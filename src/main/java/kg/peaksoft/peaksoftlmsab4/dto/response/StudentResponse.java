@@ -4,7 +4,8 @@ import kg.peaksoft.peaksoftlmsab4.enumPackage.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class StudentResponse {
 
     private String id;
