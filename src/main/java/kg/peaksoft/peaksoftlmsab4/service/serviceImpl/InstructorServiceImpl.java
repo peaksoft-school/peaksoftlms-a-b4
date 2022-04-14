@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsab4.entity.Instructor;
 import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.InstructorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,14 +21,11 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorRepository instructorRepository;
     private final InstructorEditMapper instructorEditMapper;
     private final InstructorViewMapper instructorViewMapper;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public InstructorResponse saveInstructor(InstructorRequest instructorRequest) {
-//        Instructor instructor = instructorEditMapper.convertToInstructor(instructorRequest);
-//        Instructor instructor1 = instructorRepository.save(instructor);
-//        InstructorResponse instructorResponse = instructorViewMapper.convertToInstructorResponse(instructor1);
         return instructorViewMapper
                 .convertToInstructorResponse(instructorRepository
                         .save(instructorEditMapper
@@ -91,10 +89,10 @@ public class InstructorServiceImpl implements InstructorService {
         //update password
         String currentPassword = instructor.getAuthInfo().getPassword(); // encoded
         String newPassword = instructorRequest.getPassword(); // not encoded
-//
-//        if (!passwordEncoder.matches(newPassword, currentPassword)) {
-//            instructor.getAuthInfo().setPassword(passwordEncoder.encode(newPassword));
-//        }
+
+        if (!passwordEncoder.matches(newPassword, currentPassword)) {
+            instructor.getAuthInfo().setPassword(passwordEncoder.encode(newPassword));
+        }
 
         return instructorViewMapper.convertToInstructorResponse(instructor);
     }

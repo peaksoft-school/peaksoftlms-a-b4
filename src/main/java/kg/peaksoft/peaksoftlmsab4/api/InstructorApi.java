@@ -26,19 +26,19 @@ public class InstructorApi {
     }
 
     @GetMapping("{id}")
-    public InstructorResponse getInstructorById(@PathVariable("instructorId") Long instructorId) {
+    public InstructorResponse getInstructorById(@PathVariable("id") Long instructorId) {
         return instructorService.getInstructorById(instructorId);
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Long instructorId) {
-        instructorService.deleteInstructor(instructorId);
+    public void deleteById(@PathVariable Long id) {
+        instructorService.deleteInstructor(id);
     }
 
     @PutMapping("{id}")
-    public InstructorResponse updateInstructor(@PathVariable Long instructorId,
+    public InstructorResponse updateInstructor(@PathVariable Long id,
                                                @RequestBody InstructorRequest instructorRequest) {
-        return instructorService.updateInstructor(instructorId, instructorRequest);
+        return instructorService.updateInstructor(id, instructorRequest);
 
     }
 

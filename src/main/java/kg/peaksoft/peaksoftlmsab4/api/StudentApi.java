@@ -15,7 +15,7 @@ public class StudentApi {
 
     private final StudentService studentService;
 
-    @PostMapping("/save")
+    @PostMapping
     public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest){
         return studentService.saveStudent(studentRequest);
     }
@@ -25,20 +25,20 @@ public class StudentApi {
         return studentService.getAllStudent();
     }
 
-    @GetMapping("/get/{studentId}")
-    public StudentResponse getStudentById(@PathVariable Long studentId){
-        return studentService.getInstructorById(studentId);
+    @GetMapping("{id}")
+    public StudentResponse getStudentById(@PathVariable Long id){
+        return studentService.getInstructorById(id);
     }
 
-    @PutMapping("/update/{studentId}")
-    public StudentResponse updateStudent(@PathVariable Long studentId,
+    @PutMapping("{id}")
+    public StudentResponse updateStudent(@PathVariable Long id,
                                          @RequestBody StudentRequest studentRequest){
-        return studentService.updateStudent(studentId,studentRequest);
+        return studentService.updateStudent(id,studentRequest);
     }
 
-    @DeleteMapping("/delete/{studentId}")
-    public void deleteById(@PathVariable Long studentId) {
-       studentService.deleteStudent(studentId);
+    @DeleteMapping("{id}")
+    public void deleteById(@PathVariable Long id) {
+       studentService.deleteStudent(id);
     }
 
 

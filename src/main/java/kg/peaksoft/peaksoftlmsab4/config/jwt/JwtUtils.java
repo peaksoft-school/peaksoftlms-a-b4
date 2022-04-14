@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.config.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
+import kg.peaksoft.peaksoftlmsab4.entity.AuthInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.api;
 
-import kg.peaksoft.peaksoftlmsab4.model.enams.Authority;
-import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
+import kg.peaksoft.peaksoftlmsab4.entity.AuthInfo;
+import kg.peaksoft.peaksoftlmsab4.enumPackage.Role;
 import kg.peaksoft.peaksoftlmsab4.repositories.AuthInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +28,7 @@ public class AuthTest {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
         return Map.of(
                 "email", authentication.getName(),
-                "authority", authInfo.getAuthority().name()
+                "authority", authInfo.getRole().getAuthority()
         );
     }
 
@@ -37,7 +37,7 @@ public class AuthTest {
         AuthInfo authInfo = new AuthInfo();
         authInfo.setEmail("muhammed@gmail.com");
         authInfo.setPassword(passwordEncoder.encode("123123"));
-        authInfo.setAuthority(Authority.ADMIN);
+        authInfo.setRole(Role.ADMIN);
         repository.save(authInfo);
 
     }

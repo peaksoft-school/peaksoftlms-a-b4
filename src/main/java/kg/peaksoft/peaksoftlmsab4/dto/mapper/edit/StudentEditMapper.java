@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class StudentEditMapper {
-//    private final PasswordEncoder passwordEncoder;
 
     public Student convertToStudent(StudentRequest studentRequest) {
         if (studentRequest == null) {

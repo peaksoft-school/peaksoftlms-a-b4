@@ -5,12 +5,13 @@ import kg.peaksoft.peaksoftlmsab4.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.entity.Instructor;
 import kg.peaksoft.peaksoftlmsab4.enumPackage.Role;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class InstructorEditMapper {
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public Instructor convertToInstructor(InstructorRequest instructorRequest) {
         if (instructorRequest == null) {
@@ -24,7 +25,7 @@ public class InstructorEditMapper {
 
         AuthInfo authInfo = new AuthInfo();
         authInfo.setEmail(instructorRequest.getEmail());
-        authInfo.setPassword(instructorRequest.getPassword());
+        authInfo.setPassword(passwordEncoder.encode(instructorRequest.getPassword()));
         authInfo.setRole(Role.INSTRUCTOR);
 
         instructor.setAuthInfo(authInfo);
