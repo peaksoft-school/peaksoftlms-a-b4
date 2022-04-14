@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class AuthApi {
 
-//    private final AuthService authService;
-
-//    @PostMapping
-//    @PermitAll
-//    public AuthResponse authenticate(@RequestBody AuthRequest authRequest) {
-//        return authService.authenticate(authRequest);
 
 
 }
