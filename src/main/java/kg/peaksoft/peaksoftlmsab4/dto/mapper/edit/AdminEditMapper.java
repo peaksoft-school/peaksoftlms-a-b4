@@ -11,11 +11,12 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AdminEditMapper {
 
-    public Admin saveAdmin(AdminRequest adminRequest) {
+//    private final PasswordEncoder passwordEncoder;
+
+    public Admin convertToAdmin(AdminRequest adminRequest) {
         if (adminRequest == null) {
             return null;
         }
-
         Admin admin = new Admin();
         admin.setFirstName(adminRequest.getFirstName());
         admin.setLastName(adminRequest.getLastName());

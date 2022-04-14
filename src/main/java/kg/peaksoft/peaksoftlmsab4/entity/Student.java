@@ -27,6 +27,4 @@ public class Student {
     @Column(name = "study_format")
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
-    @OneToOne
-    AuthInfo authInfo;
 }

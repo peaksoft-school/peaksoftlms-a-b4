@@ -10,19 +10,19 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class InstructorEditMapper {
+//    private final PasswordEncoder passwordEncoder;
 
-    public Instructor saveInstructor( InstructorRequest instructorRequest){
-        if(instructorRequest==null){
+    public Instructor convertToInstructor(InstructorRequest instructorRequest) {
+        if (instructorRequest == null) {
             return null;
         }
-
-        Instructor instructor=new Instructor();
+        Instructor instructor = new Instructor();
         instructor.setFirstName(instructorRequest.getFirstName());
         instructor.setLastName(instructorRequest.getLastName());
         instructor.setMobilePhone(instructorRequest.getMobilePhone());
         instructor.setSpecialization(instructorRequest.getSpecialization());
 
-        AuthInfo authInfo=new AuthInfo();
+        AuthInfo authInfo = new AuthInfo();
         authInfo.setEmail(instructorRequest.getEmail());
         authInfo.setPassword(instructorRequest.getPassword());
         authInfo.setRole(Role.INSTRUCTOR);
@@ -30,5 +30,4 @@ public class InstructorEditMapper {
         instructor.setAuthInfo(authInfo);
         return instructor;
     }
-
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdminViewMapper {
 
-    public AdminResponse viewUser(Admin admin) {
+    public AdminResponse convertToAdminResponse(Admin admin) {
         if (admin == null) {
             return null;
         }

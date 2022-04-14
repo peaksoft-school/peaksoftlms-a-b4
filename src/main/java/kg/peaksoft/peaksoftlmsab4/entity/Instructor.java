@@ -24,7 +24,7 @@ public class Instructor {
     @Column(name = "mobile_phone")
     String mobilePhone;
     String specialization;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     AuthInfo authInfo;
 
 }

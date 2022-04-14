@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InstructorViewMapper {
 
-    InstructorResponse viewInstructor(Instructor instructor){
+   public InstructorResponse convertToInstructorResponse(Instructor instructor){
         if(instructor==null){
             return null;
         }

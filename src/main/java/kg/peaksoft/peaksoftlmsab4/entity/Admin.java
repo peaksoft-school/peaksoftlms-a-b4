@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "admins")
+@Table(name = "admin")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +22,6 @@ public class Admin {
     String firstName;
     @Column(name = "last_name")
     String lastName;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     AuthInfo authInfo;
 }
