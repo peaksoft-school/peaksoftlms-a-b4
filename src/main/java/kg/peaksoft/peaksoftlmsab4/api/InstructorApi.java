@@ -15,7 +15,7 @@ public class InstructorApi {
 
     private final InstructorService instructorService;
 
-    @PostMapping("/save")
+    @PostMapping
     public InstructorResponse saveInstructor(@RequestBody InstructorRequest instructorRequest) {
         return instructorService.saveInstructor(instructorRequest);
     }
@@ -25,17 +25,17 @@ public class InstructorApi {
         return instructorService.getAllInstructor();
     }
 
-    @GetMapping("/get/{instructorId}")
+    @GetMapping("{id}")
     public InstructorResponse getInstructorById(@PathVariable("instructorId") Long instructorId) {
         return instructorService.getInstructorById(instructorId);
     }
 
-    @DeleteMapping("/delete/{instructorId}")
+    @DeleteMapping("{id}")
     public void deleteById(@PathVariable Long instructorId) {
         instructorService.deleteInstructor(instructorId);
     }
 
-    @PutMapping("/update/{instructorId}")
+    @PutMapping("{id}")
     public InstructorResponse updateInstructor(@PathVariable Long instructorId,
                                                @RequestBody InstructorRequest instructorRequest) {
         return instructorService.updateInstructor(instructorId, instructorRequest);
