@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsab4.dto.request;
+package kg.peaksoft.peaksoftlmsab4.dto.admin;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,13 +7,13 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NotBlank
-public class InstructorRequest {
-
+public class AdminRequest {
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
-    private String mobilePhone;
-    private String specialization;
-    private String password;
+    @NotBlank
     private String email;
+    @NotBlank
+    private String password;
 }

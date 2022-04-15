@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.config.security;
 
-
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtConfig;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;

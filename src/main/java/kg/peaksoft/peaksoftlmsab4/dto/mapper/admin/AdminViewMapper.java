@@ -1,6 +1,6 @@
-package kg.peaksoft.peaksoftlmsab4.dto.mapper.view;
+package kg.peaksoft.peaksoftlmsab4.dto.mapper.admin;
 
-import kg.peaksoft.peaksoftlmsab4.dto.response.AdminResponse;
+import kg.peaksoft.peaksoftlmsab4.dto.admin.AdminResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.Admin;
 import org.springframework.stereotype.Component;
 

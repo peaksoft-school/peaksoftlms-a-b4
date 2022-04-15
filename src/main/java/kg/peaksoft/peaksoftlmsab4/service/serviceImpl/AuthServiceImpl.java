@@ -1,9 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsab4.dto.request.AuthRequest;
-import kg.peaksoft.peaksoftlmsab4.dto.response.AuthResponse;
+import kg.peaksoft.peaksoftlmsab4.dto.auth.AuthRequest;
+import kg.peaksoft.peaksoftlmsab4.dto.auth.AuthResponse;
+import kg.peaksoft.peaksoftlmsab4.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;

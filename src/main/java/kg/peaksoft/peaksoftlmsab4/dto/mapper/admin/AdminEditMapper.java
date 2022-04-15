@@ -1,6 +1,6 @@
-package kg.peaksoft.peaksoftlmsab4.dto.mapper.edit;
+package kg.peaksoft.peaksoftlmsab4.dto.mapper.admin;
 
-import kg.peaksoft.peaksoftlmsab4.dto.request.AdminRequest;
+import kg.peaksoft.peaksoftlmsab4.dto.admin.AdminRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.Admin;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
