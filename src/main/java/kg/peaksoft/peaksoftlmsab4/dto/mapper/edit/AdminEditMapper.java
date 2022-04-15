@@ -1,14 +1,12 @@
 package kg.peaksoft.peaksoftlmsab4.dto.mapper.edit;
 
 import kg.peaksoft.peaksoftlmsab4.dto.request.AdminRequest;
-import kg.peaksoft.peaksoftlmsab4.entity.Admin;
-import kg.peaksoft.peaksoftlmsab4.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.enumPackage.Role;
-import lombok.AllArgsConstructor;
+import kg.peaksoft.peaksoftlmsab4.model.entity.Admin;
+import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
+import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
 public class AdminEditMapper {
 
     public Admin saveAdmin(AdminRequest adminRequest) {

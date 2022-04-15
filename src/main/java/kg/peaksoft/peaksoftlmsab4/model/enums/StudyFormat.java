@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsab4.enumPackage;
+package kg.peaksoft.peaksoftlmsab4.model.enums;
 
 public enum StudyFormat {
     ONLINE,

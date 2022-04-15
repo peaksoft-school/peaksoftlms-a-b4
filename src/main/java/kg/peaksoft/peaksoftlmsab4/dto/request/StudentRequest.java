@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.dto.request;
 
-import kg.peaksoft.peaksoftlmsab4.enumPackage.StudyFormat;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +15,5 @@ public class StudentRequest {
     private String lastName;
     private String mobilePhone;
     private StudyFormat studyFormat;
-    private String password;
     private String email;
 }

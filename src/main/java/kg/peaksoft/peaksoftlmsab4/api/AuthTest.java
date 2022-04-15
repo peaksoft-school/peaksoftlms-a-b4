@@ -1,44 +1,49 @@
-package kg.peaksoft.peaksoftlmsab4.api;
-
-import kg.peaksoft.peaksoftlmsab4.model.enams.Authority;
-import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.repositories.AuthInfoRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.PostConstruct;
-import java.util.Map;
-
-@RestController
-@RequestMapping("api/auth")
-@RequiredArgsConstructor
-public class AuthTest {
-
-    private final AuthInfoRepository repository;
-    private final PasswordEncoder passwordEncoder;
-
-    @GetMapping("/test")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'STUDENT')")
-    public Map<String, String> test(Authentication authentication) {
-        AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
-        return Map.of(
-                "email", authentication.getName(),
-                "authority", authInfo.getAuthority().name()
-        );
-    }
-
-    @PostConstruct
-    public void init() {
-        AuthInfo authInfo = new AuthInfo();
-        authInfo.setEmail("muhammed@gmail.com");
-        authInfo.setPassword(passwordEncoder.encode("123123"));
-        authInfo.setAuthority(Authority.ADMIN);
-        repository.save(authInfo);
-
-    }
-}
+//package kg.peaksoft.peaksoftlmsab4.api;
+//
+//import kg.peaksoft.peaksoftlmsab4.dto.request.AuthRequest;
+//import kg.peaksoft.peaksoftlmsab4.dto.response.AuthResponse;
+//import kg.peaksoft.peaksoftlmsab4.model.entity.Admin;
+//import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
+//import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
+//import kg.peaksoft.peaksoftlmsab4.repository.AdminRepository;
+//import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthService;
+//import lombok.AllArgsConstructor;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import javax.annotation.PostConstruct;
+//import javax.annotation.security.PermitAll;
+//
+//@RestController
+//@RequestMapping("api/auth")
+//@AllArgsConstructor
+//public class AuthTest {
+//
+//    private AuthService authService;
+//    private final AdminRepository repository;
+//    private final PasswordEncoder passwordEncoder;
+//
+//    @PostMapping
+//    @PermitAll
+//    public AuthResponse authenticate(@RequestBody AuthRequest authRequest) {
+//        return authService.authenticate(authRequest);
+//    }
+//
+//
+//    @PostConstruct
+//    public void init() {
+//        Admin admin = new Admin();
+//        admin.setFirstName("Nurmuhammad");
+//        admin.setLastName("Babaev");
+//
+//        AuthInfo authInfo = new AuthInfo();
+//        authInfo.setEmail("muhammed@gmail.com");
+//        authInfo.setPassword(passwordEncoder.encode("123123"));
+//        authInfo.setRole(Role.ADMIN);
+//        admin.setAuthInfo(authInfo);
+//        repository.save(admin);
+//    }
+//}

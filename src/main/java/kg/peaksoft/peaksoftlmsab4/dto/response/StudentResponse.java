@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.dto.response;
 
-import kg.peaksoft.peaksoftlmsab4.enumPackage.StudyFormat;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
 

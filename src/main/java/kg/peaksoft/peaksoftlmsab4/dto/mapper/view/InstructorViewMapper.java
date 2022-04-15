@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.dto.mapper.view;
 
 import kg.peaksoft.peaksoftlmsab4.dto.response.InstructorResponse;
-import kg.peaksoft.peaksoftlmsab4.entity.Instructor;
+import kg.peaksoft.peaksoftlmsab4.model.entity.Instructor;
 import org.springframework.stereotype.Component;
 
 @Component

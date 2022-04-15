@@ -1,9 +1,7 @@
-package kg.peaksoft.peaksoftlmsab4.entity;
+package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import kg.peaksoft.peaksoftlmsab4.enumPackage.StudyFormat;
-import lombok.AllArgsConstructor;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,8 +10,6 @@ import javax.persistence.*;
 @Table(name = "students")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +20,8 @@ public class Student {
     String lastName;
     @Column(name = "mobile_phone")
     String mobilePhone;
+    String email;
     @Column(name = "study_format")
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
-    @OneToOne
-    AuthInfo authInfo;
 }

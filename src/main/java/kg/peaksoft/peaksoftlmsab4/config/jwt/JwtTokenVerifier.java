@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.config.jwt;
 
-import io.jsonwebtoken.io.IOException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +12,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @AllArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
