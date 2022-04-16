@@ -1,4 +1,11 @@
-CREATE TYPE authority AS ENUM ('ADMIN', 'INSTRUCTOR');
+drop table if exists admins;
+drop table if exists instructors;
+drop table if exists students;
+drop table if exists auth_info;
+drop type if exists authority;
+drop type if exists study_format;
+
+CREATE TYPE role AS ENUM ('ADMIN', 'INSTRUCTOR');
 CREATE TYPE study_format AS ENUM ('ONLINE', 'OFFLINE');
 
 CREATE TABLE IF NOT EXISTS auth_info (
@@ -6,7 +13,7 @@ CREATE TABLE IF NOT EXISTS auth_info (
     id serial PRIMARY KEY NOT NULL,
     email varchar(50) not null unique,
     password varchar(250) not null,
-    authority_type authority,
+    role role,
     is_account_non_expired boolean,
     is_account_non_locked boolean,
     is_credentials_non_expired boolean,
@@ -36,10 +43,10 @@ CREATE TABLE IF NOT EXISTS students (
     last_name varchar(250),
     mobile_phone varchar (250),
     email varchar (250),
-    study_format_type study_format
+    study_format study_format
 );
 
-insert into auth_info(email, password, authority_type, is_account_non_expired,
+insert into auth_info(email, password, role, is_account_non_expired,
             is_account_non_locked, is_credentials_non_expired, is_enabled) values
             ('kairabek@gmail.com', '$2a$04$bgaWpBkJrajY/yO9sbjPe.dAZkMCGp.XZEJiwhFxOyLS6ENMe5Y7m',
             'ADMIN',true,true,true,true),
@@ -55,5 +62,5 @@ insert into instructors(first_name, last_name, mobile_phone, specialization, aut
             ('Chyngyz', 'Kamarov', '0779252525', 'java-instructor',
             (select id from auth_info where email = 'chyngyz@gmail.com'));
 
-insert into students(first_name, last_name, mobile_phone, email,study_format_type) values
+insert into students(first_name, last_name, mobile_phone, email,study_format) values
             ('Meerim', 'Asanova', '0779222222', 'meerim@gmail.com','OFFLINE');
