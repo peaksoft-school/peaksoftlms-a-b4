@@ -26,8 +26,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException, java.io.IOException {
-        //get token from request
-        String header = request.getHeader(jwtConfig.getAuthorizationHeader()); // Bearer_asodifaoirnv034_2094fper889er98
+
+        String header = request.getHeader(jwtConfig.getAuthorizationHeader());
         String email = null;
         String token = null;
 
@@ -39,7 +39,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             }
         }
 
-        //check token
+
         if (email != null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             if (jwtUtils.verifyToken(token)) {

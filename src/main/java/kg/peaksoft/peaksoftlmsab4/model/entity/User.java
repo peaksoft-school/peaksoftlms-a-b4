@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "admins")
+@Table(name = "users")
 @Getter
 @Setter
-public class Admin {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
