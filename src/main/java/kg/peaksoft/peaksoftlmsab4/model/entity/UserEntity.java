@@ -1,19 +1,15 @@
-package kg.peaksoft.peaksoftlmsab4.entity;
+package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "instructors")
+@Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Instructor {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -21,10 +17,6 @@ public class Instructor {
     String firstName;
     @Column(name = "last_name")
     String lastName;
-    @Column(name = "mobile_phone")
-    String mobilePhone;
-    String specialization;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     AuthInfo authInfo;
-
 }

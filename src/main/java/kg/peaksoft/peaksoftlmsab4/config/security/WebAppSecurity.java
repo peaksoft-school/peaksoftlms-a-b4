@@ -1,11 +1,10 @@
 package kg.peaksoft.peaksoftlmsab4.config.security;
 
-
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtConfig;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.repositories.AuthInfoRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.AuthInfoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
