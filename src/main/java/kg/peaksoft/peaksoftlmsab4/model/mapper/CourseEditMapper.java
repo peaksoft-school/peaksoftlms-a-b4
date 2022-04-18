@@ -15,6 +15,7 @@ public class CourseEditMapper {
         course.setDateOfStart(courseRequest.getDateOfStart());
         course.setDescription(courseRequest.getDescription());
         course.setImage(courseRequest.getImage());
+
         return course;
     }
 

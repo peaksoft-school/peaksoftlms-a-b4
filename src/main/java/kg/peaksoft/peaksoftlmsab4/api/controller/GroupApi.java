@@ -16,10 +16,10 @@ import java.util.List;
 public class GroupApi {
     private final GroupService service;
 
-    @PostMapping("/save")
+    @PostMapping("/save{courseId}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public GroupResponse create(@RequestBody GroupRequest groupRequest) {
-        return service.create(groupRequest);
+    public GroupResponse create(@RequestBody GroupRequest groupRequest,@PathVariable("courseId") Long id) {
+        return service.create(id,groupRequest);
     }
 
     @PutMapping("/update/{id}")

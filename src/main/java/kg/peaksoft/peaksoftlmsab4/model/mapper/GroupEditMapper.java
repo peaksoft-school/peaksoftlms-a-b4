@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
+import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class GroupEditMapper {
-    public GroupEntity create(GroupRequest groupRequest) {
+    public GroupEntity create(CourseEntity course, GroupRequest groupRequest) {
         if (groupRequest == null) {
             log.error("The request is null!");
             return null;
@@ -19,7 +20,7 @@ public class GroupEditMapper {
         group.setDateOfStart(groupRequest.getDateOfStart());
         group.setDescription(groupRequest.getDescription());
         group.setImage(groupRequest.getImage());
-
+        group.setCourse(course);
         return group;
     }
 

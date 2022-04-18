@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface GroupService {
 
-    GroupResponse create(GroupRequest groupRequest);
+    GroupResponse create(Long id,GroupRequest groupRequest);
     GroupResponse update(Long id, GroupRequest groupRequest);
     GroupResponse getById(Long id);
     GroupResponse deleteById(Long id);

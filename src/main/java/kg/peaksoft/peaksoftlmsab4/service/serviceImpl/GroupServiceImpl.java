@@ -3,9 +3,11 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupViewMapper;
+import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +25,12 @@ public class GroupServiceImpl implements GroupService {
     private final GroupViewMapper viewMapper;
     private final GroupRepository repository;
     private final GroupEditMapper editMapper;
+    private final CourseRepository courseRepository;
 
-    public GroupResponse create(GroupRequest groupRequest) {
-
+    public GroupResponse create(Long id,GroupRequest groupRequest) {
+        CourseEntity course=courseRepository.getById(id);
         return viewMapper.viewGroup(repository
-                .save(editMapper.create(groupRequest)));
+                .save(editMapper.create(course,groupRequest)));
     }
 
     public GroupResponse update(Long id, GroupRequest groupRequest) {
