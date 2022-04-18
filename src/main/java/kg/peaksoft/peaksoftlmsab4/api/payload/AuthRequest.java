@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsab4.dto.auth;
+package kg.peaksoft.peaksoftlmsab4.api.payload;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsab4.dto.auth.AuthRequest;
-import kg.peaksoft.peaksoftlmsab4.dto.auth.AuthResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.AuthRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4;
 
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.model.entity.User;
+import kg.peaksoft.peaksoftlmsab4.model.entity.UserEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class PeaksoftlmsAB4Application {
 
     @PostConstruct
     public void init() {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setFirstName("Nurmuhammad");
         user.setLastName("Babaev");
 

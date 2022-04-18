@@ -1,13 +1,13 @@
-package kg.peaksoft.peaksoftlmsab4.dto.mapper.user;
+package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.dto.user.UserResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.User;
+import kg.peaksoft.peaksoftlmsab4.api.payload.UserResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserViewMapper {
 
-    public UserResponse viewUser(User user) {
+    public UserResponse viewUser(UserEntity user) {
         if (user == null) {
             return null;
         }

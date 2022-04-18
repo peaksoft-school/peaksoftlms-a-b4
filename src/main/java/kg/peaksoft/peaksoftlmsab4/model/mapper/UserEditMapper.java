@@ -1,20 +1,20 @@
-package kg.peaksoft.peaksoftlmsab4.dto.mapper.user;
+package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.dto.user.UserRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.UserRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.model.entity.User;
+import kg.peaksoft.peaksoftlmsab4.model.entity.UserEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserEditMapper {
 
-    public User saveAdmin(UserRequest adminRequest) {
+    public UserEntity saveAdmin(UserRequest adminRequest) {
         if (adminRequest == null) {
             return null;
         }
 
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setFirstName(adminRequest.getFirstName());
         user.setLastName(adminRequest.getLastName());
 

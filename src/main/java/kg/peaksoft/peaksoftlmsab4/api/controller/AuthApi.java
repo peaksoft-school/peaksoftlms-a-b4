@@ -1,16 +1,14 @@
-package kg.peaksoft.peaksoftlmsab4.api;
+package kg.peaksoft.peaksoftlmsab4.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import kg.peaksoft.peaksoftlmsab4.dto.auth.AuthRequest;
-import kg.peaksoft.peaksoftlmsab4.dto.auth.AuthResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.AuthRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("/api/authentication")
@@ -24,5 +22,10 @@ public class AuthApi {
     @Operation(summary = "authenticate", description = "it is authenticate http method")
     public AuthResponse authenticate(@RequestBody AuthRequest authRequest) {
         return authService.authenticate(authRequest);
+    }
+    @RolesAllowed("ADMIN")
+    @GetMapping("/test")
+    public String testToken(){
+        return "Tested";
     }
 }
