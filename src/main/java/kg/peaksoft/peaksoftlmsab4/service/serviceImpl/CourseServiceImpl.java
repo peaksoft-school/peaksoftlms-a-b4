@@ -13,11 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -74,44 +71,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @Transactional
     public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
-        CourseEntity course = courseRepository.getById(courseId);
+        CourseEntity course = getByIdMethod(courseId);
 
-        String currentCourseName = course.getCourseName();
-        String newCourseName = courseRequest.getCourseName();
-
-        if (!Objects.equals(currentCourseName, newCourseName)) {
-            course.setCourseName(newCourseName);
-            log.info("Course with id = {} changed name from {} to {}",
-                    courseId, currentCourseName, newCourseName);
-        }
-
-        LocalDate currentDateOfStart = course.getDateOfStart();
-        LocalDate newDateOfStart = courseRequest.getDateOfStart();
-        if (currentDateOfStart != newDateOfStart) {
-            course.setDateOfStart(newDateOfStart);
-            log.info("Course with id = {} changed dateOfStart from {} to {}",
-                    courseId, currentDateOfStart, newDateOfStart);
-        }
-
-        String currentDescription = course.getDescription();
-        String newDescription = courseRequest.getDescription();
-        if (!Objects.equals(currentDescription, newDescription)) {
-            course.setDescription(newDescription);
-            log.info("Course with id = {} changed description from {} to {}",
-                    courseId, currentDescription, newDescription);
-        }
-
-        String currentImage = course.getImage();
-        String newImage = courseRequest.getImage();
-        if (!Objects.equals(currentImage, newImage)) {
-            course.setImage(newImage);
-            log.info("Course with id = {} changed image from {} to {}",
-                    courseId, currentImage, newImage);
-        }
-
-        return courseViewMapper.viewCourse(course);
+        courseMapper.update(course, courseRequest);
+        return courseViewMapper.viewCourse(courseRepository.save(course));
     }
 
     private CourseEntity getByIdMethod(Long courseId) {

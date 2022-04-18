@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CourseViewMapper {
-    public CourseResponse viewCourse(CourseEntity course){
+    public CourseResponse viewCourse(CourseEntity course) {
 
-        if (course==null){
+        if (course == null) {
             return null;
         }
-        CourseResponse courseResponse=new CourseResponse();
-        if (course.getId()!=null){
+        CourseResponse courseResponse = new CourseResponse();
+        if (course.getId() != null) {
             courseResponse.setId(course.getId());
         }
         courseResponse.setCourseName(course.getCourseName());
