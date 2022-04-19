@@ -19,7 +19,15 @@ import java.util.List;
 @Setter
 public class GroupEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "groups_sequence",
+            sequenceName = "groups_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "groups_sequence"
+    )
     private Long id;
     private String groupName;
     private LocalDate dateOfStart;
@@ -36,11 +44,10 @@ public class GroupEntity {
 
     @JsonIgnore
     public void setCourse(CourseEntity course) {
-        if (course == null) {
+        if (courses == null) {
             courses = new ArrayList<>();
         }
         courses.add(course);
         course.setGroup(this);
     }
-
 }

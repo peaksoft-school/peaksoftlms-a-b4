@@ -1,31 +1,17 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/peaksoftlms
+    url: jdbc:postgresql://localhost:5432/peaksoftlms-a
     username: postgres
-    password: 1805
+    password: postgres
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
       ddl-auto: create
     show-sql: true
-  # email sender
-  mail:
-    host: smtp.gmail.com
-    port: 25
-    username: nurmuhammedbabaev@gmail.com
-    password: nurik1805
-    properties:
-      mail:
-        debug: true
-        transport:
-          protocol: smtp
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+
 server:
-  port: 5656
+  port: 8080
   error:
     include-message: always
 
