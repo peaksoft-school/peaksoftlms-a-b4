@@ -1,10 +1,16 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-@Builder
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "courses")
 @AllArgsConstructor
@@ -20,9 +26,22 @@ public class CourseEntity {
     private String description;
     private String image;
 
-    public CourseEntity(String courseName) {
-        this.courseName =courseName;
+    @ManyToMany(mappedBy = "courses", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
+    private List<GroupEntity> groups = new ArrayList<>();
+
+    @PreRemove
+    private void removeCourseFromCourses() {
+        for (GroupEntity group : groups) {
+            group.getCourses().remove(this);
+        }
     }
-//    @ManyToMany
-//    private List<GroupEntity> groups;
+
+    @JsonIgnore
+    public void setGroup(GroupEntity group) {
+        if (group == null) {
+            groups = new ArrayList<>();
+        }
+        groups.add(group);
+
+    }
 }
