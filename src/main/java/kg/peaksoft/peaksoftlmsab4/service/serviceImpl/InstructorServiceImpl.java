@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorEditMapper;

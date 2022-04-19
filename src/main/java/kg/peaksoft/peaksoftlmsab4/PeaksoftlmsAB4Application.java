@@ -7,6 +7,7 @@ import kg.peaksoft.peaksoftlmsab4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
