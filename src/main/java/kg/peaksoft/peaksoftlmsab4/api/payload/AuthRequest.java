@@ -12,4 +12,8 @@ public class AuthRequest {
     private String email;
     @NotBlank
     private String password;
+
+    public AuthRequest(String s, String s1) {
+
+    }
 }

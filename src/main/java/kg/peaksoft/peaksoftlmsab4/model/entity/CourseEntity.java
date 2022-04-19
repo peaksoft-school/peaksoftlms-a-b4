@@ -1,13 +1,10 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+@Builder
 @Entity
 @Table(name = "courses")
 @AllArgsConstructor
@@ -22,6 +19,10 @@ public class CourseEntity {
     private LocalDate dateOfStart;
     private String description;
     private String image;
+
+    public CourseEntity(String courseName) {
+        this.courseName =courseName;
+    }
 //    @ManyToMany
 //    private List<GroupEntity> groups;
 }

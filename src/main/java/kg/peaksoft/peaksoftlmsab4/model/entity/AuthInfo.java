@@ -27,6 +27,25 @@ public class AuthInfo implements UserDetails {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
 
+    public AuthInfo(String email,
+                    String password,
+                    Role role, boolean isAccountNonExpired,
+                    boolean isAccountNonLocked,
+                    boolean isCredentialsNonExpired,
+                    boolean isEnabled) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
+    }
+
+    public AuthInfo() {
+
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(role);
