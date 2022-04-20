@@ -1,14 +1,16 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
