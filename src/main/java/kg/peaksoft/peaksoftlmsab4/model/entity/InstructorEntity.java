@@ -37,7 +37,7 @@ public class InstructorEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     AuthInfo authInfo;
 
-    @ManyToMany(cascade ={ CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY,mappedBy = "instructors")
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "instructors")
     private List<CourseEntity> courses;
 
     public void setCourse(CourseEntity course) {

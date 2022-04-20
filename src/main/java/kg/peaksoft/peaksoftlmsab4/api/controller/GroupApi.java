@@ -13,11 +13,11 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/groups")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class GroupApi {
     private final GroupService service;
 
-    @PostMapping("/save{courseId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/save/{courseId}")
     public GroupResponse create(@RequestBody GroupRequest groupRequest,@PathVariable("courseId") Long id) {
         return service.create(id,groupRequest);
     }

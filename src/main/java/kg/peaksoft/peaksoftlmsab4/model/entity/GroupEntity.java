@@ -41,6 +41,8 @@ public class GroupEntity {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<CourseEntity> courses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<StudentEntity> students;
 
     @JsonIgnore
     public void setCourse(CourseEntity course) {
@@ -49,5 +51,13 @@ public class GroupEntity {
         }
         courses.add(course);
         course.setGroup(this);
+    }
+
+    public void setStudent(StudentEntity student) {
+        if (students == null) {
+            students = new ArrayList<>();
+        }
+        students.add(student);
+        student.setGroup(this);
     }
 }
