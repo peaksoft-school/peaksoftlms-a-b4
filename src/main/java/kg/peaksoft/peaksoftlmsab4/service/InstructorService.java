@@ -17,4 +17,6 @@ public interface InstructorService {
     InstructorResponse updateInstructor(Long id,InstructorRequest instructorRequest);
 
     void deleteInstructor(Long id);
+
+  InstructorResponse addInstructorToCourse(Long courseId,Long instructorId);
 }

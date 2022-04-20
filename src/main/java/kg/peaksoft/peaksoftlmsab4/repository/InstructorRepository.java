@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InstructorRepository extends JpaRepository<InstructorEntity,Long> {
 
-    @Query("select case when count(i)>0 then true else false end" +
-            " from InstructorEntity i where i.authInfo.email =?1")
+    @Query("select case when count(a)>0 then true else false end" +
+            " from AuthInfo a where a.email =?1")
     boolean existsByEmail(String email);
 }
