@@ -17,7 +17,15 @@ import java.util.List;
 @Getter
 public class CourseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "courses_sequence",
+            sequenceName = "courses_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "courses_sequence"
+    )
     private Long id;
     private String courseName;
     private LocalDate dateOfStart;
@@ -27,19 +35,29 @@ public class CourseEntity {
     @ManyToMany(mappedBy = "courses", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     private List<GroupEntity> groups = new ArrayList<>();
 
+    @ManyToMany(cascade ={ CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @JoinTable(name = "courses_instructors",joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns =@JoinColumn(name = "instructor_id"))
+    private List<InstructorEntity>instructors;
+
     @PreRemove
-    private void removeCourseFromCourses() {
+    private void removeGroupFromCourses() {
         for (GroupEntity group : groups) {
             group.getCourses().remove(this);
         }
     }
 
-    @JsonIgnore
     public void setGroup(GroupEntity group) {
         if (group == null) {
             groups = new ArrayList<>();
         }
         groups.add(group);
 
+    }
+    public void setInstructor(InstructorEntity instructor) {
+        if (instructors == null) {
+            instructors = new ArrayList<>();
+        }
+        instructors.add(instructor);
     }
 }
