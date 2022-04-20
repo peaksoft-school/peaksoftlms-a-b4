@@ -8,9 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
-
-    @Query("select case when count (c) > 0 then true else false end " +
-            "from CourseEntity c where c.courseName = ?1")
-    boolean existsByCourseName( String name);
-
 }

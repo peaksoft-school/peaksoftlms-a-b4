@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.Rollback;
 
 import java.time.LocalDate;
@@ -35,11 +36,7 @@ class CourseServiceImplTest {
                 .build();
 
         courseRepository.save(courseEntity);
-        System.out.println("save");
-        System.out.println(courseEntity);
-
         assertThat(courseEntity.getId()).isGreaterThan(0);
-
     }
 
     @Test
@@ -65,7 +62,6 @@ class CourseServiceImplTest {
         course.setCourseName("Megacom");
         CourseEntity courseUpdated = courseRepository.save(course);
         assertThat(courseUpdated.getCourseName()).isEqualTo("Megacom");
-        System.out.println("continue");
     }
 
     @Test
@@ -73,10 +69,7 @@ class CourseServiceImplTest {
     public void deleteCourseTest() {
         CourseEntity course = courseRepository.findById(1L).get();
         courseRepository.delete(course);
-        String name = "Megacom";
-        boolean expected =
-                courseRepository.existsByCourseName(name);
-        System.out.println(expected);
+        boolean expected = courseRepository.existsById(1L);
         assertThat(expected).isFalse();
     }
 

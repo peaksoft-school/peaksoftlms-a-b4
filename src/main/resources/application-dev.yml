@@ -1,24 +1,24 @@
-spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/peaksoftlms-a
-    username: postgres
-    password: postgres
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-
-server:
-  port: 8080
-  error:
-    include-message: always
-
-# jwt token
-application:
-  jwt:
-    secretKey: java4isthebestgroup
-    tokenPrefix: Bearer
-    expirationDateAfterDays: 30
+#spring:
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/peaksoftlms-a
+#    username: postgres
+#    password: postgres
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+#    hibernate:
+#      ddl-auto: create
+#    show-sql: true
+#
+#server:
+#  port: 8080
+#  error:
+#    include-message: always
+#
+## jwt token
+#application:
+#  jwt:
+#    secretKey: java4isthebestgroup
+#    tokenPrefix: Bearer
+#    expirationDateAfterDays: 30
 
