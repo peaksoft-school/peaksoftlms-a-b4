@@ -5,9 +5,11 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +75,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
         CourseEntity course = getByIdMethod(courseId);
-
         courseMapper.update(course, courseRequest);
         return courseViewMapper.viewCourse(courseRepository.save(course));
     }

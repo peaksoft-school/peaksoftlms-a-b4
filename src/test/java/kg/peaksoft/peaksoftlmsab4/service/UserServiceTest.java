@@ -26,7 +26,6 @@ public class UserServiceTest {
                 .firstName("Akul")
                 .lastName("nurbekov")
                 .build();
-
         userRepository.save(userEntity);
         assertThat(userEntity.getId()).isGreaterThan(0);
     }

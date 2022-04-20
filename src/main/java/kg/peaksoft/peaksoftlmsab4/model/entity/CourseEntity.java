@@ -35,10 +35,10 @@ public class CourseEntity {
     @ManyToMany(mappedBy = "courses", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     private List<GroupEntity> groups = new ArrayList<>();
 
-    @ManyToMany(cascade ={ CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
-    @JoinTable(name = "courses_instructors",joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns =@JoinColumn(name = "instructor_id"))
-    private List<InstructorEntity>instructors;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(name = "courses_instructors", joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "instructor_id"))
+    private List<InstructorEntity> instructors;
 
     @PreRemove
     private void removeGroupFromCourses() {

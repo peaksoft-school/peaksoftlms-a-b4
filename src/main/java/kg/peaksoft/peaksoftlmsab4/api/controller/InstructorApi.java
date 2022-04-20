@@ -44,5 +44,9 @@ public class InstructorApi {
 
     }
 
+    @PutMapping("/{courseId}/set/{instructorId}")
+    public InstructorResponse addInstructorToCourse(@PathVariable Long courseId, @PathVariable Long instructorId) {
+        return instructorService.addInstructorToCourse(courseId, instructorId);
+    }
 }
 
