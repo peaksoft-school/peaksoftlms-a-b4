@@ -36,7 +36,7 @@ public class LessonEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private PresentationEntity presentationEntity;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
     private CourseEntity courseEntity;
 
 //    @OneToOne

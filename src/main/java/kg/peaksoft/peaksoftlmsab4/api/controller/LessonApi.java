@@ -27,19 +27,19 @@ public class LessonApi {
         return lessonService.getAllStudent();
     }
 
-    @GetMapping("{id}")
-    public LessonResponse getLessonById(@PathVariable Long id) {
-        return lessonService.getStudentById(id);
+    @GetMapping("{lessonId}")
+    public LessonResponse getLessonById(@PathVariable Long lessonId) {
+        return lessonService.getStudentById(lessonId);
     }
 
-    @PutMapping("{id}")
-    public LessonResponse updateLesson(@PathVariable Long id,
+    @PutMapping("{lessonId}")
+    public LessonResponse updateLesson(@PathVariable Long lessonId,
                                        @RequestBody LessonRequest lessonRequest) {
-        return lessonService.updateStudent(id, lessonRequest);
+        return lessonService.updateStudent(lessonId, lessonRequest);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Long id) {
-        lessonService.deleteStudent(id);
+    @DeleteMapping("{lessonId}")
+    public void deleteById(@PathVariable Long lessonId) {
+        lessonService.deleteStudent(lessonId);
     }
 }
