@@ -21,5 +21,7 @@ public interface StudentService {
 
     StudentResponse setStudentToGroup(Long groupId, Long studentId);
 
+    StudentResponse setStudentToCourse(Long courseId, Long studentId);
+
     Page<StudentEntity> findAllStudentWithPage(int page,int size);
 }
