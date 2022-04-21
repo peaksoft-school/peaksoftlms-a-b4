@@ -25,7 +25,7 @@ public class InstructorEditMapper {
 
         AuthInfo authInfo = new AuthInfo();
         authInfo.setEmail(instructorRequest.getEmail());
-        authInfo.setPassword(passwordEncoder.encode(instructorRequest.getPassword()));
+        authInfo.setPassword(instructorRequest.getPassword());
         authInfo.setRole(Role.INSTRUCTOR);
 
         instructor.setAuthInfo(authInfo);
@@ -40,7 +40,7 @@ public class InstructorEditMapper {
 
         AuthInfo authInfo=new AuthInfo();
         authInfo.setEmail(instructorRequest.getEmail());
-        authInfo.setPassword(passwordEncoder.encode(instructorRequest.getPassword()));
+        authInfo.setPassword(instructorRequest.getPassword());
         authInfo.setRole(Role.INSTRUCTOR);
 
     }
