@@ -51,14 +51,6 @@ public class CourseEntity {
         }
     }
 
-    public void setLesson(LessonEntity lesson) {
-        if (lessons == null) {
-            lessons = new ArrayList<>();
-        }
-        lessons.add(lesson);
-    }
-
-
     public void setGroup(GroupEntity group) {
         if (groups == null) {
             groups = new ArrayList<>();

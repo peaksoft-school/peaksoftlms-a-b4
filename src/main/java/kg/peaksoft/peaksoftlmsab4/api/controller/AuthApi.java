@@ -5,6 +5,7 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -18,7 +19,7 @@ public class AuthApi {
     private final AuthServiceImpl authService;
 
     @PostMapping
-    @PermitAll
+    @PreAuthorize("permitAll()")
     @Operation(summary = "authenticate", description = "it is authenticate http method")
     public AuthResponse authenticate(@RequestBody AuthRequest authRequest) {
         return authService.authenticate(authRequest);

@@ -37,11 +37,10 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Course with id = %s does not exists", courseId)
                     );
                 });
-
-        LessonEntity lesson = lessonRepository.save(lessonEditMapper.convertToLesson(lessonRequest));
-        courseEntity.setLesson(lesson);
+        LessonEntity lesson =lessonEditMapper.convertToLesson(lessonRequest);
+        lesson.setCourseEntity(courseEntity);
         log.info(" Lesson with name : {} has successfully saved to database", lesson.getLessonName());
-        return lessonViewMapper.convertToLessonResponse(lesson);
+        return lessonViewMapper.convertToLessonResponse(lessonRepository.save(lesson));
     }
 
     @Override

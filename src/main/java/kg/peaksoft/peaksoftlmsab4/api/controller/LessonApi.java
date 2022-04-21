@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/lessons")
-@PreAuthorize("hasAuthority('INSTRUCTOR')")
+@PreAuthorize("hasAuthority('ADMIN')")
 @AllArgsConstructor
 public class LessonApi {
 
