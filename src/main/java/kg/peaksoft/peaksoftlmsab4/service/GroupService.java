@@ -11,8 +11,12 @@ import java.util.List;
 public interface GroupService {
 
     GroupResponse create(Long id,GroupRequest groupRequest);
+
     GroupResponse update(Long id, GroupRequest groupRequest);
+
     GroupResponse getById(Long id);
+
     GroupResponse deleteById(Long id);
+
     List<GroupResponse> getAllGroup();
 }

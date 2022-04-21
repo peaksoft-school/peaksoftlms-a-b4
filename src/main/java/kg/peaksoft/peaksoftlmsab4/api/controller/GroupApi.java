@@ -22,32 +22,32 @@ public class GroupApi {
     private final GroupService service;
 
     @Operation(summary = "Creates new entity: Group", description = "Saves a new group")
-    @PostMapping("/save/{courseId}")
-    public GroupResponse create(@RequestBody GroupRequest groupRequest,@PathVariable("courseId") Long id) {
-        return service.create(id,groupRequest);
+    @PostMapping("/{courseId}")
+    public GroupResponse create(@RequestBody GroupRequest groupRequest, @PathVariable Long courseId) {
+        return service.create(courseId, groupRequest);
     }
 
     @Operation(summary = "Updates the group ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/update/{id}")
-    public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
-        return service.update(id, groupRequest);
+    @PutMapping("/{groupId}")
+    public GroupResponse update(@PathVariable Long groupId, @RequestBody GroupRequest groupRequest) {
+        return service.update(groupId, groupRequest);
     }
 
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/get/{id}")
-    public GroupResponse getById(@PathVariable Long id) {
-        return service.getById(id);
+    @GetMapping("/{groupId}")
+    public GroupResponse getById(@PathVariable Long groupId) {
+        return service.getById(groupId);
     }
 
     @Operation(summary = "Deletes the group ", description = "Deletes groups by id ")
-    @DeleteMapping("/delete/{id}")
-    public GroupResponse deleteById(@PathVariable Long id) {
-        return service.deleteById(id);
+    @DeleteMapping("/{groupId}")
+    public GroupResponse deleteById(@PathVariable Long groupId) {
+        return service.deleteById(groupId);
     }
 
     @Operation(summary = "Gets all existed groups", description = "Returns all groups in a list ")
-    @GetMapping("/all")
+    @GetMapping
     public List<GroupResponse> getAllGroup() {
         return service.getAllGroup();
     }

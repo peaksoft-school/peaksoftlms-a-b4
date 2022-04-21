@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -111,6 +113,29 @@ public class StudentServiceImpl implements StudentService {
         StudentEntity student = getByIdMethod(studentId);
         student.setCourse(course);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
+    }
+
+    @Override
+    public StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequest) {
+        GroupEntity group = groupRepository.findById(groupId)
+                .orElseThrow(() -> {
+                    log.error("Group with id = {} does not exists", groupId);
+                    throw new NotFoundException(
+                            String.format("Group with id = %s does not exists", groupId)
+                    );
+                });
+
+        String email = studentRequest.getEmail();
+        checkEmail(email);
+
+        StudentEntity convertedStudent = studentEditMapper.convertToStudent(studentRequest);
+        convertedStudent.setGroup(group);
+
+        StudentEntity savedStudent = studentRepository.save(convertedStudent);
+
+        log.info("Student with name = {} successfully saved to database", savedStudent.getFirstName());
+
+        return studentViewMapper.convertToStudentResponse(savedStudent);
     }
 
     private void checkEmail(String email) {

@@ -20,4 +20,6 @@ public interface StudentService {
     StudentResponse setStudentToGroup(Long groupId, Long studentId);
 
     StudentResponse setStudentToCourse(Long courseId, Long studentId);
+
+    StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
 }
