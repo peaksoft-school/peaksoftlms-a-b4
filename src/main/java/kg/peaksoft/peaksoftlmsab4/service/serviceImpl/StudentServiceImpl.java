@@ -13,6 +13,9 @@ import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -91,6 +94,12 @@ public class StudentServiceImpl implements StudentService {
         student.setGroup(group);
         group.setStudent(student);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
+    }
+
+    @Override
+    public Page<StudentEntity> findAllStudentWithPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return studentRepository.findAll(pageable);
     }
 
     private void checkEmail(String email) {

@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +42,7 @@ public class StudentEntity {
 
     @ManyToOne(cascade = {DETACH, MERGE, REFRESH})
     @JoinColumn(name = "group_id")
+    @JsonIgnore
     private GroupEntity group;
 
 }
