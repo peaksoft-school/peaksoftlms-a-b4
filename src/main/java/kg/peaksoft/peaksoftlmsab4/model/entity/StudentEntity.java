@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.CascadeType.*;
 
 @Entity
@@ -43,6 +46,23 @@ public class StudentEntity {
     @JoinColumn(name = "group_id")
     private GroupEntity group;
 
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "students")
+    private List<CourseEntity> courses;
+
+    public void setCourse(CourseEntity course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
+        course.setStudent(this);
+    }
+
+    @PreRemove
+    private void removeStudentFromCourses() {
+        for (CourseEntity course : courses) {
+            course.getStudents().remove(this);
+        }
+    }
 }
 
 

@@ -41,6 +41,11 @@ public class CourseEntity {
             inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<InstructorEntity> instructors;
 
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
+    inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<StudentEntity>students;
+
     @OneToMany(mappedBy = "courseEntity",cascade = CascadeType.ALL)
     private List<LessonEntity> lessons;
 
@@ -56,6 +61,7 @@ public class CourseEntity {
             groups = new ArrayList<>();
         }
         groups.add(group);
+
     }
 
     public void setInstructor(InstructorEntity instructor) {
@@ -65,10 +71,13 @@ public class CourseEntity {
         instructors.add(instructor);
     }
 
-    public void addInstructor(InstructorEntity instructor) {
-        if (instructor == null) {
-            instructors = new ArrayList<>();
+    public void setStudent(StudentEntity student) {
+        if (students == null) {
+            students = new ArrayList<>();
         }
-        instructors.add(instructor);
+        students.add(student);
     }
+
+
+
 }
