@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/peaksoftlmsA
+    url: jdbc:postgresql://localhost:5432/peaksoftlms-a
     username: postgres
-    password: postgres
+    password: root
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:

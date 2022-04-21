@@ -41,6 +41,9 @@ public class CourseEntity {
             inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<InstructorEntity> instructors;
 
+    @OneToMany(mappedBy = "courseEntity",cascade = CascadeType.ALL)
+    private List<LessonEntity> lessons;
+
     @PreRemove
     private void removeGroupFromCourses() {
         for (GroupEntity group : groups) {
@@ -48,12 +51,19 @@ public class CourseEntity {
         }
     }
 
+    public void setLesson(LessonEntity lesson) {
+        if (lessons == null) {
+            lessons = new ArrayList<>();
+        }
+        lessons.add(lesson);
+    }
+
+
     public void setGroup(GroupEntity group) {
-        if (group == null) {
+        if (groups == null) {
             groups = new ArrayList<>();
         }
         groups.add(group);
-
     }
 
     public void setInstructor(InstructorEntity instructor) {
