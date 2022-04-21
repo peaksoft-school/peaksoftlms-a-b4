@@ -18,5 +18,4 @@ public class CourseResponse {
     private LocalDate dateOfStart;
     private String description;
     private String image;
-    private List<GroupEntity>groups;
 }

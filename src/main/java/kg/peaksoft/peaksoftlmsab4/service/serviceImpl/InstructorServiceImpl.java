@@ -96,7 +96,6 @@ public class InstructorServiceImpl implements InstructorService {
         CourseEntity course = courseRepository.findById(courseId).orElseThrow(() ->
                 new NotFoundException(String.format("Course with id = %s does not exists", courseId)));
         InstructorEntity instructor = getByIdMethod(instructorId);
-        course.setInstructor(instructor);
         instructor.setCourse(course);
         log.info("Instructor with id = {} has successfully added to course", courseId);
         return instructorViewMapper.convertToInstructorResponse(instructorRepository.save(instructor));

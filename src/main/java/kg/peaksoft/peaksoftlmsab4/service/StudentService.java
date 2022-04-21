@@ -18,4 +18,6 @@ public interface StudentService {
     void deleteStudent(Long studentId);
 
     StudentResponse setStudentToGroup(Long groupId, Long studentId);
+
+    StudentResponse setStudentToCourse(Long courseId, Long studentId);
 }
