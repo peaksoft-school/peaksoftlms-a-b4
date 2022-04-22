@@ -30,6 +30,12 @@ public class StudentApi {
         return studentService.saveStudent(studentRequest);
     }
 
+    @PostMapping("/{groupId}")
+    public StudentResponse saveStudentWithGroup(@PathVariable Long groupId,
+                                                @RequestBody StudentRequest studentRequestDto) {
+        return studentService.saveStudentWithGroup(groupId, studentRequestDto);
+    }
+
     @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
     @GetMapping
     public List<StudentResponse> getAllStudents() {
@@ -38,22 +44,22 @@ public class StudentApi {
 
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("{id}")
-    public StudentResponse getStudentById(@PathVariable Long id) {
-        return studentService.getStudentById(id);
+    @GetMapping("/{studentId}")
+    public StudentResponse getStudentById(@PathVariable Long studentId) {
+        return studentService.getStudentById(studentId);
     }
 
     @Operation(summary = "Updates the student ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("{id}")
-    public StudentResponse updateStudent(@PathVariable Long id,
+    @PutMapping("/{studentId}")
+    public StudentResponse updateStudent(@PathVariable Long studentId,
                                          @RequestBody StudentRequest studentRequest) {
-        return studentService.updateStudent(id, studentRequest);
+        return studentService.updateStudent(studentId, studentRequest);
     }
 
     @Operation(summary = "Deletes the single student", description = "Deletes student by id ")
-    @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Long id) {
-        studentService.deleteStudent(id);
+    @DeleteMapping("{studentId}")
+    public void deleteById(@PathVariable Long studentId) {
+        studentService.deleteStudent(studentId);
     }
 
     @Operation(summary = "Assigns student to a group", description = "Adds a student to a group")

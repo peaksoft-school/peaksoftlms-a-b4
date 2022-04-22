@@ -21,7 +21,7 @@ public class CourseApi {
     private final CourseService courseService;
 
     @Operation(summary = "Creates new entity: Course", description = "Saves a new course")
-    @PostMapping("/register")
+    @PostMapping
     public CourseResponse saveNewCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
@@ -34,19 +34,19 @@ public class CourseApi {
 
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/get/{courseId}")
+    @GetMapping("/{courseId}")
     public CourseResponse findCourseById(@PathVariable Long courseId) {
         return courseService.getById(courseId);
     }
 
     @Operation(summary = "Deletes the courses ", description = "Deletes courses by id ")
-    @DeleteMapping("/delete/{courseId}")
+    @DeleteMapping("/{courseId}")
     public CourseResponse deleteCourse(@PathVariable Long courseId) {
         return courseService.deleteCourseById(courseId);
     }
 
     @Operation(summary = "Updates the course ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/update/{courseId}")
+    @PutMapping("/{courseId}")
     public CourseResponse updateCourse(@PathVariable Long courseId,
                                        @RequestBody CourseRequest courseRequest) {
         return courseService.updateCourseById(courseId, courseRequest);
