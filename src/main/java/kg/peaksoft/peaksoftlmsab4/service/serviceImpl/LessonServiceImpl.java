@@ -44,17 +44,17 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<LessonResponse> getAllStudent() {
+    public List<LessonResponse> getAllLessons() {
         List<LessonResponse> lessonResponses = new ArrayList<>();
         for (LessonEntity lesson : lessonRepository.findAll()) {
             lessonResponses.add(lessonViewMapper.convertToLessonResponse(lesson));
         }
-        log.info("Found {} instructors ", lessonResponses.size());
+        log.info("Found {} lessons ", lessonResponses.size());
         return lessonResponses;
     }
 
     @Override
-    public LessonResponse getStudentById(Long lessonId) {
+    public LessonResponse getLessonById(Long lessonId) {
         LessonEntity lesson = lessonRepository.findById(lessonId).
                 orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", lessonId);
@@ -66,7 +66,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public LessonResponse updateStudent(Long lessonId, LessonRequest lessonRequest) {
+    public LessonResponse updateLesson(Long lessonId, LessonRequest lessonRequest) {
         LessonEntity lesson = lessonRepository.findById(lessonId).
                 orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", lessonId);
@@ -74,12 +74,12 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        lessonEditMapper.updateStudent(lesson, lessonRequest);
+        lessonEditMapper.updateLesson(lesson, lessonRequest);
         return lessonViewMapper.convertToLessonResponse(lessonRepository.save(lesson));
     }
 
     @Override
-    public void deleteStudent(Long id) {
+    public void deleteLesson(Long id) {
         boolean existById = lessonRepository.existsById(id);
         if (!existById) {
             log.error("Lesson with id = {} does not exists, you can not delete it", id);

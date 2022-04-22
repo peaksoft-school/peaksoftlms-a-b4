@@ -18,7 +18,7 @@ public class LessonEditMapper {
         return lesson;
     }
 
-    public void updateStudent(LessonEntity lessonEntity, LessonRequest lessonRequest) {
+    public void updateLesson(LessonEntity lessonEntity, LessonRequest lessonRequest) {
         lessonEntity.setLessonName(lessonRequest.getLessonName());
     }
 }

@@ -28,4 +28,6 @@ public class LinkEntity {
 
     private String text;
     private String link;
+    @ManyToOne
+    private LessonEntity lessonEntity;
 }
