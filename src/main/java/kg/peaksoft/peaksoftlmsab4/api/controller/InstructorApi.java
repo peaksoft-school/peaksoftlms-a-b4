@@ -34,22 +34,22 @@ public class InstructorApi {
 
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("{id}")
-    public InstructorResponse getInstructorById(@PathVariable("id") Long instructorId) {
+    @GetMapping("/{instructorId}")
+    public InstructorResponse getInstructorById(@PathVariable Long instructorId) {
         return instructorService.getInstructorById(instructorId);
     }
 
     @Operation(summary = "Deletes the user: instructor", description = "Deletes user instructor by id ")
-    @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Long id) {
-        instructorService.deleteInstructor(id);
+    @DeleteMapping("/{instructorId}")
+    public void deleteById(@PathVariable Long instructorId) {
+        instructorService.deleteInstructor(instructorId);
     }
 
     @Operation(summary = "Updates the instructor ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("{id}")
-    public InstructorResponse updateInstructor(@PathVariable Long id,
+    @PutMapping("{instructorId}")
+    public InstructorResponse updateInstructor(@PathVariable Long instructorId,
                                                @RequestBody InstructorRequest instructorRequest) {
-        return instructorService.updateInstructor(id, instructorRequest);
+        return instructorService.updateInstructor(instructorId, instructorRequest);
 
     }
 

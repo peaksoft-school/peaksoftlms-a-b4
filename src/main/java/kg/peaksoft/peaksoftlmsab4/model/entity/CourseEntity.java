@@ -41,10 +41,10 @@ public class CourseEntity {
             inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<InstructorEntity> instructors;
 
-    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
-    @JoinTable(name = "courses_students",joinColumns = @JoinColumn(name = "course_id"),
-    inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private List<StudentEntity>students;
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "courses_students", joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<StudentEntity> students;
 
     @OneToMany(mappedBy = "courseEntity",cascade = CascadeType.ALL)
     private List<LessonEntity> lessons;
@@ -77,7 +77,6 @@ public class CourseEntity {
         }
         students.add(student);
     }
-
 
 
 }
