@@ -38,10 +38,4 @@ public class LessonEntity {
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
     private CourseEntity courseEntity;
-
-//    @OneToOne
-//    private Test test;
-//
-//    @OneToOne
-//    private Task task;
 }

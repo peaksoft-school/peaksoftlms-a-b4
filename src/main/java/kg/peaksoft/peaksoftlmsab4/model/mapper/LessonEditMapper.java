@@ -1,9 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

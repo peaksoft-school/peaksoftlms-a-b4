@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,9 +22,10 @@ public class LessonApi {
 
     @PostMapping("{courseId}")
     @Operation(summary = "Creates new entity: Lesson", description = "Saves a new lesson")
-    public LessonResponse addLesson(@RequestBody LessonRequest lessonRequest,@PathVariable Long courseId){
-        return lessonService.addLesson(lessonRequest,courseId);
+    public LessonResponse addLesson(@RequestBody LessonRequest lessonRequest, @PathVariable Long courseId) {
+        return lessonService.addLesson(lessonRequest, courseId);
     }
+
     @GetMapping
     @Operation(summary = "Gets all existed lessons", description = "Returns all lessons in a list ")
     public List<LessonResponse> getAllLessons() {
