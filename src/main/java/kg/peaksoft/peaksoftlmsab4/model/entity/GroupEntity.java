@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,3 +62,4 @@ public class GroupEntity {
         student.setGroup(this);
     }
 }
+
