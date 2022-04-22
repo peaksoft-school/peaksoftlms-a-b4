@@ -8,6 +8,8 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,8 +69,12 @@ public class StudentApi {
     }
 
     @GetMapping("/getPage/{page}/{size}")
-    public Page<StudentEntity> findAllWithPage(@PathVariable int page,
+    public List<StudentResponse> findAllWithPage(@PathVariable int page,
                                                @PathVariable int size) {
-        return studentService.findAllStudentWithPage(page, size);
+        final int DEFAULT_SIZE=5;
+        size=DEFAULT_SIZE;
+        Pageable pageable = PageRequest.of(page, size);
+
+        return studentService.findAllStudentWithPage(pageable);
     }
 }

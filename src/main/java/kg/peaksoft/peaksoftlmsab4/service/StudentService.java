@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface StudentService {
 
     StudentResponse setStudentToCourse(Long courseId, Long studentId);
 
-    Page<StudentEntity> findAllStudentWithPage(int page,int size);
+    List<StudentResponse> findAllStudentWithPage(Pageable pageable);
 }

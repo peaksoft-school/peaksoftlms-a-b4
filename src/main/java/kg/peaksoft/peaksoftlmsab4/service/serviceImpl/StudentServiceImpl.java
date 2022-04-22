@@ -117,9 +117,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Page<StudentEntity> findAllStudentWithPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return studentRepository.findAll(pageable);
+    public List<StudentResponse> findAllStudentWithPage(Pageable pageable) {
+
+        return studentViewMapper.viewStudents(studentRepository.findAll(pageable));
     }
 
     private void checkEmail(String email) {
