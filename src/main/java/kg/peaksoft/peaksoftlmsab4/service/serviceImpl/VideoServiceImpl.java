@@ -36,12 +36,8 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public List<VideoResponse> getAll() {
-        List<VideoResponse> videoResponses = new ArrayList<>();
-        for (VideoEntity videoEntity: videoRepository.findAll()) {
-            videoResponses.add(mapper.mapToResponse(videoEntity));
-        }
-        log.info("Fount {} videos",videoResponses.size());
-        return videoResponses;
+        log.info("Fount {} videos",videoRepository.findAll().size());
+        return mapper.mapToResponse(videoRepository.findAll());
     }
 
     @Override

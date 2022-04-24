@@ -36,12 +36,8 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public List<PresentationResponse> getAll() {
-        List<PresentationResponse> presentationResponses = new ArrayList<>();
-        for (PresentationEntity presentationEntity:presentationRepository.findAll()) {
-            presentationResponses.add(mapper.mapToResponse(presentationEntity));
-        }
-        log.info("fount {} presentations",presentationResponses.size());
-        return presentationResponses;
+        log.info("fount {} presentations",presentationRepository.findAll().size());
+        return mapper.mapToResponse(presentationRepository.findAll());
     }
 
     @Override

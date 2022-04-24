@@ -42,12 +42,8 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<LinkResponse> getAll() {
-        List<LinkResponse> linkResponses = new ArrayList<>();
-        for (LinkEntity link : linkRepository.findAll()) {
-            linkResponses.add(mapper.mapToResponse(link));
-        }
-        log.info("Found {} links ", linkResponses.size());
-        return linkResponses;
+        log.info("Found {} links ",linkRepository.findAll().size());
+        return mapper.mapToResponse(linkRepository.findAll());
     }
 
     @Override

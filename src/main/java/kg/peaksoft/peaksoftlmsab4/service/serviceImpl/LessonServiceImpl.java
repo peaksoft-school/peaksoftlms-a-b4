@@ -43,12 +43,8 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonResponse> getAll() {
-        List<LessonResponse> lessonResponses = new ArrayList<>();
-        for (LessonEntity lesson : lessonRepository.findAll()) {
-            lessonResponses.add(mapper.mapToResponse(lesson));
-        }
-        log.info("Found {} lessons ", lessonResponses.size());
-        return lessonResponses;
+        log.info("Found {} lessons ",lessonRepository.findAll().size());
+        return mapper.mapToResponse(lessonRepository.findAll());
     }
 
     @Override

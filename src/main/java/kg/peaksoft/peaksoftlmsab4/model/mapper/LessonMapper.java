@@ -6,6 +6,9 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class LessonMapper {
@@ -14,19 +17,24 @@ public class LessonMapper {
         if (lessonRequest == null) {
             return null;
         }
-        LessonEntity lesson = new LessonEntity();
-        lesson.setId(id);
-        lesson.setLessonName(lessonRequest.getLessonName());
-        return lesson;
+        return LessonEntity.builder()
+                .id(id)
+                .lessonName(lessonRequest.getLessonName())
+                .build();
+    }
+
+    public List<LessonResponse> mapToResponse(List<LessonEntity> lessons){
+        List<LessonResponse> lessonResponses = new ArrayList<>();
+        for (LessonEntity lessonEntity:lessons) {
+            lessonResponses.add(mapToResponse(lessonEntity));
+        }
+        return lessonResponses;
     }
 
     public LessonResponse mapToResponse(LessonEntity lesson){
-        if(lesson==null){
-            return null;
-        }
-        LessonResponse lessonResponse = new LessonResponse();
-        lessonResponse.setId(lesson.getId());
-        lessonResponse.setLessonName(lesson.getLessonName());
-        return lessonResponse;
+       return LessonResponse.builder()
+               .id(lesson.getId())
+               .lessonName(lesson.getLessonName())
+               .build();
     }
 }

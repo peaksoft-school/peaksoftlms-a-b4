@@ -1,10 +1,15 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -13,22 +18,28 @@ public class VideoMapper {
         if (videoRequest == null) {
             return null;
         }
-        VideoEntity videoEntity = new VideoEntity();
-        videoEntity.setId(id);
-        videoEntity.setVideoName(videoRequest.getVideoName());
-        videoEntity.setDescription(videoRequest.getDescription());
-        videoEntity.setLink(videoRequest.getLink());
-        return videoEntity;
+        return VideoEntity.builder()
+                .id(id)
+                .link(videoRequest.getLink())
+                .videoName(videoRequest.getVideoName())
+                .description(videoRequest.getDescription())
+                .build();
     }
-    public VideoResponse mapToResponse(VideoEntity videoEntity) {
-        if (videoEntity == null) {
-            return null;
+
+    public List<VideoResponse> mapToResponse(List<VideoEntity> videoEntities){
+        List<VideoResponse> videoResponses = new ArrayList<>();
+        for (VideoEntity videoEntity:videoEntities) {
+            videoResponses.add(mapToResponse(videoEntity));
         }
-        VideoResponse videoResponse = new VideoResponse();
-        videoResponse.setId(videoEntity.getId());
-        videoResponse.setVideoName(videoEntity.getVideoName());
-        videoResponse.setDescription(videoEntity.getDescription());
-        videoResponse.setLink(videoEntity.getLink());
-        return videoResponse;
+        return videoResponses;
+    }
+
+    public VideoResponse mapToResponse(VideoEntity videoEntity) {
+        return VideoResponse.builder()
+                .id(videoEntity.getId())
+                .videoName(videoEntity.getVideoName())
+                .description(videoEntity.getDescription())
+                .link(videoEntity.getLink())
+                .build();
     }
 }
