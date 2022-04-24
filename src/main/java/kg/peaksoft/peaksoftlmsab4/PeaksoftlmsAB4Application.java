@@ -23,7 +23,7 @@ public class PeaksoftlmsAB4Application {
 
     @GetMapping("/")
     public String greetingPage() {
-        return "<h1>Welcome to Peaksoftlms-A application Muha !!!<h1/>";
+        return "<h1>Welcome to Peaksoftlms-A application!!!<h1/>";
     }
 
     public static void main(String[] args) {
