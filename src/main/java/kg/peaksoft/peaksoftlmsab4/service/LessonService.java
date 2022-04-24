@@ -5,13 +5,13 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import java.util.List;
 
 public interface LessonService {
-    LessonResponse addLesson(LessonRequest lessonRequest,Long courseId);
+    LessonResponse create (LessonRequest lessonRequest,Long courseId);
 
-    List<LessonResponse> getAllLessons();
+    List<LessonResponse> getAll();
 
-    LessonResponse getLessonById(Long id);
+    LessonResponse getById(Long id);
 
-    LessonResponse updateLesson(Long id, LessonRequest lessonRequest);
+    LessonResponse update(Long id, LessonRequest lessonRequest);
 
-    void deleteLesson(Long id);
+    void deleteById(Long id);
 }

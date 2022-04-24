@@ -1,9 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PresentationEntity {
     @Id
     @SequenceGenerator(
@@ -24,8 +22,11 @@ public class PresentationEntity {
             strategy = GenerationType.SEQUENCE,
             generator = "presentations_sequence"
     )
-    Long id;
+    private Long id;
     private String presentationName;
     private String description;
     private String link;
+
+    @OneToOne
+    private LessonEntity lessonEntity;
 }

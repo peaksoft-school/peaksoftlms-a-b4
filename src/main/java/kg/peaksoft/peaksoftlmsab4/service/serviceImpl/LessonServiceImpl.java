@@ -6,8 +6,7 @@ import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.LessonEditMapper;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.LessonViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.LessonMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsab4.service.LessonService;
@@ -23,13 +22,12 @@ import java.util.List;
 @Slf4j
 public class LessonServiceImpl implements LessonService {
 
-    private final LessonEditMapper lessonEditMapper;
-    private final LessonViewMapper lessonViewMapper;
+    private final LessonMapper mapper;
     private final LessonRepository lessonRepository;
     private final CourseRepository courseRepository;
 
     @Override
-    public LessonResponse addLesson(LessonRequest lessonRequest, Long courseId) {
+    public LessonResponse create(LessonRequest lessonRequest, Long courseId) {
         CourseEntity courseEntity = courseRepository.findById(courseId)
                 .orElseThrow(() -> {
                     log.error("Course with id = {} does not exists", courseId);
@@ -37,24 +35,24 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Course with id = %s does not exists", courseId)
                     );
                 });
-        LessonEntity lesson =lessonEditMapper.convertToLesson(lessonRequest);
+        LessonEntity lesson =mapper.mapToEntity(lessonRequest,null);
         lesson.setCourseEntity(courseEntity);
         log.info(" Lesson with name : {} has successfully saved to database", lesson.getLessonName());
-        return lessonViewMapper.convertToLessonResponse(lessonRepository.save(lesson));
+        return mapper.mapToResponse(lessonRepository.save(lesson));
     }
 
     @Override
-    public List<LessonResponse> getAllLessons() {
+    public List<LessonResponse> getAll() {
         List<LessonResponse> lessonResponses = new ArrayList<>();
         for (LessonEntity lesson : lessonRepository.findAll()) {
-            lessonResponses.add(lessonViewMapper.convertToLessonResponse(lesson));
+            lessonResponses.add(mapper.mapToResponse(lesson));
         }
         log.info("Found {} lessons ", lessonResponses.size());
         return lessonResponses;
     }
 
     @Override
-    public LessonResponse getLessonById(Long lessonId) {
+    public LessonResponse getById(Long lessonId) {
         LessonEntity lesson = lessonRepository.findById(lessonId).
                 orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", lessonId);
@@ -62,11 +60,11 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        return lessonViewMapper.convertToLessonResponse(lesson);
+        return mapper.mapToResponse(lesson);
     }
 
     @Override
-    public LessonResponse updateLesson(Long lessonId, LessonRequest lessonRequest) {
+    public LessonResponse update(Long lessonId, LessonRequest lessonRequest) {
         LessonEntity lesson = lessonRepository.findById(lessonId).
                 orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", lessonId);
@@ -74,12 +72,12 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        lessonEditMapper.updateLesson(lesson, lessonRequest);
-        return lessonViewMapper.convertToLessonResponse(lessonRepository.save(lesson));
+        mapper.mapToEntity(lessonRequest,lesson.getId());
+        return mapper.mapToResponse(lessonRepository.save(lesson));
     }
 
     @Override
-    public void deleteLesson(Long id) {
+    public void deleteById(Long id) {
         boolean existById = lessonRepository.existsById(id);
         if (!existById) {
             log.error("Lesson with id = {} does not exists, you can not delete it", id);

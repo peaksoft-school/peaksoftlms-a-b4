@@ -24,8 +24,10 @@ public class VideoEntity {
             strategy = GenerationType.SEQUENCE,
             generator = "videos_sequence"
     )
-    Long id;
+    private Long id;
     private String videoName;
     private String description;
     private String link;
+    @OneToOne
+    private LessonEntity lessonEntity;
 }

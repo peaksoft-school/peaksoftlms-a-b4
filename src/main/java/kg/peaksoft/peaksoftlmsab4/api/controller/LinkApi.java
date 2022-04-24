@@ -26,32 +26,32 @@ public class LinkApi {
     @PostMapping("{lessonId}")
     @Operation(summary = "Creates new entity: Link", description = "Saves a new link")
     public LinkResponse addLink(@RequestBody LinkRequest linkRequest, @PathVariable Long lessonId) {
-        return linkService.addLink(linkRequest, lessonId);
+        return linkService.create(linkRequest, lessonId);
     }
 
     @GetMapping
     @Operation(summary = "Gets all existed links", description = "Returns all links in a list ")
     public List<LinkResponse> getAllLinks() {
-        return linkService.getAllLinks();
+        return linkService.getAll();
     }
 
     @GetMapping("{linkId}")
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
     public LinkResponse getLinkById(@PathVariable Long linkId) {
-        return linkService.getLinkById(linkId);
+        return linkService.getById(linkId);
     }
 
     @PutMapping("{linkId}")
     @Operation(summary = "Updates the link ", description = "Updates the details of an endpoint with ID ")
     public LinkResponse updateLink(@PathVariable Long linkId,
                                        @RequestBody LinkRequest linkRequest) {
-        return linkService.updateLink(linkId, linkRequest);
+        return linkService.update(linkId, linkRequest);
     }
 
     @DeleteMapping("{linkId}")
     @Operation(summary = "Deletes the link ", description = "Deletes link by id ")
     public void deleteById(@PathVariable Long linkId) {
-        linkService.deleteLink(linkId);
+        linkService.deleteById(linkId);
     }
 }

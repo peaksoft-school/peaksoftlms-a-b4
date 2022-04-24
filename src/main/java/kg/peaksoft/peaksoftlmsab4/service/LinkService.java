@@ -7,13 +7,13 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
 import java.util.List;
 
 public interface LinkService {
-    LinkResponse addLink(LinkRequest linkRequest, Long lessonId);
+    LinkResponse create(LinkRequest linkRequest, Long lessonId);
 
-    List<LinkResponse> getAllLinks();
+    List<LinkResponse> getAll();
 
-    LinkResponse getLinkById(Long linkId);
+    LinkResponse getById(Long linkId);
 
-    LinkResponse updateLink(Long linkId, LinkRequest linkRequest);
+    LinkResponse update(Long linkId, LinkRequest linkRequest);
 
-    void deleteLink(Long linkId);
+    void deleteById(Long linkId);
 }

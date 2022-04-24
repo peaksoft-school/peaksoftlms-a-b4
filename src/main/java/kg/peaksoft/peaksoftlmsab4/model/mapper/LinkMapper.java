@@ -1,30 +1,33 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkRequest;
-import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
+import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LinkEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class LinkEditMapper {
+public class LinkMapper {
 
-    public LinkEntity convertToLink(LinkRequest linkRequest) {
+    public LinkEntity mapToEntity(LinkRequest linkRequest,Long id) {
         if (linkRequest == null) {
             return null;
         }
-
         LinkEntity linkEntity = new LinkEntity();
+        linkEntity.setId(id);
         linkEntity.setLink(linkRequest.getLink());
         linkEntity.setText(linkRequest.getText());
         return linkEntity;
     }
-
-    public void updateStudent(LinkEntity linkEntity, LinkRequest linkRequest) {
-        linkEntity.setLink(linkRequest.getLink());
-        linkEntity.setText(linkRequest.getText());
+    public LinkResponse mapToResponse(LinkEntity link){
+        if(link==null){
+            return null;
+        }
+        LinkResponse linkResponse = new LinkResponse();
+        linkResponse.setId(link.getId());
+        linkResponse.setLink(link.getLink());
+        linkResponse.setText(link.getText());
+        return linkResponse;
     }
-
 }
