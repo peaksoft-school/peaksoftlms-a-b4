@@ -4,9 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.UserEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.repository.UserRepository;
-import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,14 +16,15 @@ import javax.annotation.PostConstruct;
 
 @RestController
 @SpringBootApplication
-
+@AllArgsConstructor
 public class PeaksoftlmsAB4Application {
-//    private  UserRepository repository;
-//    private PasswordEncoder passwordEncoder;
+
+    private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String greetingPage() {
-        return "<h1>Welcome to Peaksoftlms-A application!!!<h1/>";
+        return "<h1>Welcome to Peaksoftlms-A application !!!<h1/>";
     }
 
     public static void main(String[] args) {
@@ -33,17 +32,17 @@ public class PeaksoftlmsAB4Application {
         System.out.println("Welcome colleagues, project name is Peaksoftlms-A!");
     }
 
-//    @PostConstruct
-//    public void init() {
-//        UserEntity user = new UserEntity();
-//        user.setFirstName("Nurmuhammad");
-//        user.setLastName("Babaev");
-//
-//        AuthInfo authInfo = new AuthInfo();
-//        authInfo.setEmail("muhammed@gmail.com");
-//        authInfo.setPassword(passwordEncoder.encode("123123"));
-//        authInfo.setRole(Role.ADMIN);
-//        user.setAuthInfo(authInfo);
-//        repository.save(user);
-//    }
+    @PostConstruct
+    public void init() {
+        UserEntity user = new UserEntity();
+        user.setFirstName("Admin");
+        user.setLastName("Adminov");
+
+        AuthInfo authInfo = new AuthInfo();
+        authInfo.setEmail("admin@gmail.com");
+        authInfo.setPassword(passwordEncoder.encode("admin"));
+        authInfo.setRole(Role.ADMIN);
+        user.setAuthInfo(authInfo);
+        repository.save(user);
+    }
 }

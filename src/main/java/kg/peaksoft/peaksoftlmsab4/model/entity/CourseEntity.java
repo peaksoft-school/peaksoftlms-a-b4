@@ -1,7 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Builder
 @Table(name = "courses")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +41,14 @@ public class CourseEntity {
             inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<InstructorEntity> instructors;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "courses_students", joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<StudentEntity> students;
+
+    @OneToMany(mappedBy = "courseEntity",cascade = CascadeType.ALL)
+    private List<LessonEntity> lessons;
+
     @PreRemove
     private void removeGroupFromCourses() {
         for (GroupEntity group : groups) {
@@ -48,16 +57,26 @@ public class CourseEntity {
     }
 
     public void setGroup(GroupEntity group) {
-        if (group == null) {
+        if (groups == null) {
             groups = new ArrayList<>();
         }
         groups.add(group);
 
     }
+
     public void setInstructor(InstructorEntity instructor) {
         if (instructors == null) {
             instructors = new ArrayList<>();
         }
         instructors.add(instructor);
     }
+
+    public void setStudent(StudentEntity student) {
+        if (students == null) {
+            students = new ArrayList<>();
+        }
+        students.add(student);
+    }
+
+
 }
