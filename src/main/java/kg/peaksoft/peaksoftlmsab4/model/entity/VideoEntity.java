@@ -3,6 +3,10 @@ package kg.peaksoft.peaksoftlmsab4.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.PERSIST;
+
 @Builder
 @Entity
 @Table(name = "videos")
@@ -25,6 +29,6 @@ public class VideoEntity {
     private String videoName;
     private String description;
     private String link;
-    @OneToOne
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST},fetch = FetchType.LAZY)
     private LessonEntity lessonEntity;
 }

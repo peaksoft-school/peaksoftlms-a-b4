@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.PERSIST;
+
 @Entity
 @Table(name = "presentations")
 @Getter
@@ -27,6 +30,6 @@ public class PresentationEntity {
     private String description;
     private String link;
 
-    @OneToOne
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST},fetch = FetchType.LAZY)
     private LessonEntity lessonEntity;
 }
