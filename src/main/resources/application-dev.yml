@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/peaksoftlms-a
+    username: postgres
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+server:
+  port: 9090
+  error:
+    include-message: always
+
+# jwt token
+application:
+  jwt:
+    secretKey: java4isthebestgroup
+    tokenPrefix: Bearer
+    expirationDateAfterDays: 30
+
