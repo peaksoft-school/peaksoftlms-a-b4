@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserServiceTest {
+
     @Autowired
     private UserRepository userRepository;
 
