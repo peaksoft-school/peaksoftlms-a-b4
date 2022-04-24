@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Component
 @AllArgsConstructor
-@PropertySource("")
 public class JwtUtils {
 
     private final JwtConfig jwtConfig;
