@@ -2,21 +2,21 @@ package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
-
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 
 import java.util.List;
 
 public interface InstructorService {
 
-    InstructorResponse saveInstructor(InstructorRequest instructorRequest);
+    ResponseEntity saveInstructor(InstructorRequest instructorRequest);
 
     List<InstructorResponse> getAllInstructor();
 
-    InstructorResponse getInstructorById(Long id) ;
+    InstructorResponse getInstructorById(Long id);
 
-    InstructorResponse updateInstructor(Long id,InstructorRequest instructorRequest);
+    ResponseEntity updateInstructor(Long id, InstructorRequest instructorRequest);
 
-    void deleteInstructor(Long id);
+    ResponseEntity deleteInstructor(Long id);
 
-  InstructorResponse addInstructorToCourse(Long courseId,Long instructorId);
+    ResponseEntity addInstructorToCourse(Long courseId, Long instructorId);
 }

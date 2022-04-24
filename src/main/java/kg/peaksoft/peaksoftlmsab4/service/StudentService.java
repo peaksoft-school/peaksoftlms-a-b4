@@ -2,24 +2,25 @@ package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 
 import java.util.List;
 
 public interface StudentService {
 
-    StudentResponse saveStudent(StudentRequest studentRequest);
+    ResponseEntity saveStudent(StudentRequest studentRequest);
 
     List<StudentResponse> getAllStudent();
 
     StudentResponse getStudentById(Long studentId);
 
-    StudentResponse updateStudent(Long studentId, StudentRequest studentRequest);
+    ResponseEntity updateStudent(Long studentId, StudentRequest studentRequest);
 
-    void deleteStudent(Long studentId);
+    ResponseEntity deleteStudent(Long studentId);
 
-    StudentResponse setStudentToGroup(Long groupId, Long studentId);
+    ResponseEntity setStudentToGroup(Long groupId, Long studentId);
 
-    StudentResponse setStudentToCourse(Long courseId, Long studentId);
+    ResponseEntity setStudentToCourse(Long courseId, Long studentId);
 
-    StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
+    ResponseEntity saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
 }

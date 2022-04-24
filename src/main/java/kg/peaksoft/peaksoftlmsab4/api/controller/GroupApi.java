@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,13 +24,13 @@ public class GroupApi {
 
     @Operation(summary = "Creates new entity: Group", description = "Saves a new group")
     @PostMapping("/{courseId}")
-    public GroupResponse create(@RequestBody GroupRequest groupRequest, @PathVariable Long courseId) {
+    public ResponseEntity create(@RequestBody GroupRequest groupRequest, @PathVariable Long courseId) {
         return service.create(courseId, groupRequest);
     }
 
     @Operation(summary = "Updates the group ", description = "Updates the details of an endpoint with ID ")
     @PutMapping("/{groupId}")
-    public GroupResponse update(@PathVariable Long groupId, @RequestBody GroupRequest groupRequest) {
+    public ResponseEntity update(@PathVariable Long groupId, @RequestBody GroupRequest groupRequest) {
         return service.update(groupId, groupRequest);
     }
 
@@ -42,7 +43,7 @@ public class GroupApi {
 
     @Operation(summary = "Deletes the group ", description = "Deletes groups by id ")
     @DeleteMapping("/{groupId}")
-    public GroupResponse deleteById(@PathVariable Long groupId) {
+    public ResponseEntity deleteById(@PathVariable Long groupId) {
         return service.deleteById(groupId);
     }
 

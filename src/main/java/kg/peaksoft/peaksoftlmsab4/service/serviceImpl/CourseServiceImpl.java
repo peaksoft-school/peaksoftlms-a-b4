@@ -2,17 +2,18 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,13 +28,23 @@ public class CourseServiceImpl implements CourseService {
     private final CourseViewMapper courseViewMapper;
 
     @Override
-    public CourseResponse saveCourse(CourseRequest courseRequest) {
+    public ResponseEntity saveCourse(CourseRequest courseRequest) {
+        boolean exists = courseRepository.existsByCourseName(courseRequest.getCourseName());
+        if (exists) {
+            log.info("Course with name = {} already exists", courseRequest.getCourseName());
+            throw new AlreadyExistsException(
+                    "Course with name = " + courseRequest.getCourseName() + " already exists"
+            );
+        }
         CourseEntity course = courseMapper.create(courseRequest);
         CourseEntity savedCourse = courseRepository.save(course);
 
         log.info("Course with name = {} has successfully saved to database", savedCourse.getCourseName());
 
-        return courseViewMapper.viewCourse(savedCourse);
+        return ResponseEntity.builder()
+                .httpStatus(HttpStatus.CREATED)
+                .message(String.format("Course with name = %s has successfully saved to database", savedCourse.getCourseName()))
+                .build();
     }
 
     @Override
@@ -55,7 +66,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseResponse deleteCourseById(Long courseId) {
+    public ResponseEntity deleteCourseById(Long courseId) {
         boolean exists = courseRepository.existsById(courseId);
 
         if (!exists) {
@@ -64,19 +75,25 @@ public class CourseServiceImpl implements CourseService {
                     String.format("Course with id = %s does not exists, you can't delete it", courseId)
             );
         }
-        CourseEntity course = getByIdMethod(courseId);
         courseRepository.deleteById(courseId);
 
         log.info("Course with id = {} has successfully deleted", courseId);
 
-        return courseViewMapper.viewCourse(course);
+        return ResponseEntity.builder()
+                .httpStatus(HttpStatus.MOVED_PERMANENTLY)
+                .message(String.format("Course with id = %s has successfully deleted", courseId))
+                .build();
     }
 
     @Override
-    public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
+    public ResponseEntity updateCourseById(Long courseId, CourseRequest courseRequest) {
         CourseEntity course = getByIdMethod(courseId);
         courseMapper.update(course, courseRequest);
-        return courseViewMapper.viewCourse(courseRepository.save(course));
+        courseRepository.save(course);
+        return ResponseEntity.builder()
+                .httpStatus(HttpStatus.OK)
+                .message(String.format("Course with id = %d has successfully updated", courseId))
+                .build();
     }
 
     private CourseEntity getByIdMethod(Long courseId) {

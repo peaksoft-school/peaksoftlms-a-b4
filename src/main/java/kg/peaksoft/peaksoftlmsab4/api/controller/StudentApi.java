@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,13 +23,13 @@ public class StudentApi {
 
     @Operation(summary = "Creates new entity: Student", description = "Saves a new student")
     @PostMapping
-    public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest) {
+    public ResponseEntity saveStudent(@RequestBody StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
     @PostMapping("/{groupId}")
-    public StudentResponse saveStudentWithGroup(@PathVariable Long groupId,
-                                                @RequestBody StudentRequest studentRequestDto) {
+    public ResponseEntity saveStudentWithGroup(@PathVariable Long groupId,
+                                               @RequestBody StudentRequest studentRequestDto) {
         return studentService.saveStudentWithGroup(groupId, studentRequestDto);
     }
 
@@ -47,26 +48,26 @@ public class StudentApi {
 
     @Operation(summary = "Updates the student ", description = "Updates the details of an endpoint with ID ")
     @PutMapping("/{studentId}")
-    public StudentResponse updateStudent(@PathVariable Long studentId,
-                                         @RequestBody StudentRequest studentRequest) {
+    public ResponseEntity updateStudent(@PathVariable Long studentId,
+                                        @RequestBody StudentRequest studentRequest) {
         return studentService.updateStudent(studentId, studentRequest);
     }
 
     @Operation(summary = "Deletes the single student", description = "Deletes student by id ")
     @DeleteMapping("{studentId}")
-    public void deleteById(@PathVariable Long studentId) {
-        studentService.deleteStudent(studentId);
+    public ResponseEntity deleteById(@PathVariable Long studentId) {
+        return studentService.deleteStudent(studentId);
     }
 
     @Operation(summary = "Assigns student to a group", description = "Adds a student to a group")
     @PutMapping("/{groupId}/setGroup/{studentId}")
-    public StudentResponse setStudentToGroup(@PathVariable Long groupId, @PathVariable Long studentId) {
+    public ResponseEntity setStudentToGroup(@PathVariable Long groupId, @PathVariable Long studentId) {
         return studentService.setStudentToGroup(groupId, studentId);
     }
 
     @Operation(summary = "Assign student to a course", description = "Adds a student to a course")
     @PutMapping("/{courseId}/setCourse/{studentId}")
-    public StudentResponse setStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {
+    public ResponseEntity setStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {
         return studentService.setStudentToCourse(courseId, studentId);
     }
 }

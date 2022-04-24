@@ -2,21 +2,20 @@ package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
-import org.springframework.stereotype.Service;
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 
 import java.util.List;
 
 
-@Service
 public interface GroupService {
 
-    GroupResponse create(Long id,GroupRequest groupRequest);
+    ResponseEntity create(Long id, GroupRequest groupRequest);
 
-    GroupResponse update(Long id, GroupRequest groupRequest);
+    ResponseEntity update(Long id, GroupRequest groupRequest);
 
     GroupResponse getById(Long id);
 
-    GroupResponse deleteById(Long id);
+    ResponseEntity deleteById(Long id);
 
     List<GroupResponse> getAllGroup();
 }

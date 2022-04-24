@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,7 @@ public class CourseApi {
 
     @Operation(summary = "Creates new entity: Course", description = "Saves a new course")
     @PostMapping
-    public CourseResponse saveNewCourse(@RequestBody CourseRequest courseRequest) {
+    public ResponseEntity saveNewCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 
@@ -41,13 +42,13 @@ public class CourseApi {
 
     @Operation(summary = "Deletes the courses ", description = "Deletes courses by id ")
     @DeleteMapping("/{courseId}")
-    public CourseResponse deleteCourse(@PathVariable Long courseId) {
+    public ResponseEntity deleteCourse(@PathVariable Long courseId) {
         return courseService.deleteCourseById(courseId);
     }
 
     @Operation(summary = "Updates the course ", description = "Updates the details of an endpoint with ID ")
     @PutMapping("/{courseId}")
-    public CourseResponse updateCourse(@PathVariable Long courseId,
+    public ResponseEntity updateCourse(@PathVariable Long courseId,
                                        @RequestBody CourseRequest courseRequest) {
         return courseService.updateCourseById(courseId, courseRequest);
     }

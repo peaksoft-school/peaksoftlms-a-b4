@@ -34,12 +34,12 @@ public class PeaksoftlmsAB4Application {
     @PostConstruct
     public void init() {
         UserEntity user = new UserEntity();
-        user.setFirstName("Nurmuhammad");
-        user.setLastName("Babaev");
+        user.setFirstName("Admin");
+        user.setLastName("Admin");
 
         AuthInfo authInfo = new AuthInfo();
-        authInfo.setEmail("muhammed@gmail.com");
-        authInfo.setPassword(passwordEncoder.encode("123123"));
+        authInfo.setEmail("admin@gmail.com");
+        authInfo.setPassword(passwordEncoder.encode("admin"));
         authInfo.setRole(Role.ADMIN);
         user.setAuthInfo(authInfo);
         repository.save(user);
