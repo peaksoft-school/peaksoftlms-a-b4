@@ -1,10 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import io.swagger.v3.oas.models.links.Link;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LinkEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
