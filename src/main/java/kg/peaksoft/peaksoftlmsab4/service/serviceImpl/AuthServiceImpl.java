@@ -20,7 +20,6 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthResponse authenticate(AuthRequest authRequest) {
         Authentication authentication;
-        System.out.println(authRequest);
 
         authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authRequest.getEmail(),
@@ -28,7 +27,6 @@ public class AuthServiceImpl implements AuthService {
         ));
 
         String generatedToken = jwtUtils.generateToken(authentication);
-        System.out.println("token generated");
 
         return AuthResponse.builder()
                 .email(authRequest.getEmail())
