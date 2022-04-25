@@ -7,6 +7,7 @@ import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -15,8 +16,13 @@ import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +37,8 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final GroupRepository groupRepository;
     private final CourseRepository courseRepository;
+
+
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
@@ -136,6 +144,42 @@ public class StudentServiceImpl implements StudentService {
         log.info("Student with name = {} successfully saved to database", savedStudent.getFirstName());
 
         return studentViewMapper.convertToStudentResponse(savedStudent);
+    }
+
+    @Override
+    public List<StudentResponse> importExcel(MultipartFile files, Long groupId) throws IOException {
+
+        List<StudentEntity> students = new ArrayList<>();
+
+        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+        XSSFSheet wordSheet = workbook.getSheetAt(0);
+
+        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++){
+            if (index>0){
+                StudentEntity student = new StudentEntity();
+                XSSFRow row = wordSheet.getRow(index);
+                student.setFirstName(row.getCell(0).getStringCellValue());
+                student.setLastName(row.getCell(1).getStringCellValue());
+                student.setEmail(row.getCell(2).getStringCellValue());
+                student.setMobilePhone(String.valueOf(row.getCell(3).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+
+                students.add(student);
+            }
+        }
+
+        for (StudentEntity student: students){
+            GroupEntity groupEntity = groupRepository.getById(groupId);
+            student.setGroup(groupEntity);
+            studentRepository.save(student);
+        }
+
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity student : studentRepository.findAll()) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(student));
+        }
+        log.info("Found {} students ", studentResponses.size());
+        return studentResponses;
     }
 
     private void checkEmail(String email) {
