@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
         for (StudentEntity student : studentRepository.findAll()) {
             studentResponses.add(studentViewMapper.convertToStudentResponse(student));
         }
-        log.info("Found {} instructors ", studentResponses.size());
+        log.info("Found {} students ", studentResponses.size());
         return studentResponses;
     }
 
