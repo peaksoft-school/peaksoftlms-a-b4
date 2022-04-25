@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
 import kg.peaksoft.peaksoftlmsab4.service.TestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/tests")
+//@PreAuthorize("hasAuthority('INSTRUCTOR')")
 public class TestApi {
 
     private final TestService service;

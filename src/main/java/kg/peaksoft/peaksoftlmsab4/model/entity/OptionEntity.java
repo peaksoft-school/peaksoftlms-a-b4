@@ -6,24 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "options")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class QuestionEntity {
+public class OptionEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String question;
+    private String option;
+    private boolean answer;
 
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST})
-    private TestEntity testEntity;
+    private QuestionEntity question;
 
-    @OneToMany(mappedBy = "question",cascade = {CascadeType.ALL})
-    private List<OptionEntity> options;
-
+    @OneToOne(mappedBy = "option",cascade = {CascadeType.ALL})
+    private TestResultEntity testResult;
 }

@@ -8,24 +8,23 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "tests")
+@Table(name = "test_results")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class TestEntity {
+public class TestResultEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String testName;
-
-    @OneToMany(mappedBy ="testEntity", cascade = {CascadeType.ALL})
-    private List<QuestionEntity> questions;
-
+    private Long correctAnswer;
+    private Long wrongAnswer;
+    private Long point;
 
 
+    @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST})
+    private OptionEntity option;
 
 }

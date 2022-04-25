@@ -6,11 +6,16 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-
 @Getter
 @Setter
-public class TestRequest {
+public class TestResultRequest {
     @NotBlank
-    @JsonProperty("test_name")
-    private String testName;
+    @JsonProperty("correct_answer")
+    private Long correctAnswer;
+    @NotBlank
+    @JsonProperty("wrong_answer")
+    private Long wrongAnswer;
+    @NotBlank
+    private Long point;
+
 }

@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.TestEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.TestViewMapper;

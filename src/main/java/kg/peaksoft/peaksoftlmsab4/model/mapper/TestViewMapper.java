@@ -1,8 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-
-
-
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +16,7 @@ public class TestViewMapper {
 
     public TestResponse viewTest(TestEntity test) {
         if (test == null) {
-            log.error("The group db is null!");
+            log.error("The test db is null!");
             return null;
         }
        TestResponse testResponse=new TestResponse();
@@ -27,6 +24,7 @@ public class TestViewMapper {
             testResponse.setId(test.getId());
         }
         testResponse.setTestName(test.getTestName());
+        testResponse.setQuestion(test.getQuestions());
         return testResponse;
 
     }
