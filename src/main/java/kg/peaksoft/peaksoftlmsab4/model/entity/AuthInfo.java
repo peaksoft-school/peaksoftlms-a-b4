@@ -1,7 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,8 @@ import java.util.Collections;
 @Table(name = "auth_info")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthInfo implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,25 +30,6 @@ public class AuthInfo implements UserDetails {
     private boolean isAccountNonLocked = true;
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
-
-    public AuthInfo(String email,
-                    String password,
-                    Role role, boolean isAccountNonExpired,
-                    boolean isAccountNonLocked,
-                    boolean isCredentialsNonExpired,
-                    boolean isEnabled) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
-    }
-
-    public AuthInfo() {
-
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
