@@ -36,6 +36,6 @@ public class LessonEntity {
     @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
     private PresentationEntity presentationEntity;
 
-    @ManyToOne(cascade = {MERGE, REFRESH, DETACH,PERSIST})
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH,PERSIST},fetch = FetchType.LAZY)
     private CourseEntity courseEntity;
 }

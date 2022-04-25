@@ -7,6 +7,7 @@ import kg.peaksoft.peaksoftlmsab4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 public class PeaksoftlmsAB4Application {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String greetingPage() {
@@ -37,7 +39,7 @@ public class PeaksoftlmsAB4Application {
 
         AuthInfo authInfo = new AuthInfo();
         authInfo.setEmail("admin@gmail.com");
-        authInfo.setPassword("admin");
+        authInfo.setPassword(passwordEncoder.encode("admin"));
         authInfo.setRole(Role.ADMIN);
         user.setAuthInfo(authInfo);
         repository.save(user);
