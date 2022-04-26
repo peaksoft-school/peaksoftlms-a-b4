@@ -1,38 +1,41 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
+import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-
-@DataJpaTest
+@SpringBootTest
+@RequiredArgsConstructor
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CourseServiceImplTest {
 
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private CourseService courseService;
+
     @Test
     @Order(1)
-    @Rollback(value = false)
     public void saveCourseTest() {
-        CourseEntity courseEntity = CourseEntity.builder()
+        CourseRequest course = CourseRequest.builder()
                 .courseName("Peaksoft")
                 .description("description")
                 .image("image")
                 .dateOfStart(LocalDate.now())
                 .build();
-        courseRepository.save(courseEntity);
+         courseService.saveCourse(course);
+         CourseEntity courseEntity = courseRepository.findById(1L)
+                .orElseThrow(() -> new NotFoundException("not found"));
         assertThat(courseEntity.getId()).isGreaterThan(0);
     }
 

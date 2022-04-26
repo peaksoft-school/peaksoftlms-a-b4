@@ -5,9 +5,6 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-
-@Service
 public interface GroupService {
 
     GroupResponse create(Long id,GroupRequest groupRequest);
