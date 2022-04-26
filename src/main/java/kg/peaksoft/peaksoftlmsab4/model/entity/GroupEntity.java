@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class GroupEntity {
     @Id
     @SequenceGenerator(
