@@ -5,11 +5,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,13 +76,20 @@ public class StudentApi {
         return studentService.setStudentToCourse(courseId, studentId);
     }
 
-    @GetMapping("/getPage/{page}/{size}")
+    @GetMapping("/getPage/{page}/setSize/{size}")
     public List<StudentResponse> findAllWithPage(@PathVariable int page,
                                                @PathVariable int size) {
-        final int DEFAULT_SIZE=5;
-        size=DEFAULT_SIZE;
-        Pageable pageable = PageRequest.of(page, size);
+        page = page - 1;
+        return studentService.findAllStudentWithPage(PageRequest.of(page, size,Sort.by("firstName")));
+    }
 
-        return studentService.findAllStudentWithPage(pageable);
+    @GetMapping("/firstname/{name}")
+    public List<StudentEntity> finByStudentName(@PathVariable String name){
+        return studentService.findByStudentName(name);
+    }
+
+    @GetMapping("/format/{studyFormat}")
+    public List<StudentResponse>findByStudyFormat(@PathVariable StudyFormat studyFormat){
+        return studentService.findStudentByStudyFormat(studyFormat);
     }
 }

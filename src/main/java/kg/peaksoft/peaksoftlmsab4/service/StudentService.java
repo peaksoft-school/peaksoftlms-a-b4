@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.service;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
-import org.springframework.data.domain.Page;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -27,4 +27,11 @@ public interface StudentService {
     StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
 
     List<StudentResponse> findAllStudentWithPage(Pageable pageable);
+
+    List<StudentEntity> findByStudentName(String name);
+
+
+
+
+    List<StudentResponse> findStudentByStudyFormat(StudyFormat studyFormat);
 }

@@ -30,4 +30,12 @@ public class StudentViewMapper {
         }
         return  studentResponses;
     }
+
+    public List<StudentResponse> viewStudents(List<StudentEntity>students){
+        List<StudentResponse>studentResponses=new ArrayList<>();
+        for (StudentEntity s:students) {
+            studentResponses.add(convertToStudentResponse(s));
+        }
+        return  studentResponses;
+    }
 }

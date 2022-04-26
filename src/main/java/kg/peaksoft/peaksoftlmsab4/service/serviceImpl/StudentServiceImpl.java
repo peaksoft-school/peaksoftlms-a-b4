@@ -7,6 +7,7 @@ import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -15,15 +16,11 @@ import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RequiredArgsConstructor
 @Service
@@ -94,11 +91,11 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse setStudentToGroup(Long groupId, Long studentId) {
         GroupEntity group = groupRepository.findById(groupId)
                 .orElseThrow(() -> {
-            log.error("Group with id = {} does not exists", groupId);
-            throw new NotFoundException(
-                    String.format("Group with id = %s does not exists", groupId)
-            );
-        });
+                    log.error("Group with id = {} does not exists", groupId);
+                    throw new NotFoundException(
+                            String.format("Group with id = %s does not exists", groupId)
+                    );
+                });
         StudentEntity student = getByIdMethod(studentId);
         student.setGroup(group);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
@@ -146,6 +143,20 @@ public class StudentServiceImpl implements StudentService {
 
         return studentViewMapper.viewStudents(studentRepository.findAll(pageable));
     }
+
+    @Override
+    public List<StudentEntity> findByStudentName(String name) {
+        return studentRepository.findByStudentName(name);
+    }
+
+
+
+
+    @Override
+    public List<StudentResponse> findStudentByStudyFormat(StudyFormat studyFormat) {
+        return studentViewMapper.viewStudents(studentRepository.findStudentByStudyFormat(studyFormat));
+    }
+
 
     private void checkEmail(String email) {
         boolean exists = studentRepository.existsByEmail(email);
