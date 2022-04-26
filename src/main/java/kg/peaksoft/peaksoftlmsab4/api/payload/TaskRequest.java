@@ -12,11 +12,11 @@ import javax.validation.constraints.NotBlank;
 public class TaskRequest {
 
     @JsonProperty("task_name")
-    String taskName;
-    String text;
+    private String taskName;
+    private String text;
     @JsonProperty("file_format")
-    String fileFormat;
-    String link;
-    String image;
-    String code;
+    private String fileFormat;
+    private String link;
+    private String image;
+    private String code;
 }

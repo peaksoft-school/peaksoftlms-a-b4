@@ -23,8 +23,8 @@ public class TaskApi {
 
     @Operation(summary = "Creates new entity: Task",
             description = "This method saves new task. Only instructors can add new task to lesson")
-    @PostMapping()
-    public TaskResponse saveTask(@RequestBody TaskRequest taskRequest, @PathVariable Long id){
+    @PostMapping("{id}")
+    public TaskResponse saveTask(@RequestBody TaskRequest taskRequest,@PathVariable Long id){
         return taskService.saveTask(id,taskRequest);
     }
 

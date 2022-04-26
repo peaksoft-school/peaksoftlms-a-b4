@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.CascadeType.*;
 
 @Builder
@@ -27,15 +29,18 @@ public class LessonEntity {
     Long id;
     private String lessonName;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER)
     private LinkEntity linkEntity;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER)
     private VideoEntity videoEntity;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER)
     private PresentationEntity presentationEntity;
 
-    @ManyToOne(cascade = {MERGE, REFRESH, DETACH},fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH}, fetch = FetchType.LAZY)
     private CourseEntity courseEntity;
+
+    @OneToMany(cascade = ALL,mappedBy = "lesson")
+    private List<TaskEntity> task;
 }

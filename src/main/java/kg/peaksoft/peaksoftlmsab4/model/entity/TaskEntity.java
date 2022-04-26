@@ -1,9 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class TaskEntity {
 
     @Id
@@ -26,10 +24,16 @@ public class TaskEntity {
             generator = "tasks_sequence"
     )
     Long id;
-    String taskName;
-    String text;
-    String fileFormat;
-    String link;
-    String image;
-    String code;
+    @Column(name = "task_name")
+    private String taskName;
+    private String text;
+    @Column(name = "file_format")
+    private String fileFormat;
+    private String link;
+    private String image;
+    private String code;
+
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "lesson_id")
+    private LessonEntity lesson;
 }
