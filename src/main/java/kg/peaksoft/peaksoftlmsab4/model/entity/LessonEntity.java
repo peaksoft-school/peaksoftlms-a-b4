@@ -36,6 +36,9 @@ public class LessonEntity {
     @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
     private PresentationEntity presentationEntity;
 
-    @ManyToOne(cascade = {MERGE, REFRESH, DETACH,PERSIST},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH}, fetch = FetchType.LAZY)
     private CourseEntity courseEntity;
+
+    @OneToMany(cascade = ALL,mappedBy = "lesson")
+    private List<TaskEntity> task;
 }
