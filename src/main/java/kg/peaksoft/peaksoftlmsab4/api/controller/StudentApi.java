@@ -1,5 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
@@ -13,38 +15,58 @@ import java.util.List;
 @RequestMapping("api/students")
 @AllArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
+@Tag(name = "Student", description = "The Student CRUD operations")
 public class StudentApi {
 
     private final StudentService studentService;
 
+    @Operation(summary = "Creates new entity: Student", description = "Saves a new student")
     @PostMapping
     public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
+    @PostMapping("/{groupId}")
+    public StudentResponse saveStudentWithGroup(@PathVariable Long groupId,
+                                                @RequestBody StudentRequest studentRequestDto) {
+        return studentService.saveStudentWithGroup(groupId, studentRequestDto);
+    }
+
+    @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
     @GetMapping
     public List<StudentResponse> getAllStudents() {
         return studentService.getAllStudent();
     }
 
-    @GetMapping("{id}")
-    public StudentResponse getStudentById(@PathVariable Long id) {
-        return studentService.getStudentById(id);
+    @Operation(summary = "Gets a single entity by identifier",
+            description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("/{studentId}")
+    public StudentResponse getStudentById(@PathVariable Long studentId) {
+        return studentService.getStudentById(studentId);
     }
 
-    @PutMapping("{id}")
-    public StudentResponse updateStudent(@PathVariable Long id,
+    @Operation(summary = "Updates the student ", description = "Updates the details of an endpoint with ID ")
+    @PutMapping("/{studentId}")
+    public StudentResponse updateStudent(@PathVariable Long studentId,
                                          @RequestBody StudentRequest studentRequest) {
-        return studentService.updateStudent(id, studentRequest);
+        return studentService.updateStudent(studentId, studentRequest);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Long id) {
-        studentService.deleteStudent(id);
+    @Operation(summary = "Deletes the single student", description = "Deletes student by id ")
+    @DeleteMapping("{studentId}")
+    public void deleteById(@PathVariable Long studentId) {
+        studentService.deleteStudent(studentId);
     }
 
-    @PutMapping("/{groupId}/set/{studentId}")
+    @Operation(summary = "Assigns student to a group", description = "Adds a student to a group")
+    @PutMapping("/{groupId}/setGroup/{studentId}")
     public StudentResponse setStudentToGroup(@PathVariable Long groupId, @PathVariable Long studentId) {
         return studentService.setStudentToGroup(groupId, studentId);
+    }
+
+    @Operation(summary = "Assign student to a course", description = "Adds a student to a course")
+    @PutMapping("/{courseId}/setCourse/{studentId}")
+    public StudentResponse setStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {
+        return studentService.setStudentToCourse(courseId, studentId);
     }
 }
