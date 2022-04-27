@@ -23,7 +23,7 @@ public class PeaksoftlmsAB4Application {
 
     @GetMapping("/")
     public String greetingPage() {
-        return "<h1>Welcome to Peaksoftlms-A application!!!<h1/>";
+        return "<h1>Welcome to Peaksoftlms-A application !!!<h1/>";
     }
 
     public static void main(String[] args) {
@@ -35,7 +35,7 @@ public class PeaksoftlmsAB4Application {
     public void init() {
         UserEntity user = new UserEntity();
         user.setFirstName("Admin");
-        user.setLastName("Admin");
+        user.setLastName("Adminov");
 
         AuthInfo authInfo = new AuthInfo();
         authInfo.setEmail("admin@gmail.com");

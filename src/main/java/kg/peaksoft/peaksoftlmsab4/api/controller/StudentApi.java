@@ -8,7 +8,9 @@ import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,6 +26,11 @@ public class StudentApi {
     @PostMapping
     public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
+    }
+
+    @PostMapping("/import/{groupId}")
+    public List<StudentResponse> importExcelFile(@RequestParam("file") MultipartFile files, @PathVariable Long groupId) throws IOException {
+        return studentService.importExcel(files,groupId);
     }
 
     @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
