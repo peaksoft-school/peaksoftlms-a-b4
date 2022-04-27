@@ -2,20 +2,24 @@ package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
+import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 
 import java.util.List;
 
 public interface CourseService {
-    ResponseEntity saveCourse(CourseRequest courseRequest);
+    CourseResponse saveCourse(CourseRequest courseRequest);
 
     List<CourseResponse> findAllCourse();
 
     CourseResponse getById(Long courseId);
 
-    ResponseEntity deleteCourseById(Long courseId);
+    CourseResponse deleteCourseById(Long courseId);
 
-    ResponseEntity updateCourseById(Long courseId, CourseRequest courseRequest);
+    CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest);
 
 
+    List<StudentResponse> getAllStudentsByCourseId(Long id);
+
+    List<InstructorResponse> getAllTeacherByCourseId(Long id);
 }

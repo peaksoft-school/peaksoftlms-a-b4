@@ -2,18 +2,22 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,9 +30,11 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseEditMapper courseMapper;
     private final CourseViewMapper courseViewMapper;
+    private final StudentViewMapper studentViewMapper;
+    private final InstructorViewMapper instructorViewMapper;
 
     @Override
-    public ResponseEntity saveCourse(CourseRequest courseRequest) {
+    public CourseResponse saveCourse(CourseRequest courseRequest) {
         boolean exists = courseRepository.existsByCourseName(courseRequest.getCourseName());
         if (exists) {
             log.info("Course with name = {} already exists", courseRequest.getCourseName());
@@ -41,10 +47,7 @@ public class CourseServiceImpl implements CourseService {
 
         log.info("Course with name = {} has successfully saved to database", savedCourse.getCourseName());
 
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.CREATED)
-                .message(String.format("Course with name = %s has successfully saved to database", savedCourse.getCourseName()))
-                .build();
+        return courseViewMapper.viewCourse(savedCourse);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResponseEntity deleteCourseById(Long courseId) {
+    public CourseResponse deleteCourseById(Long courseId) {
         boolean exists = courseRepository.existsById(courseId);
 
         if (!exists) {
@@ -75,25 +78,40 @@ public class CourseServiceImpl implements CourseService {
                     String.format("Course with id = %s does not exists, you can't delete it", courseId)
             );
         }
+        CourseEntity deletedCourse = getByIdMethod(courseId);
         courseRepository.deleteById(courseId);
 
         log.info("Course with id = {} has successfully deleted", courseId);
 
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.MOVED_PERMANENTLY)
-                .message(String.format("Course with id = %s has successfully deleted", courseId))
-                .build();
+        return courseViewMapper.viewCourse(deletedCourse);
     }
 
     @Override
-    public ResponseEntity updateCourseById(Long courseId, CourseRequest courseRequest) {
+    public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
         CourseEntity course = getByIdMethod(courseId);
         courseMapper.update(course, courseRequest);
         courseRepository.save(course);
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.OK)
-                .message(String.format("Course with id = %d has successfully updated", courseId))
-                .build();
+        return courseViewMapper.viewCourse(course);
+    }
+
+    @Override
+    public List<StudentResponse> getAllStudentsByCourseId(Long id) {
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity s : getByIdMethod(id).getStudents()) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(s));
+        }
+        log.info("Successfully getAll Students by Course Id");
+        return studentResponses;
+    }
+
+    @Override
+    public List<InstructorResponse> getAllTeacherByCourseId(Long id) {
+        List<InstructorResponse> instructorResponses = new ArrayList<>();
+        for (InstructorEntity i : getByIdMethod(id).getInstructors()) {
+            instructorResponses.add(instructorViewMapper.convertToInstructorResponse(i));
+        }
+        log.info("successfully getAll teacher by Course Id");
+        return instructorResponses;
     }
 
     private CourseEntity getByIdMethod(Long courseId) {

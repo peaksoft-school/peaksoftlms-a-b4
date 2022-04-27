@@ -7,7 +7,6 @@ import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -15,9 +14,9 @@ import kg.peaksoft.peaksoftlmsab4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -31,32 +30,12 @@ public class GroupServiceImpl implements GroupService {
     private final CourseRepository courseRepository;
 
     @Override
-    public ResponseEntity create(Long id, GroupRequest groupRequest) {
-        boolean exists = repository.existsByGroupName(groupRequest.getGroupName());
-        if (exists) {
-            log.warn("Group with name = {} already exists", groupRequest.getGroupName());
-            throw new AlreadyExistsException(
-                    "Course with name = " + groupRequest.getGroupName() + " already exists"
-            );
-        }
-        CourseEntity course = courseRepository.getById(id);
-        GroupEntity savedGroup = repository.save(editMapper.create(course, groupRequest));
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.CREATED)
-                .message(String.format("Group with name = %s has successfully saved to database", savedGroup.getGroupName()))
-                .build();
-    }
-
-    @Override
-    public ResponseEntity update(Long groupId, GroupRequest groupRequest) {
+    public GroupResponse update(Long groupId, GroupRequest groupRequest) {
         GroupEntity group = getByMethod(groupId);
 
         editMapper.update(group, groupRequest);
         repository.save(group);
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.OK)
-                .message(String.format("Group with id = %d has successfully updated", groupId))
-                .build();
+        return viewMapper.viewGroup(group);
     }
 
     @Override
@@ -65,7 +44,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public ResponseEntity deleteById(Long id) {
+    public GroupResponse deleteById(Long id) {
         boolean exists = repository.existsById(id);
 
         if (!exists) {
@@ -74,19 +53,47 @@ public class GroupServiceImpl implements GroupService {
                     String.format("Group with id = %d does not exists, you can't delete it", id)
             );
         }
+        GroupEntity groupEntity = getByMethod(id);
         repository.deleteById(id);
 
         log.info("Group with id = {} has successfully deleted", id);
 
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.MOVED_PERMANENTLY)
-                .message(String.format("Group with id = %d has successfully deleted", id))
-                .build();
+        return viewMapper.viewGroup(groupEntity);
     }
 
     @Override
     public List<GroupResponse> getAllGroup() {
         return viewMapper.viewGroups(repository.findAll());
+    }
+
+    @Override
+    public GroupResponse saveGroup(GroupRequest groupRequest) {
+        boolean exists = repository.existsByGroupName(groupRequest.getGroupName());
+        if (exists) {
+            log.warn("Group with name = {} already exists", groupRequest.getGroupName());
+            throw new AlreadyExistsException(
+                    "Course with name = " + groupRequest.getGroupName() + " already exists"
+            );
+        }
+        GroupEntity group = editMapper.convert(groupRequest);
+        GroupEntity savedGroup = repository.save(group);
+        return viewMapper.viewGroup(savedGroup);
+    }
+
+    @Override
+    @Transactional
+    public GroupResponse setGroupToCourse(Long groupId, Long courseId) {
+        CourseEntity course = courseRepository.findById(courseId)
+                .orElseThrow(() -> {
+                    log.error("Course with id = {} does not exists", courseId);
+                    throw new NotFoundException(
+                            String.format("Course with id = %s does not exists", courseId)
+                    );
+                });
+        GroupEntity group = getByMethod(groupId);
+        group.setCourse(course);
+        log.info("Group with id = {} has successfully added to course with id = {}", groupId, courseId);
+        return viewMapper.viewGroup(group);
     }
 
     private GroupEntity getByMethod(Long groupId) {

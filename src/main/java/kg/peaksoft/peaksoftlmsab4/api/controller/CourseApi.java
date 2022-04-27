@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
+import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ public class CourseApi {
 
     @Operation(summary = "Creates new entity: Course", description = "Saves a new course")
     @PostMapping
-    public ResponseEntity saveNewCourse(@RequestBody CourseRequest courseRequest) {
+    public CourseResponse saveNewCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 
@@ -35,21 +36,37 @@ public class CourseApi {
 
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/{courseId}")
-    public CourseResponse findCourseById(@PathVariable Long courseId) {
-        return courseService.getById(courseId);
+    @GetMapping("/{id}")
+    public CourseResponse findCourseById(@PathVariable Long id) {
+        return courseService.getById(id);
     }
 
     @Operation(summary = "Deletes the courses ", description = "Deletes courses by id ")
-    @DeleteMapping("/{courseId}")
-    public ResponseEntity deleteCourse(@PathVariable Long courseId) {
-        return courseService.deleteCourseById(courseId);
+    @DeleteMapping("/{id}")
+    public CourseResponse deleteCourse(@PathVariable Long id) {
+        return courseService.deleteCourseById(id);
     }
 
     @Operation(summary = "Updates the course ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/{courseId}")
-    public ResponseEntity updateCourse(@PathVariable Long courseId,
+    @PutMapping("/{id}")
+    public CourseResponse updateCourse(@PathVariable Long id,
                                        @RequestBody CourseRequest courseRequest) {
-        return courseService.updateCourseById(courseId, courseRequest);
+        return courseService.updateCourseById(id, courseRequest);
+    }
+
+    @Operation(summary = "Get students by course id",
+            description = "Get all students in this course")
+    @GetMapping("/students/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
+        return courseService.getAllStudentsByCourseId(id);
+    }
+
+    @Operation(summary = "Get teachers by course id",
+            description = "Get all teachers in this course")
+    @GetMapping("/teachers/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    public List<InstructorResponse> getAllTeacherByCourseId(@PathVariable Long id) {
+        return courseService.getAllTeacherByCourseId(id);
     }
 }

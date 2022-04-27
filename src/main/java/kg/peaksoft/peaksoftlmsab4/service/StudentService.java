@@ -8,19 +8,19 @@ import java.util.List;
 
 public interface StudentService {
 
-    ResponseEntity saveStudent(StudentRequest studentRequest);
+    StudentResponse saveStudent(StudentRequest studentRequest);
 
     List<StudentResponse> getAllStudent();
 
     StudentResponse getStudentById(Long studentId);
 
-    ResponseEntity updateStudent(Long studentId, StudentRequest studentRequest);
+    StudentResponse updateStudent(Long studentId, StudentRequest studentRequest);
 
-    ResponseEntity deleteStudent(Long studentId);
+    StudentResponse deleteStudent(Long studentId);
 
-    ResponseEntity setStudentToGroup(Long groupId, Long studentId);
+    StudentResponse setStudentToGroup(Long groupId, Long studentId);
 
-    ResponseEntity setStudentToCourse(Long courseId, Long studentId);
+    StudentResponse setStudentToCourse(Long courseId, Long studentId);
 
-    ResponseEntity saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
+    StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
 }

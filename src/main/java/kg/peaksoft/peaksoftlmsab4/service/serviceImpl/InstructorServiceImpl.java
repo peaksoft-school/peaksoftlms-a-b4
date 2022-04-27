@@ -1,12 +1,13 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -14,7 +15,6 @@ import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.InstructorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +32,10 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorViewMapper instructorViewMapper;
     private final PasswordEncoder passwordEncoder;
     private final CourseRepository courseRepository;
+    private final CourseViewMapper courseViewMapper;
 
     @Override
-    public ResponseEntity saveInstructor(InstructorRequest instructorRequest) {
+    public InstructorResponse saveInstructor(InstructorRequest instructorRequest) {
         String email = instructorRequest.getEmail();
         checkEmail(email);
 
@@ -43,10 +44,7 @@ public class InstructorServiceImpl implements InstructorService {
         InstructorEntity instructor = instructorRepository.save(instructorEditMapper
                 .convertToInstructor(instructorRequest));
         log.info(" Instructor with name : {} has successfully saved to database", instructor.getFirstName());
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.CREATED)
-                .message(String.format(" Instructor with name : %s has successfully saved to database", instructor.getFirstName()))
-                .build();
+        return instructorViewMapper.convertToInstructorResponse(instructor);
     }
 
     @Override
@@ -67,19 +65,16 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Transactional
     @Override
-    public ResponseEntity updateInstructor(Long id, InstructorRequest instructorRequest) {
+    public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
         InstructorEntity instructor = getByIdMethod(id);
         instructorEditMapper.updateInstructor(instructor, instructorRequest);
         InstructorEntity savedInstructor = instructorRepository.save(instructor);
         log.info(" Instructor with name : {} has successfully updated", savedInstructor.getFirstName());
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.OK)
-                .message(String.format(" Instructor with name : %s has successfully updated", savedInstructor.getFirstName()))
-                .build();
+        return instructorViewMapper.convertToInstructorResponse(savedInstructor);
     }
 
     @Override
-    public ResponseEntity deleteInstructor(Long id) {
+    public InstructorResponse deleteInstructor(Long id) {
         boolean existById = instructorRepository.existsById(id);
         if (!existById) {
             log.error("Instructor with id = {} does not exists, you can not delete it", id);
@@ -88,25 +83,45 @@ public class InstructorServiceImpl implements InstructorService {
             );
         }
         instructorRepository.deleteById(id);
+        InstructorEntity instructorEntity = getByIdMethod(id);
         log.info("Instructor with id = {} has successfully deleted", id);
-
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.MOVED_PERMANENTLY)
-                .message(String.format("Instructor with id = %d has successfully deleted", id))
-                .build();
+        return instructorViewMapper.convertToInstructorResponse(instructorEntity);
     }
 
     @Override
-    public ResponseEntity addInstructorToCourse(Long courseId, Long instructorId) {
+    public InstructorResponse addInstructorToCourse(Long courseId, Long instructorId) {
         CourseEntity course = courseRepository.findById(courseId).orElseThrow(() ->
                 new NotFoundException(String.format("Course with id = %s does not exists", courseId)));
         InstructorEntity instructor = getByIdMethod(instructorId);
         instructor.setCourse(course);
         log.info("Instructor with id = {} has successfully added to course", courseId);
-        return ResponseEntity.builder()
-                .httpStatus(HttpStatus.OK)
-                .message(String.format("Instructor with id = %d has successfully added to course", courseId))
-                .build();
+        return instructorViewMapper.convertToInstructorResponse(instructorRepository.save(instructor));
+    }
+
+    @Override
+    public CourseResponse assignInstructorsToCourse(Long courseId, List<Long> instructorId) {
+        CourseEntity course = courseRepository.findById(courseId)
+                .orElseThrow(() -> {
+                    log.error("Course with id = {} does not exists", courseId);
+                    throw new NotFoundException(
+                            String.format("Course with id = %s does not exists", courseId)
+                    );
+                });
+        for (Long id : instructorId) {
+            course.setInstructor(getByIdMethod(id));
+        }
+        log.info("Successfully assign instructor with id = {} to course", instructorId);
+        return courseViewMapper.viewCourse(courseRepository.save(course));
+    }
+
+    @Override
+    public List<CourseResponse> getInstructorsCourses(String email) {
+        InstructorEntity instructor = instructorRepository.findInstructorByEmail(email)
+                .orElseThrow(() -> new NotFoundException(
+                        "Vendor with email = " + email + " does not exists!"
+                ));
+
+        return courseViewMapper.viewCourses(instructor.getCourses());
     }
 
     private void checkEmail(String email) {

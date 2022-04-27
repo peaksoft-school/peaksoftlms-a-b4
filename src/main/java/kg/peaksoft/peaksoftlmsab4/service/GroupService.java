@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface GroupService {
 
-    ResponseEntity create(Long id, GroupRequest groupRequest);
-
-    ResponseEntity update(Long id, GroupRequest groupRequest);
+    GroupResponse update(Long id, GroupRequest groupRequest);
 
     GroupResponse getById(Long id);
 
-    ResponseEntity deleteById(Long id);
+    GroupResponse deleteById(Long id);
 
     List<GroupResponse> getAllGroup();
+
+    GroupResponse saveGroup(GroupRequest groupRequest);
+
+    GroupResponse setGroupToCourse(Long groupId, Long courseId);
 }
