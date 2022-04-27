@@ -30,7 +30,7 @@ public class StudentApi {
 
     @PostMapping("/import/{groupId}")
     public List<StudentResponse> importExcelFile(@RequestParam("file") MultipartFile files, @PathVariable Long groupId) throws IOException {
-        return studentService.importExcel(files,groupId);
+        return studentService.importExcel(files, groupId);
     }
 
     @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
