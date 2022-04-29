@@ -17,6 +17,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
+
     public AuthResponse authenticate(AuthRequest authRequest) {
         Authentication authentication;
 

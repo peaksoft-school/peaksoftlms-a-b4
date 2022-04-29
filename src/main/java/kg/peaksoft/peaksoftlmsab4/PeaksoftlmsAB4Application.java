@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.UserEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 
 @RestController
 @SpringBootApplication
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PeaksoftlmsAB4Application {
 
     private final UserRepository repository;
@@ -42,6 +42,8 @@ public class PeaksoftlmsAB4Application {
         authInfo.setPassword(passwordEncoder.encode("admin"));
         authInfo.setRole(Role.ADMIN);
         user.setAuthInfo(authInfo);
+        System.out.println("------------------------");
         repository.save(user);
+        System.out.println(user);
     }
 }
