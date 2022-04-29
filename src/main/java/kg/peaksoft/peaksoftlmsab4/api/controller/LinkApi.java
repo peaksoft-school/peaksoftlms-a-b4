@@ -2,11 +2,8 @@ package kg.peaksoft.peaksoftlmsab4.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
-import kg.peaksoft.peaksoftlmsab4.service.LessonService;
 import kg.peaksoft.peaksoftlmsab4.service.LinkService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,14 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/links")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Link", description = "The Link CRUD operations")
 public class LinkApi {
 
     private final LinkService linkService;
 
-    @PostMapping("{lessonId}")
+    @PostMapping("/{lessonId}")
     @Operation(summary = "Creates new entity: Link", description = "Saves a new link")
     public LinkResponse addLink(@RequestBody LinkRequest linkRequest, @PathVariable Long lessonId) {
         return linkService.create(linkRequest, lessonId);
@@ -35,23 +32,23 @@ public class LinkApi {
         return linkService.getAll();
     }
 
-    @GetMapping("{linkId}")
+    @GetMapping("/{id}")
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    public LinkResponse getLinkById(@PathVariable Long linkId) {
-        return linkService.getById(linkId);
+    public LinkResponse getLinkById(@PathVariable Long id) {
+        return linkService.getById(id);
     }
 
-    @PutMapping("{linkId}")
+    @PutMapping("/{id}")
     @Operation(summary = "Updates the link ", description = "Updates the details of an endpoint with ID ")
-    public LinkResponse updateLink(@PathVariable Long linkId,
-                                       @RequestBody LinkRequest linkRequest) {
-        return linkService.update(linkId, linkRequest);
+    public LinkResponse updateLink(@PathVariable Long id,
+                                   @RequestBody LinkRequest linkRequest) {
+        return linkService.update(id, linkRequest);
     }
 
-    @DeleteMapping("{linkId}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the link ", description = "Deletes link by id ")
-    public void deleteById(@PathVariable Long linkId) {
-        linkService.deleteById(linkId);
+    public void deleteById(@PathVariable Long id) {
+        linkService.deleteById(id);
     }
 }

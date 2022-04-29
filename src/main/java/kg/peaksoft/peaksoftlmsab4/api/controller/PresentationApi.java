@@ -2,11 +2,8 @@ package kg.peaksoft.peaksoftlmsab4.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationResponse;
-import kg.peaksoft.peaksoftlmsab4.service.LessonService;
 import kg.peaksoft.peaksoftlmsab4.service.PresentationService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,14 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/presentations")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Presentation", description = "The Presentation CRUD operations")
 public class PresentationApi {
 
     private final PresentationService presentationService;
 
-    @PostMapping("{lessonId}")
+    @PostMapping("/{lessonId}")
     @Operation(summary = "Creates new entity: Presentation", description = "Saves a new presentation")
     public PresentationResponse addPresentation(
             @RequestBody PresentationRequest presentationRequest
@@ -37,24 +34,24 @@ public class PresentationApi {
         return presentationService.getAll();
     }
 
-    @GetMapping("{presentationId}")
+    @GetMapping("/{id}")
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    public PresentationResponse getPresentationsById(@PathVariable Long presentationId) {
-        return presentationService.getById(presentationId);
+    public PresentationResponse getPresentationsById(@PathVariable Long id) {
+        return presentationService.getById(id);
     }
 
 
-    @PutMapping("{presentationId}")
+    @PutMapping("/{id}")
     @Operation(summary = "Updates the presentation ", description = "Updates the details of an endpoint with ID ")
-    public PresentationResponse updatePresentation(@PathVariable Long presentationId,
-                                       @RequestBody PresentationRequest presentationRequest) {
-        return presentationService.update(presentationId, presentationRequest);
+    public PresentationResponse updatePresentation(@PathVariable Long id,
+                                                   @RequestBody PresentationRequest presentationRequest) {
+        return presentationService.update(id, presentationRequest);
     }
 
-    @DeleteMapping("{presentationId}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the presentation ", description = "Deletes presentation by id ")
-    public void deleteById(@PathVariable Long presentationId) {
-        presentationService.deleteById(presentationId);
+    public void deleteById(@PathVariable Long id) {
+        presentationService.deleteById(id);
     }
 }
