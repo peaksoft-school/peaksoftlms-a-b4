@@ -4,6 +4,9 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CourseViewMapper {
     public CourseResponse viewCourse(CourseEntity course) {
@@ -22,5 +25,13 @@ public class CourseViewMapper {
         courseResponse.setImage(course.getImage());
 
         return courseResponse;
+    }
+
+    public List<CourseResponse> viewCourses(List<CourseEntity> courses) {
+        List<CourseResponse> courseResponses = new ArrayList<>();
+        for (CourseEntity c : courses) {
+            courseResponses.add(viewCourse(c));
+        }
+        return courseResponses;
     }
 }

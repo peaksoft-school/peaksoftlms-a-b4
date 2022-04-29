@@ -5,10 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface InstructorRepository extends JpaRepository<InstructorEntity,Long> {
 
     @Query("select case when count(a)>0 then true else false end" +
             " from AuthInfo a where a.email =?1")
     boolean existsByEmail(String email);
+
+    @Query("select i from InstructorEntity i where i.authInfo.email = ?1")
+    Optional<InstructorEntity> findInstructorByEmail(String email);
 }

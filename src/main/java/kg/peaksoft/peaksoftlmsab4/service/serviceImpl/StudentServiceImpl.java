@@ -26,8 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -46,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
         checkEmail(email);
         StudentEntity student = studentRepository.save(studentEditMapper
                 .convertToStudent(studentRequest));
-        log.info(" Student with name : {} has successfully saved to database", student.getFirstName());
+        log.info("Student with name : {} has successfully saved to database", student.getFirstName());
         return studentViewMapper.convertToStudentResponse(student);
     }
 
@@ -66,25 +64,17 @@ public class StudentServiceImpl implements StudentService {
         return studentViewMapper.convertToStudentResponse(student);
     }
 
-    private StudentEntity getByIdMethod(Long studentId) {
-        return studentRepository.findById(studentId).
-                orElseThrow(() -> {
-                    log.error("Student with id = {} does not exists", studentId);
-                    throw new NotFoundException(
-                            String.format("Student with id = %s does not exists", studentId)
-                    );
-                });
-    }
-
     @Override
     public StudentResponse updateStudent(Long studentId, StudentRequest studentRequest) {
         StudentEntity student = getByIdMethod(studentId);
         studentEditMapper.updateStudent(student, studentRequest);
-        return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
+        StudentEntity savedStudent = studentRepository.save(student);
+        log.info("Student with name : {} has successfully updated", savedStudent.getFirstName());
+        return studentViewMapper.convertToStudentResponse(savedStudent);
     }
 
     @Override
-    public void deleteStudent(Long studentId) {
+    public StudentResponse deleteStudent(Long studentId) {
         boolean existById = studentRepository.existsById(studentId);
         if (!existById) {
             log.error("Student with id = {} does not exists, you can not delete it", studentId);
@@ -92,20 +82,25 @@ public class StudentServiceImpl implements StudentService {
                     String.format("Student with id = %s does not exists, you can not delete it", studentId)
             );
         }
+        StudentEntity studentEntity = getByIdMethod(studentId);
         studentRepository.deleteById(studentId);
+        log.info("Student with id = {} has successfully deleted", studentId);
+
+        return studentViewMapper.convertToStudentResponse(studentEntity);
     }
 
     @Override
     public StudentResponse setStudentToGroup(Long groupId, Long studentId) {
         GroupEntity group = groupRepository.findById(groupId)
                 .orElseThrow(() -> {
-            log.error("Group with id = {} does not exists", groupId);
-            throw new NotFoundException(
-                    String.format("Group with id = %s does not exists", groupId)
-            );
-        });
+                    log.error("Group with id = {} does not exists", groupId);
+                    throw new NotFoundException(
+                            String.format("Group with id = %s does not exists", groupId)
+                    );
+                });
         StudentEntity student = getByIdMethod(studentId);
         student.setGroup(group);
+        log.info("Student with id = {} has successfully added to group with id = {}", studentId, groupId);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
     }
 
@@ -120,6 +115,7 @@ public class StudentServiceImpl implements StudentService {
                 });
         StudentEntity student = getByIdMethod(studentId);
         student.setCourse(course);
+        log.info("Student with id = {} has successfully added to course with id = {}", studentId, courseId);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
     }
 
@@ -190,5 +186,15 @@ public class StudentServiceImpl implements StudentService {
                     "Student with email = " + email + " already exists"
             );
         }
+    }
+
+    private StudentEntity getByIdMethod(Long studentId) {
+        return studentRepository.findById(studentId).
+                orElseThrow(() -> {
+                    log.error("Student with id = {} does not exists", studentId);
+                    throw new NotFoundException(
+                            String.format("Student with id = %s does not exists", studentId)
+                    );
+                });
     }
 }
