@@ -30,9 +30,10 @@ public class StudentApi {
 
     @PostMapping("/import/{groupId}")
     public List<StudentResponse> importExcelFile(@RequestParam("file") MultipartFile files, @PathVariable Long groupId) throws IOException {
-        return studentService.importExcel(files,groupId);
+        return studentService.importExcel(files, groupId);
     }
 
+    @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
     @PostMapping("/{groupId}")
     public StudentResponse saveStudentWithGroup(@PathVariable Long groupId,
                                                 @RequestBody StudentRequest studentRequestDto) {
@@ -47,33 +48,35 @@ public class StudentApi {
 
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/{studentId}")
-    public StudentResponse getStudentById(@PathVariable Long studentId) {
-        return studentService.getStudentById(studentId);
+    @GetMapping("/{id}")
+    public StudentResponse getStudentById(@PathVariable Long id) {
+        return studentService.getStudentById(id);
     }
 
     @Operation(summary = "Updates the student ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/{studentId}")
-    public StudentResponse updateStudent(@PathVariable Long studentId,
+    @PutMapping("/{id}")
+    public StudentResponse updateStudent(@PathVariable Long id,
                                          @RequestBody StudentRequest studentRequest) {
-        return studentService.updateStudent(studentId, studentRequest);
+        return studentService.updateStudent(id, studentRequest);
     }
 
     @Operation(summary = "Deletes the single student", description = "Deletes student by id ")
-    @DeleteMapping("{studentId}")
-    public void deleteById(@PathVariable Long studentId) {
-        studentService.deleteStudent(studentId);
+    @DeleteMapping("/{id}")
+    public StudentResponse deleteById(@PathVariable Long id) {
+        return studentService.deleteStudent(id);
     }
 
     @Operation(summary = "Assigns student to a group", description = "Adds a student to a group")
-    @PutMapping("/{groupId}/setGroup/{studentId}")
-    public StudentResponse setStudentToGroup(@PathVariable Long groupId, @PathVariable Long studentId) {
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PutMapping("accept-to-group")
+    public StudentResponse setStudentToGroup(@RequestParam Long studentId, @RequestParam Long groupId) {
         return studentService.setStudentToGroup(groupId, studentId);
     }
 
     @Operation(summary = "Assign student to a course", description = "Adds a student to a course")
-    @PutMapping("/{courseId}/setCourse/{studentId}")
-    public StudentResponse setStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {
-        return studentService.setStudentToCourse(courseId, studentId);
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PutMapping("/accept-to-course")
+    public StudentResponse setStudentToCourse(@RequestParam Long studentId, @RequestParam Long courseId) {
+        return studentService.setStudentToCourse(studentId, courseId);
     }
 }

@@ -25,9 +25,18 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseEditMapper courseMapper;
     private final CourseViewMapper courseViewMapper;
+    private final StudentViewMapper studentViewMapper;
+    private final InstructorViewMapper instructorViewMapper;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
+        boolean exists = courseRepository.existsByCourseName(courseRequest.getCourseName());
+        if (exists) {
+            log.info("Course with name = {} already exists", courseRequest.getCourseName());
+            throw new AlreadyExistsException(
+                    "Course with name = " + courseRequest.getCourseName() + " already exists"
+            );
+        }
         CourseEntity course = courseMapper.create(courseRequest);
         CourseEntity savedCourse = courseRepository.save(course);
 
@@ -64,19 +73,40 @@ public class CourseServiceImpl implements CourseService {
                     String.format("Course with id = %s does not exists, you can't delete it", courseId)
             );
         }
-        CourseEntity course = getByIdMethod(courseId);
+        CourseEntity deletedCourse = getByIdMethod(courseId);
         courseRepository.deleteById(courseId);
 
         log.info("Course with id = {} has successfully deleted", courseId);
 
-        return courseViewMapper.viewCourse(course);
+        return courseViewMapper.viewCourse(deletedCourse);
     }
 
     @Override
     public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
         CourseEntity course = getByIdMethod(courseId);
         courseMapper.update(course, courseRequest);
-        return courseViewMapper.viewCourse(courseRepository.save(course));
+        courseRepository.save(course);
+        return courseViewMapper.viewCourse(course);
+    }
+
+    @Override
+    public List<StudentResponse> getAllStudentsByCourseId(Long id) {
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity s : getByIdMethod(id).getStudents()) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(s));
+        }
+        log.info("Successfully getAll Students by Course Id");
+        return studentResponses;
+    }
+
+    @Override
+    public List<InstructorResponse> getAllTeacherByCourseId(Long id) {
+        List<InstructorResponse> instructorResponses = new ArrayList<>();
+        for (InstructorEntity i : getByIdMethod(id).getInstructors()) {
+            instructorResponses.add(instructorViewMapper.convertToInstructorResponse(i));
+        }
+        log.info("successfully getAll teacher by Course Id");
+        return instructorResponses;
     }
 
     private CourseEntity getByIdMethod(Long courseId) {

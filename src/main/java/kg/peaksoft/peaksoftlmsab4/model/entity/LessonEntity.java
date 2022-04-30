@@ -10,11 +10,11 @@ import static javax.persistence.CascadeType.*;
 
 @Builder
 @Entity
-@Table(name = "lessons")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "lessons")
 public class LessonEntity {
     @Id
     @SequenceGenerator(
@@ -29,13 +29,13 @@ public class LessonEntity {
     Long id;
     private String lessonName;
 
-    @OneToOne(cascade = ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
     private LinkEntity linkEntity;
 
-    @OneToOne(cascade = ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
     private VideoEntity videoEntity;
 
-    @OneToOne(cascade = ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
     private PresentationEntity presentationEntity;
 
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH}, fetch = FetchType.LAZY)

@@ -1,11 +1,13 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -30,6 +32,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorViewMapper instructorViewMapper;
     private final PasswordEncoder passwordEncoder;
     private final CourseRepository courseRepository;
+    private final CourseViewMapper courseViewMapper;
 
     @Override
     public InstructorResponse saveInstructor(InstructorRequest instructorRequest) {
@@ -41,8 +44,7 @@ public class InstructorServiceImpl implements InstructorService {
         InstructorEntity instructor = instructorRepository.save(instructorEditMapper
                 .convertToInstructor(instructorRequest));
         log.info(" Instructor with name : {} has successfully saved to database", instructor.getFirstName());
-        return instructorViewMapper
-                .convertToInstructorResponse(instructor);
+        return instructorViewMapper.convertToInstructorResponse(instructor);
     }
 
     @Override
@@ -61,26 +63,18 @@ public class InstructorServiceImpl implements InstructorService {
         return instructorViewMapper.convertToInstructorResponse(instructor);
     }
 
-    private InstructorEntity getByIdMethod(Long id) {
-        return instructorRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Instructor with id = {} does not exists", id);
-                    throw new NotFoundException(
-                            String.format("Instructor with id = %s does not exists", id)
-                    );
-                });
-    }
-
     @Transactional
     @Override
     public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
         InstructorEntity instructor = getByIdMethod(id);
         instructorEditMapper.updateInstructor(instructor, instructorRequest);
-        return instructorViewMapper.convertToInstructorResponse(instructorRepository.save(instructor));
+        InstructorEntity savedInstructor = instructorRepository.save(instructor);
+        log.info(" Instructor with name : {} has successfully updated", savedInstructor.getFirstName());
+        return instructorViewMapper.convertToInstructorResponse(savedInstructor);
     }
 
     @Override
-    public void deleteInstructor(Long id) {
+    public InstructorResponse deleteInstructor(Long id) {
         boolean existById = instructorRepository.existsById(id);
         if (!existById) {
             log.error("Instructor with id = {} does not exists, you can not delete it", id);
@@ -89,6 +83,9 @@ public class InstructorServiceImpl implements InstructorService {
             );
         }
         instructorRepository.deleteById(id);
+        InstructorEntity instructorEntity = getByIdMethod(id);
+        log.info("Instructor with id = {} has successfully deleted", id);
+        return instructorViewMapper.convertToInstructorResponse(instructorEntity);
     }
 
     @Override
@@ -101,6 +98,32 @@ public class InstructorServiceImpl implements InstructorService {
         return instructorViewMapper.convertToInstructorResponse(instructorRepository.save(instructor));
     }
 
+    @Override
+    public CourseResponse assignInstructorsToCourse(Long courseId, List<Long> instructorId) {
+        CourseEntity course = courseRepository.findById(courseId)
+                .orElseThrow(() -> {
+                    log.error("Course with id = {} does not exists", courseId);
+                    throw new NotFoundException(
+                            String.format("Course with id = %s does not exists", courseId)
+                    );
+                });
+        for (Long id : instructorId) {
+            course.setInstructor(getByIdMethod(id));
+        }
+        log.info("Successfully assign instructor with id = {} to course", instructorId);
+        return courseViewMapper.viewCourse(courseRepository.save(course));
+    }
+
+    @Override
+    public List<CourseResponse> getInstructorsCourses(String email) {
+        InstructorEntity instructor = instructorRepository.findInstructorByEmail(email)
+                .orElseThrow(() -> new NotFoundException(
+                        "Vendor with email = " + email + " does not exists!"
+                ));
+
+        return courseViewMapper.viewCourses(instructor.getCourses());
+    }
+
     private void checkEmail(String email) {
         boolean exists = instructorRepository.existsByEmail(email);
         if (exists) {
@@ -109,5 +132,15 @@ public class InstructorServiceImpl implements InstructorService {
                     "Instructor with email = " + email + " already exists"
             );
         }
+    }
+
+    private InstructorEntity getByIdMethod(Long id) {
+        return instructorRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Instructor with id = {} does not exists", id);
+                    throw new NotFoundException(
+                            String.format("Instructor with id = %s does not exists", id)
+                    );
+                });
     }
 }

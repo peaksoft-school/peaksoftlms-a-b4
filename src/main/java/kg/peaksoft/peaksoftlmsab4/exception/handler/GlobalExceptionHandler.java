@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.exception.handler;
 
+import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
@@ -28,6 +29,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.builder()
                 .httpStatus(BAD_REQUEST)
                 .message(badRequestException.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseEntity handleAlreadyExistsException(AlreadyExistsException alreadyExistsException) {
+        return ResponseEntity.builder()
+                .httpStatus(BAD_REQUEST)
+                .message(alreadyExistsException.getMessage())
                 .build();
     }
 }
