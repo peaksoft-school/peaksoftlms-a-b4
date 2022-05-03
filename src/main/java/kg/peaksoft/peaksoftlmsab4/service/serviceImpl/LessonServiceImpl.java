@@ -69,6 +69,7 @@ public class LessonServiceImpl implements LessonService {
                     );
                 });
         mapper.mapToEntity(lessonRequest,lesson.getId());
+        log.info("Lesson with id = {} updated",lessonId);
         return mapper.mapToResponse(lessonRepository.save(lesson));
     }
 

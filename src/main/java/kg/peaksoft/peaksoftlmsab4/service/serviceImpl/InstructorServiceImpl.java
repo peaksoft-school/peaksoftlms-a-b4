@@ -38,7 +38,6 @@ public class InstructorServiceImpl implements InstructorService {
     public InstructorResponse saveInstructor(InstructorRequest instructorRequest) {
         String email = instructorRequest.getEmail();
         checkEmail(email);
-
         String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
         instructorRequest.setPassword(encoderPassword);
         InstructorEntity instructor = instructorRepository.save(instructorEditMapper
@@ -60,6 +59,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public InstructorResponse getInstructorById(Long id) {
         InstructorEntity instructor = getByIdMethod(id);
+        log.info("Found instructor with id = {} ",id);
         return instructorViewMapper.convertToInstructorResponse(instructor);
     }
 
@@ -118,7 +118,7 @@ public class InstructorServiceImpl implements InstructorService {
     public List<CourseResponse> getInstructorsCourses(String email) {
         InstructorEntity instructor = instructorRepository.findInstructorByEmail(email)
                 .orElseThrow(() -> new NotFoundException(
-                        "Vendor with email = " + email + " does not exists!"
+                        "Instructor with email = " + email + " does not exists!"
                 ));
 
         return courseViewMapper.viewCourses(instructor.getCourses());

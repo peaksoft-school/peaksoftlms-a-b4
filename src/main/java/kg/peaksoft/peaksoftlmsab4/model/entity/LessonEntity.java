@@ -27,6 +27,7 @@ public class LessonEntity {
             generator = "lessons_sequence"
     )
     Long id;
+
     private String lessonName;
 
     @OneToOne(cascade = ALL,fetch = FetchType.EAGER)

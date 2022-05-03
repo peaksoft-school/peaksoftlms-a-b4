@@ -42,10 +42,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskEntity getTaskById(Long id) {
-        log.info("Found task with id :{}", id);
-        return taskRepository.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("Not found id=%s", id)));
+    public TaskResponse getTaskById(Long id) {
+        TaskEntity task=taskRepository.findById(id).
+               orElseThrow(() -> {
+                           log.error("Task with id = {} does not exists", id);
+                           throw new NotFoundException(String.format("Task with id = %s id not found ", id));
+                       });
+        log.info("Found task with id = {} ",id);
+        return taskMapper.mapToResponse(task);
 
     }
 
@@ -65,6 +69,7 @@ public class TaskServiceImpl implements TaskService {
             );
         });
         taskMapper.mapToEntity(taskRequest,task.getId());
+        log.info("Task with id = {} updated",id);
         return taskMapper.mapToResponse(taskRepository.save(taskMapper.mapToEntity(taskRequest,id)));
     }
 
@@ -72,8 +77,10 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Long id) {
         TaskEntity taskEntity = taskRepository.findById(id)
                 .orElseThrow(()-> {
+                    log.error("Task with id = {} does not exists", id);
                     throw new NotFoundException(String.format("task with id = %s does not exists",id));
                 });
         taskRepository.delete(taskEntity);
+        log.info("Task with id = {} has successfully deleted", id);
     }
 }

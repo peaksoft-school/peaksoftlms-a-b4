@@ -55,6 +55,7 @@ public class LinkServiceImpl implements LinkService {
                             String.format("link with id = %s does not exists",linkId)
                     );
                 });
+        log.info("Found link with id = {} ",linkId);
         return mapper.mapToResponse(linkEntity);
     }
 
@@ -68,6 +69,7 @@ public class LinkServiceImpl implements LinkService {
                     );
                 });
         mapper.mapToEntity(linkRequest,linkEntity.getId());
+        log.info("Link with id = {} updated",linkEntity);
         return mapper.mapToResponse(linkRepository.save(linkEntity));
     }
 
@@ -81,5 +83,6 @@ public class LinkServiceImpl implements LinkService {
                     );
                 });
         linkRepository.delete(linkEntity);
+        log.info("Link with id = {} has successfully deleted", linkId);
     }
 }

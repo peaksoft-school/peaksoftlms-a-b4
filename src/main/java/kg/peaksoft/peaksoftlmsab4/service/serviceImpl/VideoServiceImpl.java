@@ -36,7 +36,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public List<VideoResponse> getAll() {
-        log.info("Fount {} videos",videoRepository.findAll().size());
+        log.info("Found {} videos",videoRepository.findAll().size());
         return mapper.mapToResponse(videoRepository.findAll());
     }
 
@@ -44,8 +44,10 @@ public class VideoServiceImpl implements VideoService {
     public VideoResponse getById(Long videoId) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
                 .orElseThrow(()-> {
+                    log.error("Video with id = {} does not exists", videoId);
                     throw new NotFoundException(String.format("video with id = %s does not exists",videoId));
                 });
+        log.info("Found video with id = {} ",videoId);
         return mapper.mapToResponse(videoEntity);
     }
 
@@ -53,6 +55,7 @@ public class VideoServiceImpl implements VideoService {
     public VideoResponse update(Long videoId, VideoRequest videoRequest) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
                 .orElseThrow(()-> {
+                    log.error("Video with id ={} does not exists",videoId);
                     throw new NotFoundException(String.format("video with id = %s does not exists",videoId));
                 });
         videoEntity.setVideoName(videoRequest.getVideoName());
@@ -66,6 +69,7 @@ public class VideoServiceImpl implements VideoService {
     public void deleteById(Long videoId) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
                 .orElseThrow(()-> {
+                    log.error("Video with id = {} does not exists", videoId);
                     throw new NotFoundException(String.format("video with id = %s does not exists",videoId));
                 });
         videoRepository.delete(videoEntity);

@@ -10,7 +10,7 @@ public interface TaskService {
 
     TaskResponse saveTask(Long id, TaskRequest taskRequest);
 
-    TaskEntity getTaskById(Long id);
+    TaskResponse getTaskById(Long id);
 
     List<TaskResponse> getAllTask();
 

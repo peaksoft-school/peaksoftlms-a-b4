@@ -32,21 +32,22 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupResponse update(Long groupId, GroupRequest groupRequest) {
         GroupEntity group = getByMethod(groupId);
-
         editMapper.update(group, groupRequest);
         repository.save(group);
+        log.info("Group with id = {} updated",groupId);
         return viewMapper.viewGroup(group);
     }
 
     @Override
     public GroupResponse getById(Long id) {
-        return viewMapper.viewGroup(getByMethod(id));
+        GroupEntity group=getByMethod(id);
+        log.info("Found group with id = {} ",id);
+        return viewMapper.viewGroup(group);
     }
 
     @Override
     public GroupResponse deleteById(Long id) {
         boolean exists = repository.existsById(id);
-
         if (!exists) {
             log.error("Group with id = {} does not exists, you can't delete it", id);
             throw new BadRequestException(
@@ -55,14 +56,13 @@ public class GroupServiceImpl implements GroupService {
         }
         GroupEntity groupEntity = getByMethod(id);
         repository.deleteById(id);
-
         log.info("Group with id = {} has successfully deleted", id);
-
         return viewMapper.viewGroup(groupEntity);
     }
 
     @Override
     public List<GroupResponse> getAllGroup() {
+        log.info("Found {} groups ",repository.findAll().size());
         return viewMapper.viewGroups(repository.findAll());
     }
 
@@ -70,13 +70,14 @@ public class GroupServiceImpl implements GroupService {
     public GroupResponse saveGroup(GroupRequest groupRequest) {
         boolean exists = repository.existsByGroupName(groupRequest.getGroupName());
         if (exists) {
-            log.warn("Group with name = {} already exists", groupRequest.getGroupName());
+            log.error("Group with name = {} already exists", groupRequest.getGroupName());
             throw new AlreadyExistsException(
                     "Course with name = " + groupRequest.getGroupName() + " already exists"
             );
         }
         GroupEntity group = editMapper.convert(groupRequest);
         GroupEntity savedGroup = repository.save(group);
+        log.info("Group with name = {} has successfully saved to database", savedGroup.getGroupName());
         return viewMapper.viewGroup(savedGroup);
     }
 

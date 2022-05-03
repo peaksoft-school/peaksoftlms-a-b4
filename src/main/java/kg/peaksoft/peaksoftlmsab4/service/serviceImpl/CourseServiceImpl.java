@@ -2,14 +2,19 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +37,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse saveCourse(CourseRequest courseRequest) {
         boolean exists = courseRepository.existsByCourseName(courseRequest.getCourseName());
         if (exists) {
-            log.info("Course with name = {} already exists", courseRequest.getCourseName());
+            log.error("Course with name = {} already exists", courseRequest.getCourseName());
             throw new AlreadyExistsException(
                     "Course with name = " + courseRequest.getCourseName() + " already exists"
             );
@@ -58,15 +63,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseResponse getById(Long courseId) {
         CourseEntity course = getByIdMethod(courseId);
-
-        log.info("Founded course with id = {}", courseId);
+        log.info("Found course with id = {}", courseId);
         return courseViewMapper.viewCourse(course);
     }
 
     @Override
     public CourseResponse deleteCourseById(Long courseId) {
         boolean exists = courseRepository.existsById(courseId);
-
         if (!exists) {
             log.error("Course with id = {} does not exists, you can't delete it", courseId);
             throw new BadRequestException(
@@ -86,6 +89,7 @@ public class CourseServiceImpl implements CourseService {
         CourseEntity course = getByIdMethod(courseId);
         courseMapper.update(course, courseRequest);
         courseRepository.save(course);
+        log.info("Course with id = {} updated",courseId);
         return courseViewMapper.viewCourse(course);
     }
 
