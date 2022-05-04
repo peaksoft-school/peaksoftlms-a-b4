@@ -17,6 +17,7 @@ public class TaskResponse {
     @JsonProperty("file_format")
     private String fileFormat;
     private String link;
+    @JsonProperty("image_link")
     private String image;
     private String code;
 }

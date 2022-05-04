@@ -24,7 +24,7 @@ public class CourseApi {
 
     @Operation(summary = "Creates new entity: Course", description = "Saves a new course")
     @PostMapping
-    public CourseResponse saveNewCourse(@RequestBody CourseRequest courseRequest) {
+    public CourseResponse saveNewCourse(@ModelAttribute CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,11 +27,11 @@ class CourseServiceImplTest {
 
     @Test
     @Order(1)
-    public void saveCourseTest() {
+    public void saveCourseTest(MultipartFile image) {
         CourseRequest course = CourseRequest.builder()
                 .courseName("Peaksoft")
                 .description("description")
-                .image("image")
+                .image(image)
                 .dateOfStart(LocalDate.now())
                 .build();
          courseService.saveCourse(course);

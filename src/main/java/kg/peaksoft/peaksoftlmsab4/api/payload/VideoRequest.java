@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.api.payload;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 
@@ -13,5 +14,6 @@ public class VideoRequest {
     @JsonProperty("video_name")
     private String videoName;
     private String description;
-    private String link;
+    @JsonProperty("video_file")
+    private MultipartFile videoFile;
 }

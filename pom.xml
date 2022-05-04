@@ -19,6 +19,12 @@
 
     <dependencies>
 
+<!--        <dependency>-->
+<!--            <groupId>com.amazonaws</groupId>-->
+<!--            <artifactId>aws-java-sdk</artifactId>-->
+<!--            <version>1.12.146</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>io.awspring.cloud</groupId>
             <artifactId>spring-cloud-aws-context</artifactId>

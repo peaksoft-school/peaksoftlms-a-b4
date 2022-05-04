@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.model.mapper;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TaskRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TaskResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskEntity;
+import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskMapper {
 
+    private final AWSS3Service awss3Service;
+
     public TaskEntity mapToEntity(TaskRequest taskRequest, Long id) {
         if (taskRequest == null) {
             return null;
@@ -22,10 +25,10 @@ public class TaskMapper {
                 .id(id)
                 .taskName(taskRequest.getTaskName())
                 .text(taskRequest.getText())
-                .fileFormat(taskRequest.getFileFormat())
+                .fileFormat(awss3Service.uploadFile(taskRequest.getFileFormat()))
                 .link(taskRequest.getLink())
                 .code(taskRequest.getCode())
-                .image(taskRequest.getImage())
+                .image(awss3Service.uploadFile(taskRequest.getImage()))
                 .build();
     }
 
