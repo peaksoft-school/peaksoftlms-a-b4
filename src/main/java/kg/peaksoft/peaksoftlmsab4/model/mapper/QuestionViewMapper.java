@@ -23,6 +23,7 @@ public class QuestionViewMapper {
         }
         questionResponse.setQuestion(question.getQuestion());
         questionResponse.setOptions(question.getOptions());
+        questionResponse.setQuestionType(question.getQuestionType());
         return questionResponse;
     }
 

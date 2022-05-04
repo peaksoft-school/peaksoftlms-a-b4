@@ -14,4 +14,5 @@ public interface QuestionService {
     QuestionResponse findById(Long id);
     QuestionResponse deleteById(Long id);
     List<QuestionResponse> findAll();
+    QuestionResponse findByQuestionToTest(Long testId, Long questionId);
 }

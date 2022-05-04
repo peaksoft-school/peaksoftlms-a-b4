@@ -16,14 +16,19 @@ import java.util.List;
 public class OptionApi {
     private final OptionService service;
 
-    @PostMapping("/save")
-    public OptionResponse create(@RequestBody OptionRequest optionRequest) {
-        return service.create(optionRequest);
+    @PostMapping("/save/{id}")
+    public OptionResponse create(@RequestBody OptionRequest optionRequest,@PathVariable  Long id) {
+        return service.create(id,optionRequest);
     }
 
     @PutMapping("/update/{id}")
     public OptionResponse update(@PathVariable Long id, @RequestBody OptionRequest optionRequest) {
         return service.update(id, optionRequest);
+    }
+
+    @PutMapping("/{questionId}/set/{optionId}")
+    public OptionResponse findByOptionToQuestion(@PathVariable Long questionId, @PathVariable Long optionId) {
+        return service.findByOptionToQuestion(questionId, optionId);
     }
 
     @GetMapping("/get/{id}")

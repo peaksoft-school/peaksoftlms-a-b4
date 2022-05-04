@@ -18,6 +18,7 @@ public class TestEditMapper {
         }
         TestEntity test = new TestEntity();
         test.setTestName(testRequest.getTestName());
+
         return test;
     }
 

@@ -26,6 +26,10 @@ public class QuestionApi {
     public QuestionResponse update(@PathVariable Long id,@RequestBody QuestionRequest questionRequest) {
         return service.update(id, questionRequest);
     }
+    @PutMapping("/{testId}/set/{questionId}")
+    public QuestionResponse findByQuestionToTest(@PathVariable Long testId,@PathVariable Long questionId){
+        return service.findByQuestionToTest(testId,questionId);
+    }
 
     @GetMapping("/get/{id}")
     public QuestionResponse findById(@PathVariable Long id) {

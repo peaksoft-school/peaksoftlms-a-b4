@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.TestResultRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,15 +15,15 @@ public class OptionEditMapper {
             return null;
         }
         OptionEntity option=new OptionEntity();
-        option.setOption(optionRequest.getOption());
-        option.setAnswer(optionRequest.isAnswer());
+        option.setIsTrue(optionRequest.getIsTrue());
+        option.setAnswer(optionRequest.getAnswer());
 
         return option;
     }
 
     public OptionEntity update(OptionEntity option,OptionRequest optionRequest){
-        option.setOption(optionRequest.getOption());
-        option.setAnswer(optionRequest.isAnswer());
+        option.setIsTrue(optionRequest.getIsTrue());
+        option.setAnswer(optionRequest.getAnswer());
         return option;
     }
 }

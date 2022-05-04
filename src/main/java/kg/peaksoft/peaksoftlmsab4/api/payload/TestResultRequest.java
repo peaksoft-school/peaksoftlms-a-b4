@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.api.payload;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +9,11 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class TestResultRequest {
     @NotBlank
-    @JsonProperty("correct_answer")
-    private Long correctAnswer;
+    private Long optionId;
     @NotBlank
-    @JsonProperty("wrong_answer")
-    private Long wrongAnswer;
+    private String answer;
     @NotBlank
-    private Long point;
+    private Boolean isTrue;
+
 
 }

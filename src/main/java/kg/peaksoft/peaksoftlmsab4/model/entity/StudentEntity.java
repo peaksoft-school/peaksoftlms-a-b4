@@ -41,6 +41,9 @@ public class StudentEntity {
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    AuthInfo authInfo;
+
     @ManyToOne(cascade = {DETACH, MERGE, REFRESH})
     @JoinColumn(name = "group_id")
     private GroupEntity group;

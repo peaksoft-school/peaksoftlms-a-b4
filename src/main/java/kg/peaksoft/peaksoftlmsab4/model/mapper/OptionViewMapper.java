@@ -24,8 +24,8 @@ public class OptionViewMapper {
         if (option.getId() != null) {
             optionResponse.setId(option.getId());
         }
-        optionResponse.setOption(option.getOption());
-        optionResponse.setAnswer(option.isAnswer());
+        optionResponse.setIsTrue(option.getIsTrue());
+        optionResponse.setAnswer(option.getAnswer());
 
 
         return optionResponse;

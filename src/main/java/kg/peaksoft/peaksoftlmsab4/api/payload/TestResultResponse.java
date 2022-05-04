@@ -8,7 +8,6 @@ import lombok.Setter;
 public class TestResultResponse {
 
     private Long id;
-    private Long correctAnswer;
-    private Long wrongAnswer;
-    private Long point;
+    private String answer;
+
 }

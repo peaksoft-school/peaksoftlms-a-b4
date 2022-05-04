@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface OptionService {
-    OptionResponse create(OptionRequest optionRequest);
+    OptionResponse create(Long id,OptionRequest optionRequest);
 
     OptionResponse update(Long id, OptionRequest optionRequest);
 
@@ -17,4 +17,6 @@ public interface OptionService {
     OptionResponse deleteById(Long id);
 
     List<OptionResponse> findAll();
+
+    OptionResponse findByOptionToQuestion(Long questionId, Long optionId);
 }

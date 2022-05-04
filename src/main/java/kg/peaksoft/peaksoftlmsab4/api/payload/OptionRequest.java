@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class OptionRequest {
     @NotBlank
-    private String option;
+    private String answer;
     @NotBlank
-    private boolean answer;
+    private Boolean isTrue;
 }

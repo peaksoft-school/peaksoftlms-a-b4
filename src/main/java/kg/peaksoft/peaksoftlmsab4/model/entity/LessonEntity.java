@@ -38,4 +38,9 @@ public class LessonEntity {
 
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH},fetch = FetchType.LAZY )
     private CourseEntity courseEntity;
+
+    @OneToOne(cascade = ALL, orphanRemoval = true)
+    @JoinColumn(name = "lesson_entity_id")
+    private LessonEntity lessonEntity;
+
 }

@@ -16,7 +16,7 @@ public class QuestionEditMapper {
         }
         QuestionEntity question = new QuestionEntity();
         question.setQuestion(questionRequest.getQuestion());
-
+        question.setQuestionType(questionRequest.getQuestionType());
         return question;
     }
 
