@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,4 +28,6 @@ public interface StudentService {
     StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
 
     List<StudentResponse> importExcel(MultipartFile file,Long groupId) throws IOException;
+
+    PaginationResponse<StudentResponse> getStudentPagination(int page, int size);
 }

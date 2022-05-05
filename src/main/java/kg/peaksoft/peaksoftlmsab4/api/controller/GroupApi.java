@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,5 +58,10 @@ public class GroupApi {
     @PutMapping("/accept-to-course")
     public GroupResponse setGroupToCourse(@RequestParam Long groupId, @RequestParam Long courseId) {
         return service.setGroupToCourse(groupId, courseId);
+    }
+
+    @GetMapping("/pagination")
+    public PaginationResponse<GroupResponse> getGroupPagination(@RequestParam int page,@RequestParam int size){
+        return service.getGroupPagination(page-1,size);
     }
 }
