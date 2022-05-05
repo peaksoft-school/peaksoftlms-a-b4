@@ -23,7 +23,6 @@ public class VideoServiceImpl implements VideoService {
     private final VideoRepository videoRepository;
     private final VideoMapper mapper;
     private final LessonRepository lessonRepository;
-    private final AWSS3Service awss3Service;
 
     @Override
     public VideoResponse create(VideoRequest videoRequest, Long lessonId) {
@@ -59,7 +58,7 @@ public class VideoServiceImpl implements VideoService {
                 });
         videoEntity.setVideoName(videoRequest.getVideoName());
         videoEntity.setDescription(videoRequest.getDescription());
-        videoEntity.setLink(awss3Service.uploadFile(videoRequest.getVideoFile()));
+        videoEntity.setLink(videoRequest.getVideoLink());
         videoRepository.save(videoEntity);
         log.info("video with id = {} updated", videoId);
         return mapper.mapToResponse(videoEntity);
@@ -71,7 +70,6 @@ public class VideoServiceImpl implements VideoService {
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
                 });
-        awss3Service.deleteFile(videoEntity.getVideoName());
         videoRepository.delete(videoEntity);
         log.info("video with id ={} successfully deleted", videoId);
         return mapper.mapToResponse(videoEntity);

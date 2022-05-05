@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/presentations")
-//@PreAuthorize("hasAuthority('INSTRUCTOR')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Presentation", description = "The Presentation CRUD operations")
 public class PresentationApi {
@@ -23,7 +23,7 @@ public class PresentationApi {
     @PostMapping("/{lessonId}")
     @Operation(summary = "Creates new entity: Presentation", description = "Saves a new presentation")
     public PresentationResponse addPresentation(
-            @ModelAttribute PresentationRequest presentationRequest
+            @RequestBody PresentationRequest presentationRequest
             , @PathVariable Long lessonId) {
         return presentationService.create(presentationRequest, lessonId);
     }

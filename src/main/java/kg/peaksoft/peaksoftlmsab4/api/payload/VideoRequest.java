@@ -14,6 +14,6 @@ public class VideoRequest {
     @JsonProperty("video_name")
     private String videoName;
     private String description;
-    @JsonProperty("video_file")
-    private MultipartFile videoFile;
+    @JsonProperty("video_link")
+    private String videoLink;
 }

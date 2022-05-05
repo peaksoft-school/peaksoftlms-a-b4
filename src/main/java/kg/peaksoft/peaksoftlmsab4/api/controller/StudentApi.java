@@ -76,7 +76,7 @@ public class StudentApi {
     @Operation(summary = "Assign student to a course", description = "Adds a student to a course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @PutMapping("/accept-to-course")
-    public StudentResponse setStudentToCourse(@RequestParam Long studentId, @RequestParam Long courseId) {
-        return studentService.setStudentToCourse(studentId, courseId);
+    public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
+        return studentService.setStudentToCourse(courseId, studentId);
     }
 }

@@ -23,7 +23,7 @@ public class GroupApi {
 
     @Operation(summary = "Creates new entity: Group ", description = "Saves a new group")
     @PostMapping
-    public GroupResponse saveGroup(@ModelAttribute GroupRequest groupRequest) {
+    public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
         return service.saveGroup(groupRequest);
     }
 

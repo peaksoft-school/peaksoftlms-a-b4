@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsab4.model.mapper;
 import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
-import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,6 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class VideoMapper {
-    private final AWSS3Service awss3Service;
 
     public VideoEntity mapToEntity(VideoRequest videoRequest) {
         if (videoRequest == null) {
@@ -23,7 +21,7 @@ public class VideoMapper {
         return VideoEntity.builder()
                 .videoName(videoRequest.getVideoName())
                 .description(videoRequest.getDescription())
-                .link(awss3Service.uploadFile(videoRequest.getVideoFile()))
+                .link(videoRequest.getVideoLink())
                 .build();
     }
 

@@ -27,11 +27,11 @@ class CourseServiceImplTest {
 
     @Test
     @Order(1)
-    public void saveCourseTest(MultipartFile image) {
+    public void saveCourseTest() {
         CourseRequest course = CourseRequest.builder()
                 .courseName("Peaksoft")
                 .description("description")
-                .image(image)
+                .image("image")
                 .dateOfStart(LocalDate.now())
                 .build();
          courseService.saveCourse(course);

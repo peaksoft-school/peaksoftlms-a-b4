@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +33,7 @@ public class LinkServiceImpl implements LinkService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        LinkEntity linkEntity = mapper.mapToEntity(linkRequest,null);
+        LinkEntity linkEntity = mapper.mapToEntity(linkRequest);
         linkEntity.setLessonEntity(lesson);
         log.info(" Link with name : {} has successfully saved to database", linkEntity.getLink());
         return mapper.mapToResponse(linkRepository.save(linkEntity));
@@ -42,17 +41,17 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<LinkResponse> getAll() {
-        log.info("Found {} links ",linkRepository.findAll().size());
+        log.info("Found {} links ", linkRepository.findAll().size());
         return mapper.mapToResponse(linkRepository.findAll());
     }
 
     @Override
     public LinkResponse getById(Long linkId) {
         LinkEntity linkEntity = linkRepository.findById(linkId)
-                .orElseThrow(()-> {
-                    log.error("Link with id ={} does not exists",linkId);
+                .orElseThrow(() -> {
+                    log.error("Link with id ={} does not exists", linkId);
                     throw new NotFoundException(
-                            String.format("link with id = %s does not exists",linkId)
+                            String.format("link with id = %s does not exists", linkId)
                     );
                 });
         return mapper.mapToResponse(linkEntity);
@@ -61,23 +60,23 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public LinkResponse update(Long linkId, LinkRequest linkRequest) {
         LinkEntity linkEntity = linkRepository.findById(linkId)
-                .orElseThrow(()-> {
-                    log.error("Link with id ={} does not exists",linkId);
+                .orElseThrow(() -> {
+                    log.error("Link with id ={} does not exists", linkId);
                     throw new NotFoundException(
-                            String.format("link with id = %s does not exists",linkId)
+                            String.format("link with id = %s does not exists", linkId)
                     );
                 });
-        mapper.mapToEntity(linkRequest,linkEntity.getId());
+        mapper.update(linkEntity, linkRequest);
         return mapper.mapToResponse(linkRepository.save(linkEntity));
     }
 
     @Override
     public void deleteById(Long linkId) {
         LinkEntity linkEntity = linkRepository.findById(linkId)
-                .orElseThrow(()-> {
-                    log.error("Link with id ={} does not exists",linkId);
+                .orElseThrow(() -> {
+                    log.error("Link with id ={} does not exists", linkId);
                     throw new NotFoundException(
-                            String.format("link with id = %s does not exists",linkId)
+                            String.format("link with id = %s does not exists", linkId)
                     );
                 });
         linkRepository.delete(linkEntity);

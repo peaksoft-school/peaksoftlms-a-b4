@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -24,5 +23,5 @@ public class GroupRequest {
     @NotBlank
     private String description;
     @NotBlank
-    private MultipartFile image;
+    private String image;
 }

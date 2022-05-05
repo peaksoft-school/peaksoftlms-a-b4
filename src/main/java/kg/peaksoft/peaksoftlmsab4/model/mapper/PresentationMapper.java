@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsab4.model.mapper;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.PresentationEntity;
-import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,18 +12,23 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class PresentationMapper {
-    private final AWSS3Service awss3Service;
 
-    public PresentationEntity mapToEntity(PresentationRequest presentationRequest, Long id) {
+    public PresentationEntity mapToEntity(PresentationRequest presentationRequest) {
         if (presentationRequest == null) {
             return null;
         }
         return PresentationEntity.builder()
-                .id(id)
                 .presentationName(presentationRequest.getPresentationName())
                 .description(presentationRequest.getDescription())
-                .link(awss3Service.uploadFile(presentationRequest.getPresentationFile()))
+                .link(presentationRequest.getPresentationLink())
                 .build();
+    }
+
+    public PresentationEntity update(PresentationEntity presentationEntity, PresentationRequest presentationRequest) {
+        presentationEntity.setPresentationName(presentationRequest.getPresentationName());
+        presentationEntity.setDescription(presentationRequest.getDescription());
+        presentationEntity.setLink(presentationRequest.getPresentationLink());
+        return presentationEntity;
     }
 
     public List<PresentationResponse> mapToResponse(List<PresentationEntity> presentationEntities) {

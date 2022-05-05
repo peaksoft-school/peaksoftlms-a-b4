@@ -24,14 +24,14 @@ public class TaskApi {
     @Operation(summary = "Creates new entity: Task",
             description = "This method saves new task. Only instructors can add new task to lesson")
     @PostMapping("/{lessonId}")
-    public TaskResponse saveTask(@ModelAttribute TaskRequest taskRequest,@PathVariable Long lessonId){
+    public TaskResponse saveTask(@RequestBody TaskRequest taskRequest,@PathVariable Long lessonId){
         return taskService.saveTask(lessonId,taskRequest);
     }
 
     @Operation(summary = "Gets a single tasks by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("/{id}")
-    public TaskEntity GetTaskById(@PathVariable Long id) {
+    public TaskResponse GetTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
 

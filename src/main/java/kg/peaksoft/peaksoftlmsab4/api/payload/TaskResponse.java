@@ -14,10 +14,8 @@ public class TaskResponse {
     @JsonProperty("task_name")
     private String taskName;
     private String text;
-    @JsonProperty("file_format")
-    private String fileFormat;
+    private String file;
     private String link;
-    @JsonProperty("image_link")
     private String image;
     private String code;
 }

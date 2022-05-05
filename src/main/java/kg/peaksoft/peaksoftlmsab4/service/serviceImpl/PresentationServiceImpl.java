@@ -20,8 +20,6 @@ import java.util.List;
 @Slf4j
 public class PresentationServiceImpl implements PresentationService {
 
-    private final AWSS3Service awss3Service;
-
     private final PresentationRepository presentationRepository;
     private final PresentationMapper mapper;
     private final LessonRepository lessonRepository;
@@ -29,7 +27,7 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     public PresentationResponse create(PresentationRequest request, Long lessonId) {
         LessonEntity lesson = lessonRepository.getById(lessonId);
-        PresentationEntity presentationEntity = mapper.mapToEntity(request, null);
+        PresentationEntity presentationEntity = mapper.mapToEntity(request);
         presentationEntity.setLessonEntity(lesson);
         PresentationEntity savedPresentationEntity = presentationRepository.save(presentationEntity);
         return mapper.mapToResponse(savedPresentationEntity);
@@ -52,7 +50,13 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public PresentationResponse update(Long presentationId, PresentationRequest presentationRequest) {
-        return mapper.mapToResponse(presentationRepository.save(mapper.mapToEntity(presentationRequest, presentationId)));
+        PresentationEntity presentationEntity = presentationRepository.findById(presentationId)
+                .orElseThrow(() -> {
+                    throw new NotFoundException(String.format("Presentation with id = %s does not exists", presentationId));
+                });
+        mapper.update(presentationEntity, presentationRequest);
+        presentationRepository.save(presentationEntity);
+        return mapper.mapToResponse(presentationEntity);
     }
 
     @Override
@@ -61,7 +65,6 @@ public class PresentationServiceImpl implements PresentationService {
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("presentation with id = %s does not exists", presentationId));
                 });
-        awss3Service.deleteFile(getById(presentationId).getPresentationName());
         presentationRepository.delete(presentationEntity);
         return mapper.mapToResponse(presentationEntity);
     }

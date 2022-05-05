@@ -15,9 +15,8 @@ public class TaskRequest {
     @JsonProperty("task_name")
     private String taskName;
     private String text;
-    @JsonProperty("file_format")
-    private MultipartFile fileFormat;
+    private String file;
     private String link;
-    private MultipartFile image;
+    private String image;
     private String code;
 }
