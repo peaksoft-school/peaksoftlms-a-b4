@@ -15,7 +15,6 @@ import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
