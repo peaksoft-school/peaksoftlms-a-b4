@@ -13,13 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskMapper {
 
-    public TaskEntity mapToEntity(TaskRequest taskRequest, Long id) {
+    public TaskEntity mapToEntity(TaskRequest taskRequest) {
         if (taskRequest == null) {
             return null;
         }
 
         return TaskEntity.builder()
-                .id(id)
                 .taskName(taskRequest.getTaskName())
                 .text(taskRequest.getText())
                 .fileFormat(taskRequest.getFile())
@@ -27,6 +26,16 @@ public class TaskMapper {
                 .code(taskRequest.getCode())
                 .image(taskRequest.getImage())
                 .build();
+    }
+
+    public TaskEntity update(TaskEntity taskEntity, TaskRequest taskRequest) {
+        taskEntity.setTaskName(taskRequest.getTaskName());
+        taskEntity.setText(taskRequest.getText());
+        taskEntity.setFileFormat(taskRequest.getFile());
+        taskEntity.setImage(taskRequest.getImage());
+        taskEntity.setLink(taskRequest.getLink());
+        taskEntity.setCode(taskRequest.getCode());
+        return taskEntity;
     }
 
     public List<TaskResponse> mapToResponse(List<TaskEntity> tasks) {

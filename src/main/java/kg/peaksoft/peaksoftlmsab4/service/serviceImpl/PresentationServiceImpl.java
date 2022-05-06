@@ -29,6 +29,7 @@ public class PresentationServiceImpl implements PresentationService {
         LessonEntity lesson = lessonRepository.getById(lessonId);
         PresentationEntity presentationEntity = mapper.mapToEntity(request);
         presentationEntity.setLessonEntity(lesson);
+        lesson.setPresentationEntity(presentationEntity);
         PresentationEntity savedPresentationEntity = presentationRepository.save(presentationEntity);
         return mapper.mapToResponse(savedPresentationEntity);
     }

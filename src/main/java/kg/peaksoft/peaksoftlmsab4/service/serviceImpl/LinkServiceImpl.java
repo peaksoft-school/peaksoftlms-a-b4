@@ -35,6 +35,7 @@ public class LinkServiceImpl implements LinkService {
                 });
         LinkEntity linkEntity = mapper.mapToEntity(linkRequest);
         linkEntity.setLessonEntity(lesson);
+        lesson.setLinkEntity(linkEntity);
         log.info(" Link with name : {} has successfully saved to database", linkEntity.getLink());
         return mapper.mapToResponse(linkRepository.save(linkEntity));
     }

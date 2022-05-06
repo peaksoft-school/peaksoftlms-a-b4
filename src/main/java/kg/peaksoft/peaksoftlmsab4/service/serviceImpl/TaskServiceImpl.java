@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
                             String.format("Lesson with id = %s does not exists", id)
                     );
                 });
-        TaskEntity task = taskMapper.mapToEntity(taskRequest, null);
+        TaskEntity task = taskMapper.mapToEntity(taskRequest);
         task.setLesson(lessonEntity);
         log.info(" Task with name : {} has successfully saved to database", task.getTaskName());
         return taskMapper.mapToResponse(taskRepository.save(task));
@@ -65,8 +65,9 @@ public class TaskServiceImpl implements TaskService {
                             String.format("task with id = %s does not exists", id)
                     );
                 });
-        taskMapper.mapToEntity(taskRequest, task.getId());
-        return taskMapper.mapToResponse(taskRepository.save(taskMapper.mapToEntity(taskRequest, id)));
+        taskMapper.update(task, taskRequest);
+        taskRepository.save(task);
+        return taskMapper.mapToResponse(task);
     }
 
     @Override

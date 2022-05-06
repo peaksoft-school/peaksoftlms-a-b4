@@ -30,6 +30,7 @@ public class VideoServiceImpl implements VideoService {
 
         VideoEntity videoEntity = mapper.mapToEntity(videoRequest);
         videoEntity.setLessonEntity(lesson);
+        lesson.setVideoEntity(videoEntity);
         VideoEntity savedVideoEntity = videoRepository.save(videoEntity);
         log.info(" Video with name : {} has successfully saved to database", videoEntity.getVideoName());
         return mapper.mapToResponse(savedVideoEntity);
