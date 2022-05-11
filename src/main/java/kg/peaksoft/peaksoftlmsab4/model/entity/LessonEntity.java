@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsab4.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-
 import java.util.List;
 
 import static javax.persistence.CascadeType.*;
@@ -27,20 +26,21 @@ public class LessonEntity {
             generator = "lessons_sequence"
     )
     Long id;
+    @Column(name = "lesson_name")
     private String lessonName;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
     private LinkEntity linkEntity;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
     private VideoEntity videoEntity;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
     private PresentationEntity presentationEntity;
 
-    @ManyToOne(cascade = {MERGE, REFRESH, DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     private CourseEntity courseEntity;
 
-    @OneToMany(cascade = ALL,mappedBy = "lesson")
+    @OneToMany(cascade = ALL, mappedBy = "lesson")
     private List<TaskEntity> task;
 }

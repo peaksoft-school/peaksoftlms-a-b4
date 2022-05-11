@@ -21,7 +21,7 @@ public class VideoMapper {
         return VideoEntity.builder()
                 .videoName(videoRequest.getVideoName())
                 .description(videoRequest.getDescription())
-                .link(videoRequest.getVideoLink())
+                .videoLink(videoRequest.getVideoLink())
                 .build();
     }
 
@@ -38,7 +38,7 @@ public class VideoMapper {
                 .id(videoEntity.getId())
                 .videoName(videoEntity.getVideoName())
                 .description(videoEntity.getDescription())
-                .videoLink(videoEntity.getLink())
+                .videoLink(videoEntity.getVideoLink())
                 .build();
     }
 }

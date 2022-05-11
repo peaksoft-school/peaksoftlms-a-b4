@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,7 +34,7 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Course with id = %s does not exists", courseId)
                     );
                 });
-        LessonEntity lesson =mapper.mapToEntity(lessonRequest,null);
+        LessonEntity lesson = mapper.mapToEntity(lessonRequest);
         lesson.setCourseEntity(courseEntity);
         log.info(" Lesson with name : {} has successfully saved to database", lesson.getLessonName());
         return mapper.mapToResponse(lessonRepository.save(lesson));
@@ -43,7 +42,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonResponse> getAll() {
-        log.info("Found {} lessons ",lessonRepository.findAll().size());
+        log.info("Found {} lessons ", lessonRepository.findAll().size());
         return mapper.mapToResponse(lessonRepository.findAll());
     }
 
@@ -68,7 +67,7 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        mapper.mapToEntity(lessonRequest,lesson.getId());
+        mapper.update(lesson, lessonRequest);
         return mapper.mapToResponse(lessonRepository.save(lesson));
     }
 

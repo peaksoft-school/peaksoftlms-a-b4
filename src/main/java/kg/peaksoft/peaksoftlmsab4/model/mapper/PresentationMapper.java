@@ -20,14 +20,14 @@ public class PresentationMapper {
         return PresentationEntity.builder()
                 .presentationName(presentationRequest.getPresentationName())
                 .description(presentationRequest.getDescription())
-                .link(presentationRequest.getPresentationLink())
+                .presentationLink(presentationRequest.getPresentationLink())
                 .build();
     }
 
     public PresentationEntity update(PresentationEntity presentationEntity, PresentationRequest presentationRequest) {
         presentationEntity.setPresentationName(presentationRequest.getPresentationName());
         presentationEntity.setDescription(presentationRequest.getDescription());
-        presentationEntity.setLink(presentationRequest.getPresentationLink());
+        presentationEntity.setPresentationLink(presentationRequest.getPresentationLink());
         return presentationEntity;
     }
 
@@ -44,7 +44,7 @@ public class PresentationMapper {
                 .id(presentationEntity.getId())
                 .presentationName(presentationEntity.getPresentationName())
                 .description(presentationEntity.getDescription())
-                .presentationLink(presentationEntity.getLink())
+                .presentationLink(presentationEntity.getPresentationLink())
                 .build();
     }
 }

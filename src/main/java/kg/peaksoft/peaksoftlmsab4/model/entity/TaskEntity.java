@@ -27,13 +27,14 @@ public class TaskEntity {
     @Column(name = "task_name")
     private String taskName;
     private String text;
-    @Column(name = "file_format")
-    private String fileFormat;
+    @Column(name = "file_link")
+    private String fileLink;
     private String link;
-    private String image;
+    @Column(name = "image_link")
+    private String imageLink;
     private String code;
 
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "lesson_id")
     private LessonEntity lesson;
 }

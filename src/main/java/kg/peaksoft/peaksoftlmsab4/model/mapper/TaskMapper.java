@@ -21,18 +21,18 @@ public class TaskMapper {
         return TaskEntity.builder()
                 .taskName(taskRequest.getTaskName())
                 .text(taskRequest.getText())
-                .fileFormat(taskRequest.getFile())
+                .fileLink(taskRequest.getFileLink())
                 .link(taskRequest.getLink())
                 .code(taskRequest.getCode())
-                .image(taskRequest.getImage())
+                .imageLink(taskRequest.getImageLink())
                 .build();
     }
 
     public TaskEntity update(TaskEntity taskEntity, TaskRequest taskRequest) {
         taskEntity.setTaskName(taskRequest.getTaskName());
         taskEntity.setText(taskRequest.getText());
-        taskEntity.setFileFormat(taskRequest.getFile());
-        taskEntity.setImage(taskRequest.getImage());
+        taskEntity.setFileLink(taskRequest.getFileLink());
+        taskEntity.setImageLink(taskRequest.getImageLink());
         taskEntity.setLink(taskRequest.getLink());
         taskEntity.setCode(taskRequest.getCode());
         return taskEntity;
@@ -51,10 +51,10 @@ public class TaskMapper {
                 .id(task.getId())
                 .taskName(task.getTaskName())
                 .text(task.getText())
-                .file(task.getFileFormat())
+                .fileLink(task.getFileLink())
                 .link(task.getLink())
                 .code(task.getCode())
-                .image(task.getImage())
+                .imageLink(task.getImageLink())
                 .build();
     }
 }

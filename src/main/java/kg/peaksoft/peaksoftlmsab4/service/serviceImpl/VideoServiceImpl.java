@@ -59,7 +59,7 @@ public class VideoServiceImpl implements VideoService {
                 });
         videoEntity.setVideoName(videoRequest.getVideoName());
         videoEntity.setDescription(videoRequest.getDescription());
-        videoEntity.setLink(videoRequest.getVideoLink());
+        videoEntity.setVideoLink(videoRequest.getVideoLink());
         videoRepository.save(videoEntity);
         log.info("video with id = {} updated", videoId);
         return mapper.mapToResponse(videoEntity);
