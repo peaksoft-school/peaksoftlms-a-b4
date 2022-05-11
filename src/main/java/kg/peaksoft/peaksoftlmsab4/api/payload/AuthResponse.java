@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthResponse {
+
     @JsonProperty("first_name")
     private String firstName;
     @JsonProperty("last_name")

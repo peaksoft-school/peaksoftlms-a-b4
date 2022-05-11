@@ -45,11 +45,12 @@ public class AuthServiceImpl implements AuthService {
 
         AuthInfo authInfo = authInfoRepository.findByEmail(authRequest.getEmail())
                 .orElseThrow(() -> {
-                    log.error("User with email = {} does not exists", authRequest.getEmail());
+                    log.error("Course with email = {} does not exists", authRequest.getEmail());
                     throw new NotFoundException(
-                            String.format("User with email = %s does not exists", authRequest.getEmail())
+                            String.format("Course with email = %s does not exists", authRequest.getEmail())
                     );
                 });
+
         String firstName = "";
         String lastName = "";
         for (UserEntity u : userRepository.findAll()) {

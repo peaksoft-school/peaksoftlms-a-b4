@@ -5,7 +5,6 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
