@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtConfig;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.exception.UnauthorizedException;
 import kg.peaksoft.peaksoftlmsab4.repository.AuthInfoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -50,7 +51,12 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return (email) -> authInfoRepository.findByEmail(email)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(()->new UnauthorizedException("This person is not authorized"));
+    }
+    @Bean
+    public UserDetailsService getPasswordDetailsService(){
+        return (password)->authInfoRepository.findByPassword(password)
+                .orElseThrow(()->new UnauthorizedException("This person is not authorized"));
     }
 
     @Override
