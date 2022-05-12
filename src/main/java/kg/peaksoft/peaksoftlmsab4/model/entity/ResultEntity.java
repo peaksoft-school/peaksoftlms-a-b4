@@ -4,24 +4,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "test_results")
+@Table(name = "results")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class TestResultEntity {
+public class ResultEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String answer;
-    private Boolean isTrue;
 
+    private Boolean accepted;
+    private String studentName;
+    private int error;
+    private int correct;
+    private int points;
 
-    @OneToOne(mappedBy = "testResultEntity", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-    private TestEntity testEntity;
-
+    @CreatedDate
+    private LocalDate localDate;
 }

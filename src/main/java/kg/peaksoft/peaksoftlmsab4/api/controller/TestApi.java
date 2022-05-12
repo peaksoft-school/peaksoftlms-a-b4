@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/tests")
-//@PreAuthorize("hasAuthority('INSTRUCTOR')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 public class TestApi {
 
     private final TestService service;

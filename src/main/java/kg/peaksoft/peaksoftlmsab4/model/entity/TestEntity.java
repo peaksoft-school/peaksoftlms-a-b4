@@ -18,20 +18,14 @@ import java.util.List;
 public class TestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
     private String testName;
-    private int countTest;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
     private LessonEntity lessonEntity;
 
-    @OneToMany(mappedBy = "testEntity", cascade = CascadeType.ALL)
+    @OneToMany( cascade = CascadeType.ALL)
     private List<QuestionEntity> questions = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "test_result_entity_id")
-    private TestResultEntity testResultEntity;
 
 }

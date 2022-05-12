@@ -12,16 +12,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/options")
-//@PreAuthorize("hasAuthority('INSTRUCTOR')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 public class OptionApi {
     private final OptionService service;
 
-    @PostMapping("/save/{id}")
-    public OptionResponse create(@RequestBody OptionRequest optionRequest,@PathVariable  Long id) {
-        return service.create(id,optionRequest);
-    }
-
-    @PutMapping("/update/{id}")
+    @PostMapping("/save")
+    public OptionResponse create(@RequestBody OptionRequest optionRequest) {
+        return service.create(optionRequest);
+    }    @PutMapping("/update/{id}")
     public OptionResponse update(@PathVariable Long id, @RequestBody OptionRequest optionRequest) {
         return service.update(id, optionRequest);
     }

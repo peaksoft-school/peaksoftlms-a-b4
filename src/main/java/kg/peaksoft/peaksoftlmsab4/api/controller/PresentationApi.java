@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/presentations")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Presentation", description = "The Presentation CRUD operations")
 public class PresentationApi {

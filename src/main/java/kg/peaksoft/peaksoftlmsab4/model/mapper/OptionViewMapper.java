@@ -26,8 +26,6 @@ public class OptionViewMapper {
         }
         optionResponse.setIsTrue(option.getIsTrue());
         optionResponse.setAnswer(option.getAnswer());
-
-
         return optionResponse;
     }
 

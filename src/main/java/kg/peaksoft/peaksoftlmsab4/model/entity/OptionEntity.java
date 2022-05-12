@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "options")
@@ -22,9 +23,7 @@ public class OptionEntity {
     private String answer;
     private Boolean isTrue;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST})
-    private QuestionEntity question;
 
-
+//    @OneToOne
+//    private TestStudentEntity testStudent;
 }

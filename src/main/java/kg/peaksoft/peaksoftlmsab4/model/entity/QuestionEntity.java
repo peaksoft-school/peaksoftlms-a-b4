@@ -26,19 +26,15 @@ public class QuestionEntity {
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST})
-    private TestEntity testEntity;
-
-    @OneToMany(mappedBy = "question",cascade = {CascadeType.ALL})
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<OptionEntity> options;
 
-    public void setOptions(OptionEntity option){
+    public void setOption(OptionEntity option){
         if (options==null){
             options=new ArrayList<>();
         }
         options.add(option);
-        option.setQuestion(this);
+
     }
 
 }

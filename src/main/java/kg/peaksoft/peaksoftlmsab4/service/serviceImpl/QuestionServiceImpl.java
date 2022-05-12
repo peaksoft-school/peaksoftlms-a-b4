@@ -1,19 +1,23 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
+import kg.peaksoft.peaksoftlmsab4.service.OptionService;
 import kg.peaksoft.peaksoftlmsab4.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,10 +29,10 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionEditMapper editMapper;
     private final TestRepository testRepository;
-
+    private final OptionService optionService;
 
     @Override
-    public QuestionResponse create(QuestionRequest questionRequest) {
+    public QuestionResponse create(Long id, QuestionRequest questionRequest) {
 
         return viewMapper.viewQuestion(questionRepository.save(editMapper.create(questionRequest)));
     }
@@ -77,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
                     );
                 });
         QuestionEntity question = getByIdMethod(questionId);
-        question.setTestEntity(test);
+        // question.setTestEntity(test);
         return viewMapper.viewQuestion(questionRepository.save(question));
     }
 

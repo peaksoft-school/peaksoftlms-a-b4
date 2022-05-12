@@ -2,13 +2,14 @@ package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.OptionResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface OptionService {
-    OptionResponse create(Long id,OptionRequest optionRequest);
+    OptionResponse create(OptionRequest optionRequest);
 
     OptionResponse update(Long id, OptionRequest optionRequest);
 

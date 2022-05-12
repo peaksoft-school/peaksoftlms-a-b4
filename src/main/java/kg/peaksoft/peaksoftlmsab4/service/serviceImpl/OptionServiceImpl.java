@@ -12,7 +12,7 @@ import kg.peaksoft.peaksoftlmsab4.model.mapper.OptionViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.OptionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.service.OptionService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class OptionServiceImpl implements OptionService {
     private final OptionEditMapper editMapper;
@@ -30,47 +30,24 @@ public class OptionServiceImpl implements OptionService {
     private final ModelMapper modelMapper;
 
 
-    @Override
-    public OptionResponse create(Long id, OptionRequest optionRequest) {
-        QuestionEntity question = questionRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("not found this id=%s", id)
-        ));
-        int counter = 0;
-        OptionEntity map = modelMapper.map(optionRequest, OptionEntity.class);
-        if (question.getQuestionType() == QuestionType.ONE) {
-            for (OptionEntity o : question.getOptions()) {
-                if (o.getIsTrue()) {
-                    counter++;
-                }
-            }
-            if (map.getIsTrue()) {
-                if (counter > 0) {
-                    throw new BadRequestException("You can't choose multiple variants");
-                } else {
-                    OptionEntity save = optionRepository.save(map);
-                    question.setOptions(save);
-                    log.info("successful variant save:{}", save);
-                    return viewMapper.viewOption(save);
-                }
-            } else {
-                OptionEntity save = optionRepository.save(map);
-                question.setOptions(save);
-                log.info("successful variant save:{}", save);
-                return viewMapper.viewOption(save);
-            }
-        }
-        OptionEntity save = optionRepository.save(map);
-        question.setOptions(save);
+    public OptionResponse create( OptionRequest optionRequest) {
+        QuestionEntity question=new QuestionEntity();
+        OptionEntity optionEntity = editMapper.create(optionRequest);
+        OptionEntity save = optionRepository.save(optionEntity);
+        question.setOption(save);
         log.info("successful variant save:{}", save);
         return viewMapper.viewOption(optionRepository.save(save));
 
+
     }
+
 
     @Override
     public OptionResponse update(Long id, OptionRequest optionRequest) {
-        OptionEntity option = getByIdMethod(id);
-        editMapper.update(option, optionRequest);
-        return viewMapper.viewOption(optionRepository.save(option));
+        //   OptionEntity option = getByIdMethod(id);
+        //  editMapper.update(option, optionRequest);
+        //  return viewMapper.viewOption(optionRepository.save(option));
+        return null;
     }
 
     @Override
@@ -100,7 +77,7 @@ public class OptionServiceImpl implements OptionService {
                     );
                 });
         OptionEntity option = getByIdMethod(optionId);
-        option.setQuestion(question);
+//        option.setQuestion(question);
         return viewMapper.viewOption(optionRepository.save(option));
     }
 

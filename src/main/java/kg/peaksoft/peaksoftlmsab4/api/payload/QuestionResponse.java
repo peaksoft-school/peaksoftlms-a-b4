@@ -18,5 +18,5 @@ public class QuestionResponse {
     @JsonProperty("question_type")
     private QuestionType questionType;
 
-    private List<OptionEntity>options;
+    private List<OptionResponse>options;
 }

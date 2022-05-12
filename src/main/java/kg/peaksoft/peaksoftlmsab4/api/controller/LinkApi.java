@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/links")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Link", description = "The Link CRUD operations")
 public class LinkApi {

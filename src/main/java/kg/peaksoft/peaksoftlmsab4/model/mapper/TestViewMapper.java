@@ -13,24 +13,26 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class TestViewMapper {
+    private final QuestionViewMapper viewMapper;
 
     public TestResponse viewTest(TestEntity test) {
         if (test == null) {
             log.error("The test db is null!");
             return null;
         }
-       TestResponse testResponse=new TestResponse();
+        TestResponse testResponse = new TestResponse();
         if (test.getId() != null) {
             testResponse.setId(test.getId());
         }
         testResponse.setTestName(test.getTestName());
-        testResponse.setQuestion(test.getQuestions());
+        testResponse.setQuestions(viewMapper.viewQuestions(test.getQuestions()));
         return testResponse;
 
     }
-    public List<TestResponse> viewTests(List<TestEntity>tests){
-        List<TestResponse> testResponses=new ArrayList<>();
-        for (TestEntity t:tests) {
+
+    public List<TestResponse> viewTests(List<TestEntity> tests) {
+        List<TestResponse> testResponses = new ArrayList<>();
+        for (TestEntity t : tests) {
             testResponses.add(viewTest(t));
         }
         return testResponses;

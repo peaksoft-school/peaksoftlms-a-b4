@@ -36,7 +36,6 @@ public class StudentEntity {
     String lastName;
     @Column(name = "mobile_phone")
     String mobilePhone;
-    String email;
     @Column(name = "study_format")
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
@@ -50,6 +49,8 @@ public class StudentEntity {
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "students")
     private List<CourseEntity> courses;
+
+
 
     public void setCourse(CourseEntity course) {
         if (courses == null) {
@@ -65,6 +66,7 @@ public class StudentEntity {
             course.getStudents().remove(this);
         }
     }
+
 }
 
 

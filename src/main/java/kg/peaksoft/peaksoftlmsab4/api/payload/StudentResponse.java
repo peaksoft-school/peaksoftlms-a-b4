@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.api.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,4 +19,5 @@ public class StudentResponse {
     private String email;
     @JsonProperty("study_format")
     private StudyFormat studyFormat;
+    private Role role;
 }

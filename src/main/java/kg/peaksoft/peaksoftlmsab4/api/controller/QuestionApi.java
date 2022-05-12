@@ -12,14 +12,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/question")
-//@PreAuthorize("hasAuthority('INSTRUCTOR')")
+@PreAuthorize("hasAuthority('INSTRUCTOR')")
 public class QuestionApi {
 
     private final QuestionService service;
 
     @PostMapping("/save")
-    public QuestionResponse create(@RequestBody QuestionRequest questionRequest) {
-        return service.create(questionRequest);
+    public QuestionResponse create(@PathVariable Long id,@RequestBody QuestionRequest questionRequest) {
+        return service.create(id,questionRequest);
     }
 
     @PutMapping("/update/{id}")

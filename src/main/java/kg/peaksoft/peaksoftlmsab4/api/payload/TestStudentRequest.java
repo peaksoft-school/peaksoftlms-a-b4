@@ -7,11 +7,9 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class OptionRequest {
+public class TestStudentRequest {
     @NotBlank
-    private String answer;
-    @NotBlank
-    private Boolean isTrue;
+    private Long optionId;
 
 
 }
