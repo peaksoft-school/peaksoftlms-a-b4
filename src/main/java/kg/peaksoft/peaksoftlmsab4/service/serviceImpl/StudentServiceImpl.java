@@ -7,6 +7,7 @@ import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -15,12 +16,15 @@ import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RequiredArgsConstructor
 @Service
@@ -32,13 +36,15 @@ public class StudentServiceImpl implements StudentService {
     private final GroupRepository groupRepository;
     private final CourseRepository courseRepository;
 
+
+
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
         checkEmail(email);
         StudentEntity student = studentRepository.save(studentEditMapper
                 .convertToStudent(studentRequest));
-        log.info(" Student with name : {} has successfully saved to database", student.getFirstName());
+        log.info("Student with name : {} has successfully saved to database", student.getFirstName());
         return studentViewMapper.convertToStudentResponse(student);
     }
 
@@ -58,25 +64,17 @@ public class StudentServiceImpl implements StudentService {
         return studentViewMapper.convertToStudentResponse(student);
     }
 
-    private StudentEntity getByIdMethod(Long studentId) {
-        return studentRepository.findById(studentId).
-                orElseThrow(() -> {
-                    log.error("Student with id = {} does not exists", studentId);
-                    throw new NotFoundException(
-                            String.format("Student with id = %s does not exists", studentId)
-                    );
-                });
-    }
-
     @Override
     public StudentResponse updateStudent(Long studentId, StudentRequest studentRequest) {
         StudentEntity student = getByIdMethod(studentId);
         studentEditMapper.updateStudent(student, studentRequest);
-        return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
+        StudentEntity savedStudent = studentRepository.save(student);
+        log.info("Student with name : {} has successfully updated", savedStudent.getFirstName());
+        return studentViewMapper.convertToStudentResponse(savedStudent);
     }
 
     @Override
-    public void deleteStudent(Long studentId) {
+    public StudentResponse deleteStudent(Long studentId) {
         boolean existById = studentRepository.existsById(studentId);
         if (!existById) {
             log.error("Student with id = {} does not exists, you can not delete it", studentId);
@@ -84,20 +82,25 @@ public class StudentServiceImpl implements StudentService {
                     String.format("Student with id = %s does not exists, you can not delete it", studentId)
             );
         }
+        StudentEntity studentEntity = getByIdMethod(studentId);
         studentRepository.deleteById(studentId);
+        log.info("Student with id = {} has successfully deleted", studentId);
+
+        return studentViewMapper.convertToStudentResponse(studentEntity);
     }
 
     @Override
     public StudentResponse setStudentToGroup(Long groupId, Long studentId) {
         GroupEntity group = groupRepository.findById(groupId)
                 .orElseThrow(() -> {
-            log.error("Group with id = {} does not exists", groupId);
-            throw new NotFoundException(
-                    String.format("Group with id = %s does not exists", groupId)
-            );
-        });
+                    log.error("Group with id = {} does not exists", groupId);
+                    throw new NotFoundException(
+                            String.format("Group with id = %s does not exists", groupId)
+                    );
+                });
         StudentEntity student = getByIdMethod(studentId);
         student.setGroup(group);
+        log.info("Student with id = {} has successfully added to group with id = {}", studentId, groupId);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
     }
 
@@ -112,6 +115,7 @@ public class StudentServiceImpl implements StudentService {
                 });
         StudentEntity student = getByIdMethod(studentId);
         student.setCourse(course);
+        log.info("Student with id = {} has successfully added to course with id = {}", studentId, courseId);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
     }
 
@@ -138,6 +142,42 @@ public class StudentServiceImpl implements StudentService {
         return studentViewMapper.convertToStudentResponse(savedStudent);
     }
 
+    @Override
+    public List<StudentResponse> importExcel(MultipartFile files, Long groupId) throws IOException {
+
+        List<StudentEntity> students = new ArrayList<>();
+
+        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+        XSSFSheet wordSheet = workbook.getSheetAt(0);
+
+        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++){
+            if (index>0){
+                StudentEntity student = new StudentEntity();
+                XSSFRow row = wordSheet.getRow(index);
+                student.setFirstName(row.getCell(0).getStringCellValue());
+                student.setLastName(row.getCell(1).getStringCellValue());
+                student.setEmail(row.getCell(2).getStringCellValue());
+                student.setMobilePhone(String.valueOf(row.getCell(3).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+
+                students.add(student);
+            }
+        }
+
+        for (StudentEntity student: students){
+            GroupEntity groupEntity = groupRepository.getById(groupId);
+            student.setGroup(groupEntity);
+            studentRepository.save(student);
+        }
+
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity student : studentRepository.findAll()) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(student));
+        }
+        log.info("Found {} students ", studentResponses.size());
+        return studentResponses;
+    }
+
     private void checkEmail(String email) {
         boolean exists = studentRepository.existsByEmail(email);
         if (exists) {
@@ -146,5 +186,15 @@ public class StudentServiceImpl implements StudentService {
                     "Student with email = " + email + " already exists"
             );
         }
+    }
+
+    private StudentEntity getByIdMethod(Long studentId) {
+        return studentRepository.findById(studentId).
+                orElseThrow(() -> {
+                    log.error("Student with id = {} does not exists", studentId);
+                    throw new NotFoundException(
+                            String.format("Student with id = %s does not exists", studentId)
+                    );
+                });
     }
 }

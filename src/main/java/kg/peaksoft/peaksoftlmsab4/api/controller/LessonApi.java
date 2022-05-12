@@ -20,7 +20,7 @@ public class LessonApi {
 
     private final LessonService lessonService;
 
-    @PostMapping("{courseId}")
+    @PostMapping("/{courseId}")
     @Operation(summary = "Creates new entity: Lesson", description = "Saves a new lesson")
     public LessonResponse addLesson(@RequestBody LessonRequest lessonRequest, @PathVariable Long courseId) {
         return lessonService.create(lessonRequest, courseId);
@@ -32,23 +32,23 @@ public class LessonApi {
         return lessonService.getAll();
     }
 
-    @GetMapping("{lessonId}")
+    @GetMapping("/{id}")
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    public LessonResponse getLessonById(@PathVariable Long lessonId) {
-        return lessonService.getById(lessonId);
+    public LessonResponse getLessonById(@PathVariable Long id) {
+        return lessonService.getById(id);
     }
 
-    @PutMapping("{lessonId}")
+    @PutMapping("/{id}")
     @Operation(summary = "Updates the lesson ", description = "Updates the details of an endpoint with ID ")
-    public LessonResponse updateLesson(@PathVariable Long lessonId,
+    public LessonResponse updateLesson(@PathVariable Long id,
                                        @RequestBody LessonRequest lessonRequest) {
-        return lessonService.update(lessonId, lessonRequest);
+        return lessonService.update(id, lessonRequest);
     }
 
-    @DeleteMapping("{lessonId}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the lesson ", description = "Deletes lesson by id ")
-    public void deleteById(@PathVariable Long lessonId) {
-        lessonService.deleteById(lessonId);
+    public void deleteById(@PathVariable Long id) {
+        lessonService.deleteById(id);
     }
 }

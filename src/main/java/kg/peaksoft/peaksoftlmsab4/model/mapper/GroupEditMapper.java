@@ -24,6 +24,16 @@ public class GroupEditMapper {
         return group;
     }
 
+    public GroupEntity convert(GroupRequest groupRequest) {
+
+        GroupEntity group = new GroupEntity();
+        group.setGroupName(groupRequest.getGroupName());
+        group.setDateOfStart(groupRequest.getDateOfStart());
+        group.setDescription(groupRequest.getDescription());
+        group.setImage(groupRequest.getImage());
+        return group;
+    }
+
     public GroupEntity update(GroupEntity group, GroupRequest groupRequest) {
 
         group.setGroupName(groupRequest.getGroupName());
