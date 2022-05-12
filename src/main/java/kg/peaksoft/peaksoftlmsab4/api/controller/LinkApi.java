@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("api/links")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Link", description = "The Link CRUD operations")
 public class LinkApi {
 
