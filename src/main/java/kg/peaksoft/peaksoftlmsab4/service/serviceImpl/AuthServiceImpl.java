@@ -16,7 +16,6 @@ import kg.peaksoft.peaksoftlmsab4.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -46,9 +45,9 @@ public class AuthServiceImpl implements AuthService {
 
         AuthInfo authInfo = authInfoRepository.findByEmail(authRequest.getEmail())
                 .orElseThrow(() -> {
-                    log.error("User with email = {} does not registered", authRequest.getEmail());
-                    throw new BadCredentialsException(
-                            String.format("User with email = %s does not registered", authRequest.getEmail())
+                    log.error("User with email = {} does not exist", authRequest.getEmail());
+                    throw new NotFoundException(
+                            String.format("User with email = %s does not exist", authRequest.getEmail())
                     );
                 });
 
