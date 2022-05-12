@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/tasks")
-@CrossOrigin(origins = "*",maxAge = 3600)
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Task", description = "The Task CRUD operations")
