@@ -17,7 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/instructors")
 @AllArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
 @PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "Instructor", description = "The Instructor CRUD operations")
 public class InstructorApi {
