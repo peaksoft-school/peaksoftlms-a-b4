@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/options")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class OptionApi {
     private final OptionService service;
 

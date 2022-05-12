@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/tests")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class TestApi {
 
     private final TestService service;

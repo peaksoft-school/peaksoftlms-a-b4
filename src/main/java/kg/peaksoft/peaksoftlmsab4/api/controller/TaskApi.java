@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("api/tasks")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Task", description = "The Task CRUD operations")
 public class TaskApi {
 

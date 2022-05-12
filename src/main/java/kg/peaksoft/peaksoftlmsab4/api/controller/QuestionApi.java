@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/question")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class QuestionApi {
 
     private final QuestionService service;
