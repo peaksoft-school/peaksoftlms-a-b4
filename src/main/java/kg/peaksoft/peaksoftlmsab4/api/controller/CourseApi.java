@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin(origins = "*",maxAge = 3600)
 @PreAuthorize("hasAuthority('ADMIN')")
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Course", description = "The Course CRUD operations")
 public class CourseApi {
 

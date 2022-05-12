@@ -16,6 +16,7 @@ import java.util.List;
 @CrossOrigin(origins = "*",maxAge = 3600)
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Video", description = "The Video CRUD operations")
 public class VideoApi {
 
