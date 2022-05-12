@@ -5,15 +5,13 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 
 @RestController
 @RequestMapping("/api/authentication")
+@CrossOrigin(origins = "*",maxAge = 3600)
 @AllArgsConstructor
 public class AuthApi {
 
