@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/presentations")
+@CrossOrigin(origins = "*",maxAge = 3600)
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Presentation", description = "The Presentation CRUD operations")

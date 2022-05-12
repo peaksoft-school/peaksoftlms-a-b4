@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/links")
+@CrossOrigin(origins = "*",maxAge = 3600)
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
 @Tag(name = "Link", description = "The Link CRUD operations")
