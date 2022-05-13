@@ -13,5 +13,6 @@ public class PresentationRequest {
     @JsonProperty("presentation_name")
     private String presentationName;
     private String description;
-    private String link;
+    @JsonProperty("presentation_link")
+    private String presentationLink;
 }

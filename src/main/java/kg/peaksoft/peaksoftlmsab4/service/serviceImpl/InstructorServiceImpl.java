@@ -63,10 +63,14 @@ public class InstructorServiceImpl implements InstructorService {
         return instructorViewMapper.convertToInstructorResponse(instructor);
     }
 
-    @Transactional
     @Override
     public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
         InstructorEntity instructor = getByIdMethod(id);
+        String email = instructorRequest.getEmail();
+        checkEmail(email);
+
+        String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
+        instructorRequest.setPassword(encoderPassword);
         instructorEditMapper.updateInstructor(instructor, instructorRequest);
         InstructorEntity savedInstructor = instructorRepository.save(instructor);
         log.info(" Instructor with name : {} has successfully updated", savedInstructor.getFirstName());

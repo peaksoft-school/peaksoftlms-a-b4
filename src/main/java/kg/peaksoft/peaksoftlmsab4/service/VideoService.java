@@ -14,5 +14,5 @@ public interface VideoService {
 
     VideoResponse update(Long videoId, VideoRequest videoRequest);
 
-    void deleteById(Long videoId);
+    VideoResponse deleteById(Long videoId);
 }

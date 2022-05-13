@@ -52,7 +52,7 @@ public class PresentationApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the presentation ", description = "Deletes presentation by id ")
-    public void deleteById(@PathVariable Long id) {
-        presentationService.deleteById(id);
+    public PresentationResponse deleteById(@PathVariable Long id) {
+        return presentationService.deleteById(id);
     }
 }

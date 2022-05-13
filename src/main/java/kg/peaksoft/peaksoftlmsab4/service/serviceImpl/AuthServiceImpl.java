@@ -45,9 +45,9 @@ public class AuthServiceImpl implements AuthService {
 
         AuthInfo authInfo = authInfoRepository.findByEmail(authRequest.getEmail())
                 .orElseThrow(() -> {
-                    log.error("Course with email = {} does not exists", authRequest.getEmail());
+                    log.error("User with email = {} does not exist", authRequest.getEmail());
                     throw new NotFoundException(
-                            String.format("Course with email = %s does not exists", authRequest.getEmail())
+                            String.format("User with email = %s does not exist", authRequest.getEmail())
                     );
                 });
 

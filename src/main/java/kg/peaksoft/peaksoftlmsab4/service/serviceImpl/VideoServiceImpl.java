@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,23 +27,26 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public VideoResponse create(VideoRequest videoRequest, Long lessonId) {
         LessonEntity lesson = lessonRepository.getById(lessonId);
-        VideoEntity videoEntity = videoRepository.save(mapper.mapToEntity(videoRequest,null));
+
+        VideoEntity videoEntity = mapper.mapToEntity(videoRequest);
         videoEntity.setLessonEntity(lesson);
+        lesson.setVideoEntity(videoEntity);
+        VideoEntity savedVideoEntity = videoRepository.save(videoEntity);
         log.info(" Video with name : {} has successfully saved to database", videoEntity.getVideoName());
-        return mapper.mapToResponse(videoEntity);
+        return mapper.mapToResponse(savedVideoEntity);
     }
 
     @Override
     public List<VideoResponse> getAll() {
-        log.info("Fount {} videos",videoRepository.findAll().size());
+        log.info("Fount {} videos", videoRepository.findAll().size());
         return mapper.mapToResponse(videoRepository.findAll());
     }
 
     @Override
     public VideoResponse getById(Long videoId) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
-                .orElseThrow(()-> {
-                    throw new NotFoundException(String.format("video with id = %s does not exists",videoId));
+                .orElseThrow(() -> {
+                    throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
                 });
         return mapper.mapToResponse(videoEntity);
     }
@@ -52,23 +54,25 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public VideoResponse update(Long videoId, VideoRequest videoRequest) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
-                .orElseThrow(()-> {
-                    throw new NotFoundException(String.format("video with id = %s does not exists",videoId));
+                .orElseThrow(() -> {
+                    throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
                 });
         videoEntity.setVideoName(videoRequest.getVideoName());
         videoEntity.setDescription(videoRequest.getDescription());
-        videoEntity.setLink(videoRequest.getLink());
-        log.info("video with id = {} updated",videoId);
+        videoEntity.setVideoLink(videoRequest.getVideoLink());
+        videoRepository.save(videoEntity);
+        log.info("video with id = {} updated", videoId);
         return mapper.mapToResponse(videoEntity);
     }
 
     @Override
-    public void deleteById(Long videoId) {
+    public VideoResponse deleteById(Long videoId) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
-                .orElseThrow(()-> {
-                    throw new NotFoundException(String.format("video with id = %s does not exists",videoId));
+                .orElseThrow(() -> {
+                    throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
                 });
         videoRepository.delete(videoEntity);
-        log.info("video with id ={} successfully deleted",videoId);
+        log.info("video with id ={} successfully deleted", videoId);
+        return mapper.mapToResponse(videoEntity);
     }
 }

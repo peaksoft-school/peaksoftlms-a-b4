@@ -28,6 +28,6 @@ public class LinkEntity {
 
     private String text;
     private String link;
-    @OneToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST},fetch = FetchType.LAZY)
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH})
     private LessonEntity lessonEntity;
 }
