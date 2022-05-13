@@ -26,23 +26,8 @@ public class TestStudentApi {
 
     @PostMapping("/save")
     public List<TestStudentResponse> createResult(@RequestBody TestStudentRequest testStudentRequest) {
-//        AuthInfo principal = (AuthInfo) authentication.getPrincipal();
+
         return service.createResult(testStudentRequest);
-    }
-
-//    @PutMapping("/update/{id}")
-//    public TestResultResponse update(@PathVariable Long id, @RequestBody TestResultRequest testResultRequest) {
-//        return service.update(id, testResultRequest);
-//    }
-
-    @GetMapping("/get")
-    public ResultResponse result() {
-        return service.result();
-    }
-
-    @GetMapping("/gets")
-    public ResultResponse testResults() {
-        return service.testResults();
     }
 
 

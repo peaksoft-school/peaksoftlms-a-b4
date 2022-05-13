@@ -2,13 +2,10 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.OptionResponse;
-import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.OptionEditMapper;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.OptionViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.OptionMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.OptionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.service.OptionService;
@@ -23,8 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class OptionServiceImpl implements OptionService {
-    private final OptionEditMapper editMapper;
-    private final OptionViewMapper viewMapper;
+    private final OptionMapper optionMapper;
+
     private final OptionRepository optionRepository;
     private final QuestionRepository questionRepository;
     private final ModelMapper modelMapper;
@@ -32,39 +29,41 @@ public class OptionServiceImpl implements OptionService {
 
     public OptionResponse create( OptionRequest optionRequest) {
         QuestionEntity question=new QuestionEntity();
-        OptionEntity optionEntity = editMapper.create(optionRequest);
+        OptionEntity optionEntity = optionMapper.create(optionRequest);
         OptionEntity save = optionRepository.save(optionEntity);
         question.setOption(save);
         log.info("successful variant save:{}", save);
-        return viewMapper.viewOption(optionRepository.save(save));
+        return optionMapper.viewOption(optionRepository.save(save));
 
 
     }
-
-
     @Override
     public OptionResponse update(Long id, OptionRequest optionRequest) {
-        //   OptionEntity option = getByIdMethod(id);
-        //  editMapper.update(option, optionRequest);
-        //  return viewMapper.viewOption(optionRepository.save(option));
-        return null;
+      OptionEntity option=optionRepository.findById(id).orElseThrow(()-> new NotFoundException(
+              String.format("Question with id = %s does not exists",id)
+      ));
+      optionMapper.update(option,optionRequest);
+
+        return optionMapper.viewOption(optionRepository.save(option));
     }
 
     @Override
     public OptionResponse findById(Long id) {
-        return viewMapper.viewOption(optionRepository.findById(id).get());
+        return optionMapper.viewOption(optionRepository.findById(id).orElseThrow(()-> new NotFoundException(
+                String.format("Option with id = %s does not exists",id))));
     }
 
     @Override
     public OptionResponse deleteById(Long id) {
-        OptionEntity option = optionRepository.findById(id).get();
+        OptionEntity option = optionRepository.findById(id).orElseThrow(()-> new NotFoundException(
+                String.format("Option with id = %s does not exists",id)));
         optionRepository.deleteById(id);
-        return viewMapper.viewOption(option);
+        return optionMapper.viewOption(option);
     }
 
     @Override
     public List<OptionResponse> findAll() {
-        return viewMapper.viewOptions(optionRepository.findAll());
+        return optionMapper.viewOptions(optionRepository.findAll());
     }
 
     @Override
@@ -77,8 +76,8 @@ public class OptionServiceImpl implements OptionService {
                     );
                 });
         OptionEntity option = getByIdMethod(optionId);
-//        option.setQuestion(question);
-        return viewMapper.viewOption(optionRepository.save(option));
+
+        return optionMapper.viewOption(optionRepository.save(option));
     }
 
     private OptionEntity getByIdMethod(Long optionId) {

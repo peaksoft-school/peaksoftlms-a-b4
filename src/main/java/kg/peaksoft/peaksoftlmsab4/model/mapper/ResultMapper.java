@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.ResultRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.ResultResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.ResultEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
@@ -11,12 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ResultEditMapper {
+public class ResultMapper {
     private final QuestionRepository questionRepository;
     private final TestStudentRepository testStudentRepository;
 
@@ -56,9 +57,27 @@ public class ResultEditMapper {
         return resultEntity;
     }
 
-    public ResultEntity createStudent(StudentEntity studentEntity) {
-        ResultEntity resultEntity = new ResultEntity();
-        resultEntity.setStudentName(studentEntity.getFirstName());
-        return resultEntity;
+
+    public ResultResponse viewResult(ResultEntity resultEntity) {
+
+
+        ResultResponse resultResponse = new ResultResponse();
+
+        resultResponse.setStudentName(resultEntity.getStudentName());
+        resultResponse.setCorrect(resultEntity.getCorrect());
+        resultResponse.setError(resultEntity.getError());
+        resultResponse.setPoint(resultEntity.getPoints());
+        resultResponse.setLocalDate(resultEntity.getLocalDate());
+
+        return resultResponse;
     }
+    public List<ResultResponse> viewResults(List<ResultEntity> results) {
+
+        List<ResultResponse> resultResponses = new ArrayList<>();
+        for (ResultEntity r : results) {
+            resultResponses.add(viewResult(r));
+        }
+        return resultResponses;
+    }
+
 }

@@ -1,14 +1,11 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionEditMapper;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsab4.service.OptionService;
@@ -17,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,16 +21,15 @@ import java.util.List;
 @Slf4j
 public class QuestionServiceImpl implements QuestionService {
 
-    private final QuestionViewMapper viewMapper;
+
     private final QuestionRepository questionRepository;
-    private final QuestionEditMapper editMapper;
+    private final QuestionMapper questionMapper;
     private final TestRepository testRepository;
-    private final OptionService optionService;
 
     @Override
     public QuestionResponse create(Long id, QuestionRequest questionRequest) {
 
-        return viewMapper.viewQuestion(questionRepository.save(editMapper.create(questionRequest)));
+        return questionMapper.viewQuestion(questionRepository.save(questionMapper.create(questionRequest)));
     }
 
     @Override
@@ -45,13 +40,13 @@ public class QuestionServiceImpl implements QuestionService {
                     String.format("Question with id = %s does not exists", id)
             );
         });
-        editMapper.update(question, questionRequest);
-        return viewMapper.viewQuestion(questionRepository.save(question));
+        questionMapper.update(question, questionRequest);
+        return questionMapper.viewQuestion(questionRepository.save(question));
     }
 
     @Override
     public QuestionResponse findById(Long id) {
-        return viewMapper.viewQuestion(questionRepository.findById(id).orElseThrow(() -> {
+        return questionMapper.viewQuestion(questionRepository.findById(id).orElseThrow(() -> {
             log.error("Question with id = {} does not exists", id);
             throw new NotFoundException(
                     String.format("Question with id = %s does not exists", id)
@@ -63,12 +58,12 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionResponse deleteById(Long id) {
         QuestionEntity question = getByIdMethod(id);
         questionRepository.deleteById(id);
-        return viewMapper.viewQuestion(question);
+        return questionMapper.viewQuestion(question);
     }
 
     @Override
     public List<QuestionResponse> findAll() {
-        return viewMapper.viewQuestions(questionRepository.findAll());
+        return questionMapper.viewQuestions(questionRepository.findAll());
     }
 
     @Override
@@ -81,8 +76,8 @@ public class QuestionServiceImpl implements QuestionService {
                     );
                 });
         QuestionEntity question = getByIdMethod(questionId);
-        // question.setTestEntity(test);
-        return viewMapper.viewQuestion(questionRepository.save(question));
+
+        return questionMapper.viewQuestion(questionRepository.save(question));
     }
 
     private QuestionEntity getByIdMethod(Long questionId) {

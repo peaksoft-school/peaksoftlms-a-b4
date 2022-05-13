@@ -12,11 +12,6 @@ public interface ResultService {
 
     ResultResponse createResult(ResultRequest resultRequest);
 
-    ResultResponse updateResult(Long id, ResultRequest resultRequest);
-
-    ResultResponse getById(Long id);
-
-    ResultResponse deleteById(Long id);
 
     List<ResultResponse> getAll();
 }

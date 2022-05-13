@@ -13,12 +13,6 @@ public interface TestStudentService {
 
     List<TestStudentResponse> createResult(TestStudentRequest testStudentRequest);
 
-    // TestResultResponse update(Long id, TestResultRequest testResultRequest);
-
-
-    ResultResponse result();
-
-    ResultResponse testResults();
 
 
 }

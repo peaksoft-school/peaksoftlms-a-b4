@@ -39,6 +39,8 @@ public class StudentEntity {
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
 
+    String email;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     AuthInfo authInfo;
 
