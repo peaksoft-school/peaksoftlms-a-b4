@@ -32,7 +32,7 @@ public class TaskApi {
     @Operation(summary = "Gets a single tasks by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("/{id}")
-    public TaskEntity GetTaskById(@PathVariable Long id) {
+    public TaskResponse GetTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
 

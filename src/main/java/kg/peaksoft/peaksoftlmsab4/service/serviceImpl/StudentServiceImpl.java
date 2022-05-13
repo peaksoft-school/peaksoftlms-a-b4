@@ -157,7 +157,7 @@ public class StudentServiceImpl implements StudentService {
                 student.setFirstName(row.getCell(0).getStringCellValue());
                 student.setLastName(row.getCell(1).getStringCellValue());
                 student.setEmail(row.getCell(2).getStringCellValue());
-                student.setMobilePhone(String.valueOf(row.getCell(3).getNumericCellValue()));
+                student.setMobilePhone(String.valueOf((int)row.getCell(3).getNumericCellValue()));
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
 
                 students.add(student);

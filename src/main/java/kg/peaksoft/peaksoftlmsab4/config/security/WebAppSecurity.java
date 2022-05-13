@@ -3,13 +3,14 @@ package kg.peaksoft.peaksoftlmsab4.config.security;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtConfig;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.repository.AuthInfoRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -29,6 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         securedEnabled = true
 )
 @AllArgsConstructor
+@Slf4j
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
     private final AuthInfoRepository authInfoRepository;
@@ -50,7 +52,12 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return (email) -> authInfoRepository.findByEmail(email)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> {
+                    log.error("User with email = {} does not registered", email);
+                    throw new BadCredentialsException(
+                            String.format("User with email = %s does not registered", email)
+                    );
+                });
     }
 
     @Override

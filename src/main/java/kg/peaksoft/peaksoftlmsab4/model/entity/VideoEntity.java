@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.*;
-import static javax.persistence.CascadeType.PERSIST;
 
 @Builder
 @Entity
@@ -26,9 +25,11 @@ public class VideoEntity {
             generator = "videos_sequence"
     )
     private Long id;
+    @Column(name = "video_name")
     private String videoName;
     private String description;
-    private String link;
-    @OneToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST},fetch = FetchType.LAZY)
+    @Column(name = "video_link")
+    private String videoLink;
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH})
     private LessonEntity lessonEntity;
 }

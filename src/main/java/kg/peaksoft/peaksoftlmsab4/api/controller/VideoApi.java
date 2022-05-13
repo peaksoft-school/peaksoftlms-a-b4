@@ -49,7 +49,7 @@ public class VideoApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the video ", description = "Deletes video by id ")
-    public void deleteById(@PathVariable Long id) {
-        videoService.deleteById(id);
+    public VideoResponse deleteById(@PathVariable Long id) {
+        return videoService.deleteById(id);
     }
 }

@@ -14,5 +14,5 @@ public interface PresentationService {
 
     PresentationResponse update(Long presentationId, PresentationRequest presentationRequest);
 
-    void deleteById(Long presentationId);
+    PresentationResponse deleteById(Long presentationId);
 }

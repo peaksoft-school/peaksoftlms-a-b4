@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class GroupEditMapper {
+
     public GroupEntity create(CourseEntity course, GroupRequest groupRequest) {
         if (groupRequest == null) {
             log.error("The request is null!");

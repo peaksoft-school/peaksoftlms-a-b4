@@ -13,20 +13,29 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskMapper {
 
-    public TaskEntity mapToEntity(TaskRequest taskRequest, Long id) {
+    public TaskEntity mapToEntity(TaskRequest taskRequest) {
         if (taskRequest == null) {
             return null;
         }
 
         return TaskEntity.builder()
-                .id(id)
                 .taskName(taskRequest.getTaskName())
                 .text(taskRequest.getText())
-                .fileFormat(taskRequest.getFileFormat())
+                .fileLink(taskRequest.getFileLink())
                 .link(taskRequest.getLink())
                 .code(taskRequest.getCode())
-                .image(taskRequest.getImage())
+                .imageLink(taskRequest.getImageLink())
                 .build();
+    }
+
+    public TaskEntity update(TaskEntity taskEntity, TaskRequest taskRequest) {
+        taskEntity.setTaskName(taskRequest.getTaskName());
+        taskEntity.setText(taskRequest.getText());
+        taskEntity.setFileLink(taskRequest.getFileLink());
+        taskEntity.setImageLink(taskRequest.getImageLink());
+        taskEntity.setLink(taskRequest.getLink());
+        taskEntity.setCode(taskRequest.getCode());
+        return taskEntity;
     }
 
     public List<TaskResponse> mapToResponse(List<TaskEntity> tasks) {
@@ -42,10 +51,10 @@ public class TaskMapper {
                 .id(task.getId())
                 .taskName(task.getTaskName())
                 .text(task.getText())
-                .fileFormat(task.getFileFormat())
+                .fileLink(task.getFileLink())
                 .link(task.getLink())
                 .code(task.getCode())
-                .image(task.getImage())
+                .imageLink(task.getImageLink())
                 .build();
     }
 }
