@@ -1,7 +1,10 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import kg.peaksoft.peaksoftlmsab4.service.FileService;
 import lombok.AllArgsConstructor;
@@ -11,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -52,11 +53,5 @@ public class AWSS3Service implements FileService {
     public String deleteFile(String fileName) {
         awsS3Client.deleteObject("lms-a", fileName);
         return "File deleted";
-    }
-
-    @Override
-    public List<String> listAllFiles() {
-        ListObjectsV2Result listObjectsV2Result = awsS3Client.listObjectsV2("lms-a");
-        return listObjectsV2Result.getObjectSummaries().stream().map(S3ObjectSummary::getKey).collect(Collectors.toList());
     }
 }

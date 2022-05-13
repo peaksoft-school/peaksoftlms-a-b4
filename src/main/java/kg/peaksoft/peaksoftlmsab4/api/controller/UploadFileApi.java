@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -22,6 +21,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 @RequestMapping("/api/file")
 @AllArgsConstructor
 @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'ADMIN')")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Upload File", description = "The Upload File s3 operations")
 public class UploadFileApi {
 
@@ -52,11 +52,4 @@ public class UploadFileApi {
         return fileService.deleteFile(filename);
     }
 
-    @Operation(summary = "Get all files", description = "Get all files from aws s3 bucket")
-    @GetMapping("/list")
-    public List<String> getAllFiles() {
-
-        return fileService.listAllFiles();
-
-    }
 }
