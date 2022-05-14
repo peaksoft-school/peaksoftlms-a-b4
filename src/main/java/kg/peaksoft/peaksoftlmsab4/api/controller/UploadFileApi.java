@@ -30,9 +30,9 @@ public class UploadFileApi {
     @Operation(summary = "Save file to s3", description = "Save file to aws s3 repository and get link for this file")
     @PostMapping
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
-        String publicURL = fileService.uploadFile(file);
+        String url = fileService.uploadFile(file);
         Map<String, String> response = new HashMap<>();
-        response.put("publicURL", publicURL);
+        response.put("url", url);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
