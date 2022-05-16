@@ -18,7 +18,6 @@ import java.util.List;
 @PreAuthorize("hasAuthority('ADMIN')")
 @CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Group", description = "The Group CRUD operations")
-@CrossOrigin(origins = "*",maxAge = 3600)
 public class GroupApi {
     private final GroupService service;
 

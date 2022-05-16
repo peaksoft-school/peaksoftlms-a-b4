@@ -13,7 +13,6 @@ import javax.annotation.security.PermitAll;
 @RequestMapping("/api/authentication")
 @CrossOrigin(origins = "*",maxAge = 3600)
 @AllArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
 public class AuthApi {
 
     private final AuthServiceImpl authService;
