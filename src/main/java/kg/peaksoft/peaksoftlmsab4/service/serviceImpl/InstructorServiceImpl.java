@@ -86,8 +86,8 @@ public class InstructorServiceImpl implements InstructorService {
                     String.format("Instructor with id = %s does not exists, you can not delete it", id)
             );
         }
-        instructorRepository.deleteById(id);
         InstructorEntity instructorEntity = getByIdMethod(id);
+        instructorRepository.deleteById(id);
         log.info("Instructor with id = {} has successfully deleted", id);
         return instructorViewMapper.convertToInstructorResponse(instructorEntity);
     }
