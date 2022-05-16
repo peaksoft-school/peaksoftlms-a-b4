@@ -15,8 +15,9 @@ public class StudentViewMapper {
         studentResponse.setFirstName(student.getFirstName());
         studentResponse.setLastName(student.getLastName());
         studentResponse.setMobilePhone(student.getMobilePhone());
-        studentResponse.setEmail(student.getEmail());
+        studentResponse.setEmail(student.getAuthInfo().getEmail());
         studentResponse.setStudyFormat(student.getStudyFormat());
+        studentResponse.setRole(student.getAuthInfo().getRole());
         return studentResponse;
     }
 }

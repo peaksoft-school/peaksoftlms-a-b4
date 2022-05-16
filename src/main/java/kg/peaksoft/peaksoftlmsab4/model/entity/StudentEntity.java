@@ -35,10 +35,14 @@ public class StudentEntity {
     String lastName;
     @Column(name = "mobile_phone")
     String mobilePhone;
-    String email;
     @Column(name = "study_format")
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
+
+    String email;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    AuthInfo authInfo;
 
     @ManyToOne(cascade = {DETACH, MERGE, REFRESH})
     @JoinColumn(name = "group_id")
@@ -46,6 +50,8 @@ public class StudentEntity {
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "students")
     private List<CourseEntity> courses;
+
+
 
     public void setCourse(CourseEntity course) {
         if (courses == null) {
@@ -61,6 +67,7 @@ public class StudentEntity {
             course.getStudents().remove(this);
         }
     }
+
 }
 
 

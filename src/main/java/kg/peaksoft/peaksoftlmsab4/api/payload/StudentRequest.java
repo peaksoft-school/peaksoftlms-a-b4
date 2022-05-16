@@ -19,6 +19,7 @@ public class StudentRequest {
     private String lastName;
     @JsonProperty("mobile_phone")
     private String mobilePhone;
+    private String password;
     private String email;
     @Enumerated(value = EnumType.STRING)
     @JsonProperty("study_format")
