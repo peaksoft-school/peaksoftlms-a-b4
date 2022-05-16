@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
                     lastName = i.getLastName();
                 }
                 for (StudentEntity s : studentRepository.findAll()) {
-                    if (s.getEmail().equals(authInfo.getEmail())) {
+                    if (s.getAuthInfo().getEmail().equals(authInfo.getEmail())) {
                         firstName = s.getFirstName();
                         lastName = s.getLastName();
                     }

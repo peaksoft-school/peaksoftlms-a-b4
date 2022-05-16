@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.api.payload;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import lombok.Getter;
@@ -10,10 +9,10 @@ import lombok.Setter;
 @Setter
 public class StudentResponse {
     private String id;
-    private String firstName;
-    private String lastName;
-    private String mobilePhone;
+    private String fullName;
+    private String phoneNumber;
     private String email;
     private StudyFormat studyFormat;
+    private String groupName;
     private Role role;
 }
