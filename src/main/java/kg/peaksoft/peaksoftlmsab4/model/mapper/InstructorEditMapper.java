@@ -16,7 +16,7 @@ public class InstructorEditMapper {
         InstructorEntity instructor = new InstructorEntity();
         instructor.setFirstName(instructorRequest.getFirstName());
         instructor.setLastName(instructorRequest.getLastName());
-        instructor.setMobilePhone(instructorRequest.getMobilePhone());
+        instructor.setPhoneNumber(instructorRequest.getPhoneNumber());
         instructor.setSpecialization(instructorRequest.getSpecialization());
 
         AuthInfo authInfo = new AuthInfo();
@@ -32,7 +32,7 @@ public class InstructorEditMapper {
         instructorEntity.setFirstName(instructorRequest.getFirstName());
         instructorEntity.setLastName(instructorRequest.getLastName());
         instructorEntity.setSpecialization(instructorRequest.getSpecialization());
-        instructorEntity.setMobilePhone(instructorRequest.getMobilePhone());
+        instructorEntity.setPhoneNumber(instructorRequest.getPhoneNumber());
 
         instructorEntity.getAuthInfo().setEmail(instructorRequest.getEmail());
         instructorEntity.getAuthInfo().setPassword(instructorRequest.getPassword());

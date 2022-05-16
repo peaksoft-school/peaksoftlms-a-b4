@@ -19,7 +19,7 @@ public class StudentEditMapper {
         StudentEntity student = new StudentEntity();
         student.setFirstName(studentRequest.getFirstName());
         student.setLastName(studentRequest.getLastName());
-        student.setMobilePhone(studentRequest.getMobilePhone());
+        student.setPhoneNumber(studentRequest.getPhoneNumber());
         student.setStudyFormat(studentRequest.getStudyFormat());
 
         AuthInfo authInfo=new AuthInfo();
@@ -35,7 +35,7 @@ public class StudentEditMapper {
     public void updateStudent(StudentEntity studentEntity, StudentRequest studentRequest) {
         studentEntity.setFirstName(studentRequest.getFirstName());
         studentEntity.setLastName(studentRequest.getLastName());
-        studentEntity.setMobilePhone(studentRequest.getMobilePhone());
+        studentEntity.setPhoneNumber(studentRequest.getPhoneNumber());
         studentEntity.setStudyFormat(studentRequest.getStudyFormat());
 
         AuthInfo authInfo=new AuthInfo();

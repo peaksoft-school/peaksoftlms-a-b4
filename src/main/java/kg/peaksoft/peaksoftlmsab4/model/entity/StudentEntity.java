@@ -33,13 +33,11 @@ public class StudentEntity {
     String firstName;
     @Column(name = "last_name")
     String lastName;
-    @Column(name = "mobile_phone")
-    String mobilePhone;
+    @Column(name = "phone_number")
+    String phoneNumber;
     @Column(name = "study_format")
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
-
-    String email;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     AuthInfo authInfo;
