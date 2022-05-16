@@ -11,13 +11,10 @@ import javax.validation.constraints.NotBlank;
 @NotBlank
 public class TaskRequest {
 
-    @JsonProperty("task_name")
     private String taskName;
     private String text;
-    @JsonProperty("file_link")
     private String fileLink;
     private String link;
-    @JsonProperty("image_link")
     private String imageLink;
     private String code;
 }

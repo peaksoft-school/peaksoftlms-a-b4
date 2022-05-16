@@ -14,9 +14,6 @@ public class QuestionResponse {
 
     private Long id;
     private String question;
-
-    @JsonProperty("question_type")
     private QuestionType questionType;
-
     private List<OptionResponse>options;
 }

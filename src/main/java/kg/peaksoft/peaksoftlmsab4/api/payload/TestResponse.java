@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 public class TestResponse {
     private Long id;
-    @JsonProperty("test_name")
     private String testName;
     private List<QuestionResponse> questions;
 }

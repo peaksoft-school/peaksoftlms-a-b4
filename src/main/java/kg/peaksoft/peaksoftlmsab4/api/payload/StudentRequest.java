@@ -13,15 +13,11 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class StudentRequest {
-    @JsonProperty("first_name")
     private String firstName;
-    @JsonProperty("last_name")
     private String lastName;
-    @JsonProperty("mobile_phone")
     private String mobilePhone;
     private String password;
     private String email;
     @Enumerated(value = EnumType.STRING)
-    @JsonProperty("study_format")
     private StudyFormat studyFormat;
 }

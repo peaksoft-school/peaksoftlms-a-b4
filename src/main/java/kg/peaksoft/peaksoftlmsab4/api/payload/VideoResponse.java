@@ -10,9 +10,7 @@ import lombok.Setter;
 @Builder
 public class VideoResponse {
     Long id;
-    @JsonProperty("video_name")
     private String videoName;
     private String description;
-    @JsonProperty("video_link")
     private String videoLink;
 }

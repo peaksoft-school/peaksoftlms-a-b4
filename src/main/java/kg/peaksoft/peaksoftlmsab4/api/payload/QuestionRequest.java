@@ -15,7 +15,6 @@ public class QuestionRequest {
 
     @NotBlank
     private String question;
-    @JsonProperty("question_type")
     private QuestionType questionType;
 
     private List<OptionRequest>options;

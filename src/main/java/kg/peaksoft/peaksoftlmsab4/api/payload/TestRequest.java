@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class TestRequest {
-    @JsonProperty("test_name")
     private String testName;
     private List<QuestionRequest> questions;
 }

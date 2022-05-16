@@ -12,12 +12,10 @@ import java.time.LocalDate;
 @Setter
 public class GroupRequest {
     @NotBlank
-    @JsonProperty("group_name")
     private String groupName;
 
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @JsonProperty("date_of_start")
     private LocalDate dateOfStart;
 
     @NotBlank
