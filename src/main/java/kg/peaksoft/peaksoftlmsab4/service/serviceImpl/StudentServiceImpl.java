@@ -194,10 +194,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size) {
+    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size,StudyFormat studyFormat) {
         Pageable pageable = PageRequest.of(page, size);
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (StudentEntity student:studentRepository.findAllPag(pageable)) {
+        for (StudentEntity student:studentRepository.findStudentEntitiesByStudyFormat(pageable,studyFormat)) {
             studentResponses.add(studentViewMapper.convertToStudentResponse(student));
         }
         PaginationResponse<StudentResponse> paginationResponse = new PaginationResponse<>();

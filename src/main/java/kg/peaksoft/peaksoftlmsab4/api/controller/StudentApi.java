@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -82,7 +83,7 @@ public class StudentApi {
     }
 
     @GetMapping("/pagination")
-    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size){
-        return studentService.getStudentPagination(page-1,size);
+    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat){
+        return studentService.getStudentPagination(page-1,size,studyFormat);
     }
 }
