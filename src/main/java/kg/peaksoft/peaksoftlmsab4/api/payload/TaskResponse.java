@@ -11,12 +11,10 @@ import lombok.Setter;
 public class TaskResponse {
 
     private Long id;
-    @JsonProperty("task_name")
     private String taskName;
     private String text;
-    @JsonProperty("file_format")
-    private String fileFormat;
+    private String fileLink;
     private String link;
-    private String image;
+    private String imageLink;
     private String code;
 }

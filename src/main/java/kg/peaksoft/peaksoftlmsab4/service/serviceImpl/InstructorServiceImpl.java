@@ -63,10 +63,14 @@ public class InstructorServiceImpl implements InstructorService {
         return instructorViewMapper.convertToInstructorResponse(instructor);
     }
 
-    @Transactional
     @Override
     public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
         InstructorEntity instructor = getByIdMethod(id);
+        String email = instructorRequest.getEmail();
+        checkEmail(email);
+
+        String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
+        instructorRequest.setPassword(encoderPassword);
         instructorEditMapper.updateInstructor(instructor, instructorRequest);
         InstructorEntity savedInstructor = instructorRepository.save(instructor);
         log.info(" Instructor with name : {} has successfully updated", savedInstructor.getFirstName());
@@ -82,8 +86,8 @@ public class InstructorServiceImpl implements InstructorService {
                     String.format("Instructor with id = %s does not exists, you can not delete it", id)
             );
         }
-        instructorRepository.deleteById(id);
         InstructorEntity instructorEntity = getByIdMethod(id);
+        instructorRepository.deleteById(id);
         log.info("Instructor with id = {} has successfully deleted", id);
         return instructorViewMapper.convertToInstructorResponse(instructorEntity);
     }

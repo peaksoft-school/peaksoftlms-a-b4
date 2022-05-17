@@ -10,8 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class PresentationRequest {
-    @JsonProperty("presentation_name")
     private String presentationName;
     private String description;
-    private String link;
+    private String presentationLink;
 }

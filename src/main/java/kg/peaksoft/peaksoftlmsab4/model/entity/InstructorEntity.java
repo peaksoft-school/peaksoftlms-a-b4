@@ -1,14 +1,12 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Table(name = "instructors")
 @Getter
@@ -31,8 +29,8 @@ public class InstructorEntity {
     String firstName;
     @Column(name = "last_name")
     String lastName;
-    @Column(name = "mobile_phone")
-    String mobilePhone;
+    @Column(name = "phone_number")
+    String phoneNumber;
     String specialization;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     AuthInfo authInfo;

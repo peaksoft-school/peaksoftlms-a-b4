@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("api/students")
 @AllArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Student", description = "The Student CRUD operations")
 public class StudentApi {
 
@@ -35,10 +36,9 @@ public class StudentApi {
     }
 
     @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
-    @PostMapping("/{groupId}")
-    public StudentResponse saveStudentWithGroup(@PathVariable Long groupId,
-                                                @RequestBody StudentRequest studentRequestDto) {
-        return studentService.saveStudentWithGroup(groupId, studentRequestDto);
+    @PostMapping("/withGroup")
+    public StudentResponse saveStudentWithGroup(@RequestBody StudentRequest studentRequestDto) {
+        return studentService.saveStudentWithGroup(studentRequestDto);
     }
 
     @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
@@ -77,8 +77,8 @@ public class StudentApi {
     @Operation(summary = "Assign student to a course", description = "Adds a student to a course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @PutMapping("/accept-to-course")
-    public StudentResponse setStudentToCourse(@RequestParam Long studentId, @RequestParam Long courseId) {
-        return studentService.setStudentToCourse(studentId, courseId);
+    public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
+        return studentService.setStudentToCourse(courseId, studentId);
     }
 
     @GetMapping("/pagination")

@@ -1,9 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.PresentationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,21 +12,28 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class PresentationMapper {
-    public PresentationEntity mapToEntity(PresentationRequest presentationRequest,Long id) {
+
+    public PresentationEntity mapToEntity(PresentationRequest presentationRequest) {
         if (presentationRequest == null) {
             return null;
         }
         return PresentationEntity.builder()
-                .id(id)
                 .presentationName(presentationRequest.getPresentationName())
                 .description(presentationRequest.getDescription())
-                .link(presentationRequest.getLink())
+                .presentationLink(presentationRequest.getPresentationLink())
                 .build();
     }
 
-    public List<PresentationResponse> mapToResponse(List<PresentationEntity> presentationEntities){
+    public PresentationEntity update(PresentationEntity presentationEntity, PresentationRequest presentationRequest) {
+        presentationEntity.setPresentationName(presentationRequest.getPresentationName());
+        presentationEntity.setDescription(presentationRequest.getDescription());
+        presentationEntity.setPresentationLink(presentationRequest.getPresentationLink());
+        return presentationEntity;
+    }
+
+    public List<PresentationResponse> mapToResponse(List<PresentationEntity> presentationEntities) {
         List<PresentationResponse> presentationResponses = new ArrayList<>();
-        for (PresentationEntity presentationEntity:presentationEntities) {
+        for (PresentationEntity presentationEntity : presentationEntities) {
             presentationResponses.add(mapToResponse(presentationEntity));
         }
         return presentationResponses;
@@ -39,7 +44,7 @@ public class PresentationMapper {
                 .id(presentationEntity.getId())
                 .presentationName(presentationEntity.getPresentationName())
                 .description(presentationEntity.getDescription())
-                .link(presentationEntity.getLink())
+                .presentationLink(presentationEntity.getPresentationLink())
                 .build();
     }
 }

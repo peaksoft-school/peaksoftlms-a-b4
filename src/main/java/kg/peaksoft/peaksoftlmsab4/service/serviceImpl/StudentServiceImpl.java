@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
@@ -8,6 +7,7 @@ import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -123,15 +124,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequest) {
-        GroupEntity group = groupRepository.findById(groupId)
+    public StudentResponse saveStudentWithGroup( StudentRequest studentRequest) {
+        GroupEntity group = groupRepository.findById(studentRequest.getGroupId())
                 .orElseThrow(() -> {
-                    log.error("Group with id = {} does not exists", groupId);
+                    log.error("Group with id = {} does not exists", studentRequest.getGroupId());
                     throw new NotFoundException(
-                            String.format("Group with id = %s does not exists", groupId)
+                            String.format("Group with id = %s does not exists", studentRequest.getGroupId())
                     );
                 });
-
+        System.out.println(group);
         String email = studentRequest.getEmail();
         checkEmail(email);
 
@@ -159,9 +160,11 @@ public class StudentServiceImpl implements StudentService {
                 XSSFRow row = wordSheet.getRow(index);
                 student.setFirstName(row.getCell(0).getStringCellValue());
                 student.setLastName(row.getCell(1).getStringCellValue());
-                student.setEmail(row.getCell(2).getStringCellValue());
-                student.setMobilePhone(String.valueOf(row.getCell(3).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
+                student.getAuthInfo().setEmail(row.getCell(4).getStringCellValue());
+                student.getAuthInfo().setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
+                student.getAuthInfo().setPassword(passwordEncoder.encode(row.getCell(6).getStringCellValue()));
 
                 students.add(student);
             }

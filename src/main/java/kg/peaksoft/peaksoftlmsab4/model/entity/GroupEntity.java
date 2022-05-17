@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Table(name = "groups")
 @NoArgsConstructor
@@ -58,3 +60,4 @@ public class GroupEntity {
         student.setGroup(this);
     }
 }
+

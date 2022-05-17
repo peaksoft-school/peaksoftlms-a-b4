@@ -25,7 +25,7 @@ public interface StudentService {
 
     StudentResponse setStudentToCourse(Long courseId, Long studentId);
 
-    StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequestDto);
+    StudentResponse saveStudentWithGroup(StudentRequest studentRequestDto);
 
     List<StudentResponse> importExcel(MultipartFile file,Long groupId) throws IOException;
 

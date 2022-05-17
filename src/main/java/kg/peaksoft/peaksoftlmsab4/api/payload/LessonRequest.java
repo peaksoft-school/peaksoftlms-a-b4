@@ -10,6 +10,5 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class LessonRequest {
-    @JsonProperty("lesson_name")
     private String lessonName;
 }

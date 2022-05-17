@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
+
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class GroupEditMapper {
+
     public GroupEntity create(CourseEntity course, GroupRequest groupRequest) {
         if (groupRequest == null) {
             log.error("The request is null!");

@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("api/presentations")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Presentation", description = "The Presentation CRUD operations")
 public class PresentationApi {
 
@@ -51,7 +52,7 @@ public class PresentationApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the presentation ", description = "Deletes presentation by id ")
-    public void deleteById(@PathVariable Long id) {
-        presentationService.deleteById(id);
+    public PresentationResponse deleteById(@PathVariable Long id) {
+        return presentationService.deleteById(id);
     }
 }

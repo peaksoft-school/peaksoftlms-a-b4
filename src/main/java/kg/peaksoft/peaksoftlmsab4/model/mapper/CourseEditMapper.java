@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CourseEditMapper {
+
     public CourseEntity create(CourseRequest courseRequest) {
         if (courseRequest == null) {
             return null;

@@ -1,9 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class CourseEntity {
     @Id
     @SequenceGenerator(

@@ -1,10 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +9,8 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
+@Builder
+@ToString
 @Entity
 @Table(name = "students")
 @Getter
@@ -34,12 +33,14 @@ public class StudentEntity {
     String firstName;
     @Column(name = "last_name")
     String lastName;
-    @Column(name = "mobile_phone")
-    String mobilePhone;
-    String email;
+    @Column(name = "phone_number")
+    String phoneNumber;
     @Column(name = "study_format")
     @Enumerated(EnumType.STRING)
     StudyFormat studyFormat;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    AuthInfo authInfo;
 
     @ManyToOne(cascade = {DETACH, MERGE, REFRESH})
     @JoinColumn(name = "group_id")
@@ -47,6 +48,8 @@ public class StudentEntity {
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "students")
     private List<CourseEntity> courses;
+
+
 
     public void setCourse(CourseEntity course) {
         if (courses == null) {
@@ -62,6 +65,7 @@ public class StudentEntity {
             course.getStudents().remove(this);
         }
     }
+
 }
 
 

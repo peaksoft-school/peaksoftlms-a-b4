@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("api/tasks")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Task", description = "The Task CRUD operations")
 public class TaskApi {
 
@@ -31,7 +32,7 @@ public class TaskApi {
     @Operation(summary = "Gets a single tasks by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("/{id}")
-    public TaskEntity GetTaskById(@PathVariable Long id) {
+    public TaskResponse GetTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
 

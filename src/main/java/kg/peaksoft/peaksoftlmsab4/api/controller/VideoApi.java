@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("api/videos")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 @Tag(name = "Video", description = "The Video CRUD operations")
 public class VideoApi {
 
@@ -48,7 +49,7 @@ public class VideoApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the video ", description = "Deletes video by id ")
-    public void deleteById(@PathVariable Long id) {
-        videoService.deleteById(id);
+    public VideoResponse deleteById(@PathVariable Long id) {
+        return videoService.deleteById(id);
     }
 }
