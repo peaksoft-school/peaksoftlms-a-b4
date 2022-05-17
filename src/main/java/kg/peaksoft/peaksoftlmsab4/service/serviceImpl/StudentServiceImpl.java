@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
@@ -39,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final GroupRepository groupRepository;
     private final CourseRepository courseRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
 
