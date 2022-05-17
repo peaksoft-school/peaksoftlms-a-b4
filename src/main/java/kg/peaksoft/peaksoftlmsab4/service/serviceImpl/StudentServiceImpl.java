@@ -5,6 +5,7 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
@@ -164,10 +165,16 @@ public class StudentServiceImpl implements StudentService {
                 student.setLastName(row.getCell(1).getStringCellValue());
                 student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
-                student.getAuthInfo().setEmail(row.getCell(4).getStringCellValue());
-                student.getAuthInfo().setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
-                student.getAuthInfo().setPassword(passwordEncoder.encode(row.getCell(6).getStringCellValue()));
 
+                AuthInfo authInfo = new AuthInfo();
+                authInfo.setEmail(row.getCell(4).getStringCellValue());
+                authInfo.setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
+                authInfo.setPassword(passwordEncoder.encode(row.getCell(6).getStringCellValue()));
+
+                String email = authInfo.getEmail();
+                checkEmail(email);
+
+                student.setAuthInfo(authInfo);
                 students.add(student);
             }
         }
@@ -187,10 +194,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size) {
+    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size,StudyFormat studyFormat) {
         Pageable pageable = PageRequest.of(page, size);
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (StudentEntity student:studentRepository.findAllPag(pageable)) {
+        for (StudentEntity student:studentRepository.findStudentEntitiesByStudyFormat(pageable,studyFormat)) {
             studentResponses.add(studentViewMapper.convertToStudentResponse(student));
         }
         PaginationResponse<StudentResponse> paginationResponse = new PaginationResponse<>();
