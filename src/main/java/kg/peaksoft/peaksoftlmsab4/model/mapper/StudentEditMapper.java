@@ -42,5 +42,7 @@ public class StudentEditMapper {
         authInfo.setEmail(studentRequest.getEmail());
         authInfo.setPassword(studentRequest.getPassword());
         authInfo.setRole(Role.STUDENT);
+
+        studentEntity.setAuthInfo(authInfo);
     }
 }

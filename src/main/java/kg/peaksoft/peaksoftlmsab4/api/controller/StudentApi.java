@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
@@ -78,5 +79,10 @@ public class StudentApi {
     @PutMapping("/accept-to-course")
     public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
         return studentService.setStudentToCourse(courseId, studentId);
+    }
+
+    @GetMapping("/pagination")
+    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size){
+        return studentService.getStudentPagination(page-1,size);
     }
 }

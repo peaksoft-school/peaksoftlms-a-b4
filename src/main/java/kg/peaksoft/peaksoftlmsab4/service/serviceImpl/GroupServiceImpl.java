@@ -2,11 +2,14 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
@@ -14,9 +17,12 @@ import kg.peaksoft.peaksoftlmsab4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -94,6 +100,24 @@ public class GroupServiceImpl implements GroupService {
         group.setCourse(course);
         log.info("Group with id = {} has successfully added to course with id = {}", groupId, courseId);
         return viewMapper.viewGroup(group);
+    }
+
+    @Override
+    public PaginationResponse<GroupResponse> getGroupPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<GroupResponse> groupResponses = new ArrayList<>();
+        for (GroupEntity group:repository.findAllPag(pageable)) {
+            groupResponses.add(viewMapper.viewGroup(group));
+        }
+        PaginationResponse<GroupResponse> paginationResponse = new PaginationResponse<>();
+        paginationResponse.setResponseList(groupResponses);
+        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setPageSize(pageable.getPageSize());
+        paginationResponse.setListSize(repository.findAll().size());
+        paginationResponse.setHowManyPages(
+                paginationResponse.getListSize()%pageable.getPageSize()+
+                        paginationResponse.getListSize()/pageable.getPageSize());
+        return paginationResponse;
     }
 
     private GroupEntity getByMethod(Long groupId) {

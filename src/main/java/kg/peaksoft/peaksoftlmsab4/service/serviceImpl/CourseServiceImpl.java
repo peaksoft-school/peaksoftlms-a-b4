@@ -1,9 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.*;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
@@ -18,6 +15,8 @@ import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -112,6 +111,24 @@ public class CourseServiceImpl implements CourseService {
         }
         log.info("successfully getAll teacher by Course Id");
         return instructorResponses;
+    }
+
+    @Override
+    public PaginationResponse<CourseResponse> getCoursePagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<CourseResponse> courseResponses = new ArrayList<>();
+        for (CourseEntity course:courseRepository.findAllPag(pageable)) {
+            courseResponses.add(courseViewMapper.viewCourse(course));
+        }
+        PaginationResponse<CourseResponse> paginationResponse = new PaginationResponse<>();
+        paginationResponse.setResponseList(courseResponses);
+        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setPageSize(pageable.getPageSize());
+        paginationResponse.setListSize(courseRepository.findAll().size());
+        paginationResponse.setHowManyPages(
+                paginationResponse.getListSize()%pageable.getPageSize()+
+                        paginationResponse.getListSize()/pageable.getPageSize());
+        return paginationResponse;
     }
 
     private CourseEntity getByIdMethod(Long courseId) {

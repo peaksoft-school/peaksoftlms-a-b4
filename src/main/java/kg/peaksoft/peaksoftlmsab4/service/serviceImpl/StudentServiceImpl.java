@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
@@ -20,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -181,6 +184,24 @@ public class StudentServiceImpl implements StudentService {
         }
         log.info("Found {} students ", studentResponses.size());
         return studentResponses;
+    }
+
+    @Override
+    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity student:studentRepository.findAllPag(pageable)) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(student));
+        }
+        PaginationResponse<StudentResponse> paginationResponse = new PaginationResponse<>();
+        paginationResponse.setResponseList(studentResponses);
+        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setPageSize(pageable.getPageSize());
+        paginationResponse.setListSize(studentRepository.findAll().size());
+        paginationResponse.setHowManyPages(
+                paginationResponse.getListSize()%pageable.getPageSize()+
+                paginationResponse.getListSize()/pageable.getPageSize());
+        return paginationResponse;
     }
 
     private void checkEmail(String email) {
