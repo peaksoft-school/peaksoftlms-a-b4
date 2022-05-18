@@ -1,12 +1,15 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
@@ -19,6 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +41,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final GroupRepository groupRepository;
     private final CourseRepository courseRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
 
@@ -120,15 +127,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse saveStudentWithGroup(Long groupId, StudentRequest studentRequest) {
-        GroupEntity group = groupRepository.findById(groupId)
+    public StudentResponse saveStudentWithGroup( StudentRequest studentRequest) {
+        GroupEntity group = groupRepository.findById(studentRequest.getGroupId())
                 .orElseThrow(() -> {
-                    log.error("Group with id = {} does not exists", groupId);
+                    log.error("Group with id = {} does not exists", studentRequest.getGroupId());
                     throw new NotFoundException(
-                            String.format("Group with id = %s does not exists", groupId)
+                            String.format("Group with id = %s does not exists", studentRequest.getGroupId())
                     );
                 });
-
+        System.out.println(group);
         String email = studentRequest.getEmail();
         checkEmail(email);
 
@@ -156,10 +163,18 @@ public class StudentServiceImpl implements StudentService {
                 XSSFRow row = wordSheet.getRow(index);
                 student.setFirstName(row.getCell(0).getStringCellValue());
                 student.setLastName(row.getCell(1).getStringCellValue());
-                student.setEmail(row.getCell(2).getStringCellValue());
-                student.setMobilePhone(String.valueOf((int)row.getCell(3).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
 
+                AuthInfo authInfo = new AuthInfo();
+                authInfo.setEmail(row.getCell(4).getStringCellValue());
+                authInfo.setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
+                authInfo.setPassword(passwordEncoder.encode(row.getCell(6).getStringCellValue()));
+
+                String email = authInfo.getEmail();
+                checkEmail(email);
+
+                student.setAuthInfo(authInfo);
                 students.add(student);
             }
         }
@@ -176,6 +191,24 @@ public class StudentServiceImpl implements StudentService {
         }
         log.info("Found {} students ", studentResponses.size());
         return studentResponses;
+    }
+
+    @Override
+    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size,StudyFormat studyFormat) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity student:studentRepository.findStudentEntitiesByStudyFormat(pageable,studyFormat)) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(student));
+        }
+        PaginationResponse<StudentResponse> paginationResponse = new PaginationResponse<>();
+        paginationResponse.setResponseList(studentResponses);
+        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setPageSize(pageable.getPageSize());
+        paginationResponse.setListSize(studentRepository.findAll().size());
+        paginationResponse.setHowManyPages(
+                paginationResponse.getListSize()%pageable.getPageSize()+
+                paginationResponse.getListSize()/pageable.getPageSize());
+        return paginationResponse;
     }
 
     private void checkEmail(String email) {

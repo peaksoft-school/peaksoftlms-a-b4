@@ -2,8 +2,10 @@ package kg.peaksoft.peaksoftlmsab4.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +19,7 @@ import java.util.List;
 @RequestMapping("api/students")
 @AllArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Student", description = "The Student CRUD operations")
 public class StudentApi {
 
@@ -35,10 +37,9 @@ public class StudentApi {
     }
 
     @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
-    @PostMapping("/{groupId}")
-    public StudentResponse saveStudentWithGroup(@PathVariable Long groupId,
-                                                @RequestBody StudentRequest studentRequestDto) {
-        return studentService.saveStudentWithGroup(groupId, studentRequestDto);
+    @PostMapping("/withGroup")
+    public StudentResponse saveStudentWithGroup(@RequestBody StudentRequest studentRequestDto) {
+        return studentService.saveStudentWithGroup(studentRequestDto);
     }
 
     @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
@@ -79,5 +80,10 @@ public class StudentApi {
     @PutMapping("/accept-to-course")
     public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
         return studentService.setStudentToCourse(courseId, studentId);
+    }
+
+    @GetMapping("/pagination")
+    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat){
+        return studentService.getStudentPagination(page-1,size,studyFormat);
     }
 }

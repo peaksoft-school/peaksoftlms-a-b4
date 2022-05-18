@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface GroupService {
     GroupResponse saveGroup(GroupRequest groupRequest);
 
     GroupResponse setGroupToCourse(Long groupId, Long courseId);
+
+    PaginationResponse<GroupResponse> getGroupPagination(int page, int size);
 }

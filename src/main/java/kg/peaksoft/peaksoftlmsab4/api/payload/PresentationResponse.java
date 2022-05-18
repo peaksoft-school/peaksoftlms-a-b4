@@ -10,9 +10,7 @@ import lombok.Setter;
 @Builder
 public class PresentationResponse {
     Long id;
-    @JsonProperty("presentation_name")
     private String presentationName;
     private String description;
-    @JsonProperty("presentation_link")
     private String presentationLink;
 }

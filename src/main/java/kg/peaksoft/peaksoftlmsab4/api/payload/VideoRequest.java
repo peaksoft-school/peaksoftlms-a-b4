@@ -10,9 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class VideoRequest {
-    @JsonProperty("video_name")
     private String videoName;
     private String description;
-    @JsonProperty("video_link")
     private String videoLink;
 }

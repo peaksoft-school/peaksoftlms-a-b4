@@ -11,9 +11,7 @@ import java.time.LocalDate;
 public class GroupResponse {
 
     private Long id;
-    @JsonProperty("group_name")
     private String groupName;
-    @JsonProperty("date_of_start")
     private LocalDate dateOfStart;
     private String description;
     private String image;

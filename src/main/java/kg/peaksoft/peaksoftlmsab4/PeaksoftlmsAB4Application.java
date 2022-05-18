@@ -31,7 +31,7 @@ public class PeaksoftlmsAB4Application {
         System.out.println("Welcome colleagues, project name is Peaksoftlms-A!");
     }
 
-//    @PostConstruct
+    @PostConstruct
     public void init() {
         UserEntity user = new UserEntity();
         user.setFirstName("Admin");
@@ -42,7 +42,6 @@ public class PeaksoftlmsAB4Application {
         authInfo.setPassword(passwordEncoder.encode("admin"));
         authInfo.setRole(Role.ADMIN);
         user.setAuthInfo(authInfo);
-        System.out.println("------------------------");
         repository.save(user);
         System.out.println(user);
     }

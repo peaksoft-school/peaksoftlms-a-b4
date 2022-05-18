@@ -12,11 +12,12 @@ public class StudentViewMapper {
         }
         StudentResponse studentResponse=new StudentResponse();
         studentResponse.setId(String.valueOf(student.getId()));
-        studentResponse.setFirstName(student.getFirstName());
-        studentResponse.setLastName(student.getLastName());
-        studentResponse.setMobilePhone(student.getMobilePhone());
-        studentResponse.setEmail(student.getEmail());
+        studentResponse.setFullName(student.getFirstName() + " " + student.getLastName());
+        studentResponse.setPhoneNumber(student.getPhoneNumber());
+        studentResponse.setEmail(student.getAuthInfo().getEmail());
         studentResponse.setStudyFormat(student.getStudyFormat());
+        studentResponse.setRole(student.getAuthInfo().getRole());
+        studentResponse.setGroupName(student.getGroup().getGroupName());
         return studentResponse;
     }
 }
