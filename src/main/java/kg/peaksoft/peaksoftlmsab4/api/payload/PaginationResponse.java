@@ -9,8 +9,6 @@ import java.util.List;
 @Setter
 public class PaginationResponse <S>{
     List<S> responseList;
-    private int listSize;
-    private int pageSize;
+    private int totalPage;
     private int currentPage;
-    private int HowManyPages;
 }
