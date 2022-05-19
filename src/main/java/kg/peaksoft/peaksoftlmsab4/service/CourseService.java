@@ -20,6 +20,8 @@ public interface CourseService {
 
     List<InstructorResponse> getAllTeacherByCourseId(Long id);
 
+    String assignTeacherToCourse(AssignRequest assignRequest);
+
     PaginationResponse<CourseResponse> getCoursePagination(int page, int size);
 
 }

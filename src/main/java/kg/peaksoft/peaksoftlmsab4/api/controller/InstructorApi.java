@@ -78,5 +78,7 @@ public class InstructorApi {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
         return instructorService.getInstructorsCourses(authInfo.getEmail());
     }
+
+
 }
 
