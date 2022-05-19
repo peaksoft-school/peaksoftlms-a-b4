@@ -2,10 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.*;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,5 +66,12 @@ public class CourseApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public List<InstructorResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return courseService.getAllTeacherByCourseId(id);
+    }
+
+    @Operation(summary = "Assign Teacher to Course",description = "Assign Teacher to Course")
+    @PostMapping("/assign")
+    public String assignTeacher(@RequestBody AssignRequest assignRequest){
+
+        return  courseService.assignTeacherToCourse(assignRequest);
     }
 }

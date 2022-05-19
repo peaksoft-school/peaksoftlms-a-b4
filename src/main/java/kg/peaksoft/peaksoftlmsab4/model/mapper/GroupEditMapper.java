@@ -20,7 +20,7 @@ public class GroupEditMapper {
         group.setDateOfStart(groupRequest.getDateOfStart());
         group.setDescription(groupRequest.getDescription());
         group.setImage(groupRequest.getImage());
-        group.setCourse(course);
+
         return group;
     }
 
