@@ -117,8 +117,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public String assignTeacherToCourse(AssignRequest assignRequest) {
-        CourseEntity course = courseRepository.findById(assignRequest.getCourseId()).orElseThrow(() -> new NotFoundException("this id not found"));
-        InstructorEntity instructorEntity = instructorRepository.findById(assignRequest.getTeacherId()).orElseThrow(() -> new NotFoundException("this id not found"));
+        CourseEntity course = courseRepository.findById(assignRequest.getCourseId())
+                .orElseThrow(() -> new NotFoundException("this id not found"));
+
+        InstructorEntity instructorEntity = instructorRepository.findById(assignRequest.getTeacherId())
+                .orElseThrow(() -> new NotFoundException("this id not found"));
+
         course.setInstructor(instructorEntity);
         return String.format("Muhammed add teacher to course=%s",course);
     }
