@@ -1,9 +1,11 @@
 package kg.peaksoft.peaksoftlmsab4.api.payload;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import kg.peaksoft.peaksoftlmsab4.model.entity.TaskTypeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,9 +14,5 @@ public class TaskResponse {
 
     private Long id;
     private String taskName;
-    private String text;
-    private String fileLink;
-    private String link;
-    private String imageLink;
-    private String code;
+    private List<TaskTypeEntity> taskTypeEntity;
 }
