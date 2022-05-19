@@ -138,7 +138,7 @@ public class CourseServiceImpl implements CourseService {
         PaginationResponse<CourseResponse> paginationResponse = new PaginationResponse<>();
         paginationResponse.setResponseList(courseResponses);
         paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
-        paginationResponse.setTotalPage(courseRepository.findAll().size());
+        paginationResponse.setTotalPage(courseRepository.findAll(pageable).getTotalPages());
         return paginationResponse;
     }
 

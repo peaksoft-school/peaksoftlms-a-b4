@@ -20,10 +20,7 @@ public class OptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String answer;
+    private String option;
     private Boolean isTrue;
 
-
-//    @OneToOne
-//    private TestStudentEntity testStudent;
 }

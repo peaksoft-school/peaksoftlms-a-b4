@@ -16,7 +16,7 @@ public class CourseRequest {
     @NotBlank
     private String courseName;
     @NotBlank
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfStart;
     @NotBlank
     private String description;

@@ -8,7 +8,7 @@ import lombok.Setter;
 public class OptionResponse {
 
     private Long id;
-    private String answer;
+    private String option;
     private Boolean isTrue;
 
 }

@@ -33,7 +33,7 @@ public class TestStudentMapper {
         TestStudentEntity testStudent = new TestStudentEntity();
 
         for (OptionEntity o : options) {
-            testStudent.setAnswer(o.getAnswer());
+            testStudent.setAnswer(o.getOption());
             testStudent.setIsTrue(o.getIsTrue());
             resultEntities.add(testStudent);
         }
@@ -59,7 +59,7 @@ public class TestStudentMapper {
     public TestStudentResponse viewTestResult(TestStudentEntity resultEntity) {
         TestStudentResponse testResultResponse = new TestStudentResponse();
         testResultResponse.setId(resultEntity.getId());
-        testResultResponse.setAnswer(resultEntity.getAnswer());
+        testResultResponse.setOption(resultEntity.getAnswer());
 
 
         return testResultResponse;
