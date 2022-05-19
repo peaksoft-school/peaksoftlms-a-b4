@@ -38,11 +38,8 @@ public class StudentEditMapper {
         studentEntity.setPhoneNumber(studentRequest.getPhoneNumber());
         studentEntity.setStudyFormat(studentRequest.getStudyFormat());
 
-        AuthInfo authInfo=new AuthInfo();
-        authInfo.setEmail(studentRequest.getEmail());
-        authInfo.setPassword(studentRequest.getPassword());
-        authInfo.setRole(Role.STUDENT);
-
-        studentEntity.setAuthInfo(authInfo);
+        studentEntity.getAuthInfo().setEmail(studentRequest.getEmail());
+        studentEntity.getAuthInfo().setPassword(studentRequest.getPassword());
+        studentEntity.getAuthInfo().setRole(Role.STUDENT);
     }
 }
