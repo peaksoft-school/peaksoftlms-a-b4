@@ -43,9 +43,6 @@ public class TestStudentServiceImpl implements TestStudentService {
         return editMapper.viewTestResults(testStudentRepository.saveAll(editMapper.createResult(testStudentRequest)));
 
     }
-
-
-
 }
 
 

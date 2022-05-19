@@ -8,10 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TestStudentRepository extends JpaRepository<TestStudentEntity, Long> {
 
-    int countAllByAnswerTrue();
-
-    int countAllByAnswerFalse();
-
-    @Query("select count (id) from  TestStudentEntity ")
-    int countAllById();
 }

@@ -67,8 +67,10 @@ public class InstructorServiceImpl implements InstructorService {
     public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
         InstructorEntity instructor = getByIdMethod(id);
         String email = instructorRequest.getEmail();
-        checkEmail(email);
-
+        String entityEmail = instructor.getAuthInfo().getEmail();
+        if (!email.equals(entityEmail)) {
+            checkEmail(email);
+        }
         String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
         instructorRequest.setPassword(encoderPassword);
         instructorEditMapper.updateInstructor(instructor, instructorRequest);
