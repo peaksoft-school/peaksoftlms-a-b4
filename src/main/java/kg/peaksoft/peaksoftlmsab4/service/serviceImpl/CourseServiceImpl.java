@@ -119,12 +119,11 @@ public class CourseServiceImpl implements CourseService {
     public String assignTeacherToCourse(AssignRequest assignRequest) {
         CourseEntity course = courseRepository.findById(assignRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("this id not found"));
-
-        InstructorEntity instructorEntity = instructorRepository.findById(assignRequest.getTeacherId())
-                .orElseThrow(() -> new NotFoundException("this id not found"));
-
-        course.setInstructor(instructorEntity);
-        return String.format("Muhammed add teacher to course=%s",course);
+        for (Long id : assignRequest.getTeacherId()) {
+            course.setInstructor(instructorRepository.findById(id).orElseThrow(() -> new NotFoundException("this id not found")));
+        }
+        courseRepository.save(course);
+        return String.format("Muhammed add teacher to course=%s", course);
     }
 
     private CourseEntity getByIdMethod(Long courseId) {
