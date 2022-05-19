@@ -112,11 +112,7 @@ public class GroupServiceImpl implements GroupService {
         PaginationResponse<GroupResponse> paginationResponse = new PaginationResponse<>();
         paginationResponse.setResponseList(groupResponses);
         paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
-        paginationResponse.setPageSize(pageable.getPageSize());
-        paginationResponse.setListSize(repository.findAll().size());
-        paginationResponse.setHowManyPages(
-                paginationResponse.getListSize()%pageable.getPageSize()+
-                        paginationResponse.getListSize()/pageable.getPageSize());
+        paginationResponse.setTotalPage(repository.findAll().size());
         return paginationResponse;
     }
 

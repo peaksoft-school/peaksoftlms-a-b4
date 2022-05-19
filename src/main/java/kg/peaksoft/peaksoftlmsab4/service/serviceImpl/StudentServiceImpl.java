@@ -74,7 +74,24 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse updateStudent(Long studentId, StudentRequest studentRequest) {
         StudentEntity student = getByIdMethod(studentId);
+        String email = studentRequest.getEmail();
+        String entityEmail = student.getAuthInfo().getEmail();
+        if (!email.equals(entityEmail)) {
+            checkEmail(email);
+        }
+
+        String encoderPassword = passwordEncoder.encode(studentRequest.getPassword());
+        studentRequest.setPassword(encoderPassword);
+        GroupEntity groupEntity = groupRepository.findById(studentRequest.getGroupId())
+                .orElseThrow(() -> {
+                    log.error("Group with id = {} does not exists", studentRequest.getGroupId());
+                    throw new NotFoundException(
+                            String.format("Group with id = %s does not exists", studentRequest.getGroupId())
+                    );
+                });
         studentEditMapper.updateStudent(student, studentRequest);
+        student.setGroup(groupEntity);
+
         StudentEntity savedStudent = studentRepository.save(student);
         log.info("Student with name : {} has successfully updated", savedStudent.getFirstName());
         return studentViewMapper.convertToStudentResponse(savedStudent);
@@ -197,17 +214,20 @@ public class StudentServiceImpl implements StudentService {
     public PaginationResponse<StudentResponse> getStudentPagination(int page, int size,StudyFormat studyFormat) {
         Pageable pageable = PageRequest.of(page, size);
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (StudentEntity student:studentRepository.findStudentEntitiesByStudyFormat(pageable,studyFormat)) {
-            studentResponses.add(studentViewMapper.convertToStudentResponse(student));
-        }
         PaginationResponse<StudentResponse> paginationResponse = new PaginationResponse<>();
+
+        if(studyFormat.equals(StudyFormat.ALL)) {
+            for (StudentEntity student:studentRepository.findAll(pageable)) {
+                studentResponses.add(studentViewMapper.convertToStudentResponse(student));
+            }
+        }else {
+            for (StudentEntity student:studentRepository.findStudentEntitiesByStudyFormat(pageable,studyFormat)) {
+                studentResponses.add(studentViewMapper.convertToStudentResponse(student));
+            }
+        }
         paginationResponse.setResponseList(studentResponses);
-        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
-        paginationResponse.setPageSize(pageable.getPageSize());
-        paginationResponse.setListSize(studentRepository.findAll().size());
-        paginationResponse.setHowManyPages(
-                paginationResponse.getListSize()%pageable.getPageSize()+
-                paginationResponse.getListSize()/pageable.getPageSize());
+        paginationResponse.setCurrentPage(pageable.getPageNumber() + 1);
+        paginationResponse.setTotalPage(studentRepository.findAll(pageable).getTotalPages());
         return paginationResponse;
     }
 
