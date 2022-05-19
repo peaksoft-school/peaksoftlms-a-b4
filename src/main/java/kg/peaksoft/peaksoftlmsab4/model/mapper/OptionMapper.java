@@ -21,7 +21,7 @@ public class OptionMapper {
 
         OptionEntity option = new OptionEntity();
 
-        option.setAnswer(optionRequest.getAnswer());
+        option.setOption(optionRequest.getOption());
         option.setIsTrue(optionRequest.getIsTrue());
         return option;
 
@@ -31,7 +31,7 @@ public class OptionMapper {
 
     public OptionEntity update(OptionEntity option,OptionRequest optionRequest){
         option.setIsTrue(optionRequest.getIsTrue());
-        option.setAnswer(optionRequest.getAnswer());
+        option.setOption(optionRequest.getOption());
         return option;
       }
 
@@ -45,7 +45,7 @@ public class OptionMapper {
             optionResponse.setId(option.getId());
         }
         optionResponse.setIsTrue(option.getIsTrue());
-        optionResponse.setAnswer(option.getAnswer());
+        optionResponse.setOption(option.getOption());
         return optionResponse;
     }
 
