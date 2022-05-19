@@ -69,8 +69,10 @@ public class InstructorServiceImpl implements InstructorService {
     public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
         InstructorEntity instructor = getByIdMethod(id);
         String email = instructorRequest.getEmail();
-        checkEmail(email);
-
+        String entityEmail = instructor.getAuthInfo().getEmail();
+        if (!email.equals(entityEmail)) {
+            checkEmail(email);
+        }
         String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
         instructorRequest.setPassword(encoderPassword);
         instructorEditMapper.updateInstructor(instructor, instructorRequest);
@@ -88,8 +90,8 @@ public class InstructorServiceImpl implements InstructorService {
                     String.format("Instructor with id = %s does not exists, you can not delete it", id)
             );
         }
-        instructorRepository.deleteById(id);
         InstructorEntity instructorEntity = getByIdMethod(id);
+        instructorRepository.deleteById(id);
         log.info("Instructor with id = {} has successfully deleted", id);
         return instructorViewMapper.convertToInstructorResponse(instructorEntity);
     }

@@ -14,11 +14,9 @@ import java.time.LocalDate;
 @Builder
 public class CourseRequest {
     @NotBlank
-    @JsonProperty("course_name")
     private String courseName;
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @JsonProperty("date_of_start")
     private LocalDate dateOfStart;
     @NotBlank
     private String description;

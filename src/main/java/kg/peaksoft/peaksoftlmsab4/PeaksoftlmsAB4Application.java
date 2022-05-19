@@ -42,7 +42,6 @@ public class PeaksoftlmsAB4Application {
         authInfo.setPassword(passwordEncoder.encode("admin"));
         authInfo.setRole(Role.ADMIN);
         user.setAuthInfo(authInfo);
-        System.out.println("------------------------");
         repository.save(user);
         System.out.println(user);
     }

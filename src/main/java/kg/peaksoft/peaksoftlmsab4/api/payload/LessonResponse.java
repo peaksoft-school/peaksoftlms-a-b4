@@ -10,6 +10,5 @@ import lombok.Setter;
 @Builder
 public class LessonResponse {
     private Long id;
-    @JsonProperty("lesson_name")
     private String lessonName;
 }

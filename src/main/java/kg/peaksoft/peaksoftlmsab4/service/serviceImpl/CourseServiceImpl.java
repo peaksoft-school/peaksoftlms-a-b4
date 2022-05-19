@@ -16,6 +16,8 @@ import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -124,6 +126,20 @@ public class CourseServiceImpl implements CourseService {
         }
         courseRepository.save(course);
         return String.format("Muhammed add teacher to course=%s", course);
+    }
+
+    @Override
+    public PaginationResponse<CourseResponse> getCoursePagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<CourseResponse> courseResponses = new ArrayList<>();
+        for (CourseEntity course:courseRepository.findAllPag(pageable)) {
+            courseResponses.add(courseViewMapper.viewCourse(course));
+        }
+        PaginationResponse<CourseResponse> paginationResponse = new PaginationResponse<>();
+        paginationResponse.setResponseList(courseResponses);
+        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setTotalPage(courseRepository.findAll().size());
+        return paginationResponse;
     }
 
     private CourseEntity getByIdMethod(Long courseId) {

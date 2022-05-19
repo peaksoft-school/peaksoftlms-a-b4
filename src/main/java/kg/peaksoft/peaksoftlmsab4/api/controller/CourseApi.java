@@ -74,4 +74,9 @@ public class CourseApi {
 
         return  courseService.assignTeacherToCourse(assignRequest);
     }
+
+    @GetMapping("/pagination")
+    public PaginationResponse<CourseResponse> getCoursePagination(@RequestParam int page,@RequestParam int size){
+        return courseService.getCoursePagination(page-1,size);
+    }
 }
