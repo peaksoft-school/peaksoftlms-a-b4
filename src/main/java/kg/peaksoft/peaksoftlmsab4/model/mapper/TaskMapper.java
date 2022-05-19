@@ -17,24 +17,15 @@ public class TaskMapper {
         if (taskRequest == null) {
             return null;
         }
-
         return TaskEntity.builder()
                 .taskName(taskRequest.getTaskName())
-                .text(taskRequest.getText())
-                .fileLink(taskRequest.getFileLink())
-                .link(taskRequest.getLink())
-                .code(taskRequest.getCode())
-                .imageLink(taskRequest.getImageLink())
+                .taskTypes(taskRequest.getTaskTypeEntity())
                 .build();
-    }
 
+    }
     public TaskEntity update(TaskEntity taskEntity, TaskRequest taskRequest) {
         taskEntity.setTaskName(taskRequest.getTaskName());
-        taskEntity.setText(taskRequest.getText());
-        taskEntity.setFileLink(taskRequest.getFileLink());
-        taskEntity.setImageLink(taskRequest.getImageLink());
-        taskEntity.setLink(taskRequest.getLink());
-        taskEntity.setCode(taskRequest.getCode());
+        taskEntity.setTaskTypes(taskRequest.getTaskTypeEntity());
         return taskEntity;
     }
 
@@ -50,11 +41,7 @@ public class TaskMapper {
         return TaskResponse.builder()
                 .id(task.getId())
                 .taskName(task.getTaskName())
-                .text(task.getText())
-                .fileLink(task.getFileLink())
-                .link(task.getLink())
-                .code(task.getCode())
-                .imageLink(task.getImageLink())
+                .taskTypeEntity(task.getTaskTypes())
                 .build();
     }
 }

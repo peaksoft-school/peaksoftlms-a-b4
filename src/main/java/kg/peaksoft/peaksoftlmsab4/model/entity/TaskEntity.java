@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tasks")
@@ -26,13 +27,9 @@ public class TaskEntity {
     Long id;
     @Column(name = "task_name")
     private String taskName;
-    private String text;
-    @Column(name = "file_link")
-    private String fileLink;
-    private String link;
-    @Column(name = "image_link")
-    private String imageLink;
-    private String code;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<TaskTypeEntity > taskTypes;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "lesson_id")
