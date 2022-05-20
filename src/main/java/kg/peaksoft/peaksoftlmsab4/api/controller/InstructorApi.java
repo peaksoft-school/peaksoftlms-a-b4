@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.service.InstructorService;
 import lombok.AllArgsConstructor;
@@ -79,6 +80,10 @@ public class InstructorApi {
         return instructorService.getInstructorsCourses(authInfo.getEmail());
     }
 
+    @GetMapping("/pagination")
+    public PaginationResponse<InstructorResponse> getCoursePagination(@RequestParam int page, @RequestParam int size){
+        return instructorService.getInstructorPagination(page-1,size);
+    }
 
 }
 
