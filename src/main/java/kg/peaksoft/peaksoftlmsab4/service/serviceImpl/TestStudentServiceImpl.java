@@ -27,17 +27,6 @@ public class TestStudentServiceImpl implements TestStudentService {
     private final TestStudentRepository testStudentRepository;
     private final TestStudentMapper editMapper;
 
-    private TestStudentEntity getByIdMethod(Long testResultId) {
-        return testStudentRepository.findById(testResultId).
-                orElseThrow(() -> {
-                    log.error("TestResult with id = {} does not exists", testResultId);
-                    throw new NotFoundException(
-                            String.format("TestResult with id = %s does not exists", testResultId)
-                    );
-                });
-    }
-
-
     @Override
     public List<TestStudentResponse> createResult(TestStudentRequest testStudentRequest) {
         return editMapper.viewTestResults(testStudentRepository.saveAll(editMapper.createResult(testStudentRequest)));

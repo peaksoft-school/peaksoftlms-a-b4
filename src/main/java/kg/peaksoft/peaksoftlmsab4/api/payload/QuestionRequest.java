@@ -16,7 +16,6 @@ public class QuestionRequest {
     @NotBlank
     private String question;
     private QuestionType questionType;
-
     private List<OptionRequest>options;
 
 
