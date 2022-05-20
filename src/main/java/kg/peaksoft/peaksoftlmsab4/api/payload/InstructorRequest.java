@@ -16,4 +16,6 @@ public class InstructorRequest {
     private String password;
     private String email;
 
+    private Long courseId;
+
 }

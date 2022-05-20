@@ -12,6 +12,7 @@ import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseViewMapper courseViewMapper;
     private final StudentViewMapper studentViewMapper;
     private final InstructorViewMapper instructorViewMapper;
+    private final InstructorRepository instructorRepository;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -114,6 +117,18 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
+    public String assignTeacherToCourse(AssignRequest assignRequest) {
+        CourseEntity course = courseRepository.findById(assignRequest.getCourseId())
+                .orElseThrow(() -> new NotFoundException("this id not found"));
+        for (Long id : assignRequest.getTeacherId()) {
+            course.setInstructor(instructorRepository.findById(id).orElseThrow(() -> new NotFoundException("this id not found")));
+        }
+        courseRepository.save(course);
+        return String.format("Muhammed add teacher to course=%s", course);
+    }
+
+    @Override
     public PaginationResponse<CourseResponse> getCoursePagination(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<CourseResponse> courseResponses = new ArrayList<>();
@@ -123,7 +138,7 @@ public class CourseServiceImpl implements CourseService {
         PaginationResponse<CourseResponse> paginationResponse = new PaginationResponse<>();
         paginationResponse.setResponseList(courseResponses);
         paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
-        paginationResponse.setTotalPage(courseRepository.findAll().size());
+        paginationResponse.setTotalPage(courseRepository.findAll(pageable).getTotalPages());
         return paginationResponse;
     }
 

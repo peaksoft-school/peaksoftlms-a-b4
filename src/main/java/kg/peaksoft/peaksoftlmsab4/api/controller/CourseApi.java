@@ -68,6 +68,13 @@ public class CourseApi {
         return courseService.getAllTeacherByCourseId(id);
     }
 
+    @Operation(summary = "Assign Teacher to Course",description = "Assign Teacher to Course")
+    @PostMapping("/assign")
+    public String assignTeacher(@RequestBody AssignRequest assignRequest){
+
+        return  courseService.assignTeacherToCourse(assignRequest);
+    }
+
     @GetMapping("/pagination")
     public PaginationResponse<CourseResponse> getCoursePagination(@RequestParam int page,@RequestParam int size){
         return courseService.getCoursePagination(page-1,size);

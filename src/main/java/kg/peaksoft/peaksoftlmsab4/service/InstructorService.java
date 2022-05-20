@@ -1,8 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.*;
 
 import java.util.List;
 
@@ -19,6 +17,7 @@ public interface InstructorService {
     InstructorResponse deleteInstructor(Long id);
 
     InstructorResponse addInstructorToCourse(Long courseId, Long instructorId);
+
 
     List<CourseResponse> getInstructorsCourses(String email);
 

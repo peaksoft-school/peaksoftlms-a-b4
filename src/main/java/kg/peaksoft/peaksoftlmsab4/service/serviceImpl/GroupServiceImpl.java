@@ -98,7 +98,7 @@ public class GroupServiceImpl implements GroupService {
                 });
         GroupEntity group = getByMethod(groupId);
         group.setCourse(course);
-        log.info("Group with id = {} has successfully added to course with id = {}", groupId, courseId);
+        log.info("Group with id = {} h as successfully added to course with id = {}", groupId, courseId);
         return viewMapper.viewGroup(group);
     }
 
@@ -112,7 +112,7 @@ public class GroupServiceImpl implements GroupService {
         PaginationResponse<GroupResponse> paginationResponse = new PaginationResponse<>();
         paginationResponse.setResponseList(groupResponses);
         paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
-        paginationResponse.setTotalPage(repository.findAll().size());
+        paginationResponse.setTotalPage(repository.findAll(pageable).getTotalPages());
         return paginationResponse;
     }
 

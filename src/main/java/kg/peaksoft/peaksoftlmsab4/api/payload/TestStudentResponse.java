@@ -8,6 +8,6 @@ import lombok.Setter;
 public class TestStudentResponse {
 
     private Long id;
-    private String answer;
+    private String option;
 
 }
