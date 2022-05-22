@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.repository;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.data.domain.Page;

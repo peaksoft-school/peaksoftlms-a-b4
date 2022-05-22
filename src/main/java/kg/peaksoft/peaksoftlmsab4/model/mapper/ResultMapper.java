@@ -1,18 +1,26 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.ResultRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.ResultResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.ResultEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -71,6 +79,7 @@ public class ResultMapper {
 
         return resultResponse;
     }
+
     public List<ResultResponse> viewResults(List<ResultEntity> results) {
 
         List<ResultResponse> resultResponses = new ArrayList<>();

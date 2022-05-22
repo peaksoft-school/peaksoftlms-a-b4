@@ -23,4 +23,5 @@ public class OptionEntity {
     private String option;
     private Boolean isTrue;
 
+
 }
