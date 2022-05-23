@@ -15,13 +15,13 @@ import java.util.List;
 public class ResultApi {
     private final ResultService service;
 
-    @PostMapping("/save")
-    public ResultResponse createResult(@RequestBody ResultRequest resultRequest){
-        return service.createResult(resultRequest);
-    }
-
-    @GetMapping("/all")
-    public List<ResultResponse> getAll(){
-        return service.getAll();
-    }
+//    @PostMapping("/save")
+//    public ResultResponse createResult(@RequestBody ResultRequest resultRequest){
+//        return service.createResult(resultRequest);
+//    }
+//
+//    @GetMapping("/all")
+//    public List<ResultResponse> getAll(){
+//        return service.getAll();
+//    }
 }

@@ -6,12 +6,13 @@ import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResultEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -51,19 +52,24 @@ public class AnswerServiceImpl {
         int score = (userRightAnswer * 100 / correctOption) / 10;
 
         AnswerResponse answerResponse = new AnswerResponse();
-
         answerResponse.setQuestionId(questionId);
         answerResponse.setStudent(authInfo.getUsername());
+        answerResponse.setResult(score);
 
-        if(question.getCountOfPoints() != 0){
-            question.setCountOfPoints(score);
-            questionRepository.save(question);
-        }else{
-            question.setCountOfPoints(question.getCountOfPoints() + score);
-            questionRepository.save(question);
-        }
-        answerResponse.setResult(question.getCountOfPoints());
-
+        TestStudentEntity testStudentEntity = new TestStudentEntity();
+        testStudentEntity.setResult(score);
+        testStudentEntity.setStudent(authInfo.getUsername());
+        testStudentEntity.setQuestionEntity(question);
+        testStudentEntity.setLocalDate(LocalDate.now());
+        question.setTestStudentEntity(testStudentEntity);
+        questionRepository.save(question);
+//        if(question.getTestStudentEntity().getResult() != 0){
+//            question.getTestStudentEntity().setResult(score);
+//            questionRepository.save(question);
+//        }else{
+//            question.getTestStudentEntity().setResult(question.getTestStudentEntity().getResult() + score);
+//            questionRepository.save(question);
+//        }
 
         return answerResponse;
     }

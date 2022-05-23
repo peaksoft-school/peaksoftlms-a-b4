@@ -26,12 +26,12 @@ public class TestStudentServiceImpl implements TestStudentService {
 
     private final TestStudentRepository testStudentRepository;
     private final TestStudentMapper editMapper;
-
-    @Override
-    public List<TestStudentResponse> createResult(TestStudentRequest testStudentRequest) {
-        return editMapper.viewTestResults(testStudentRepository.saveAll(editMapper.createResult(testStudentRequest)));
-
-    }
+//
+//    @Override
+//    public List<TestStudentResponse> createResult(TestStudentRequest testStudentRequest) {
+//        return editMapper.viewTestResults(testStudentRepository.saveAll(editMapper.createResult(testStudentRequest)));
+//
+//    }
 }
 
 

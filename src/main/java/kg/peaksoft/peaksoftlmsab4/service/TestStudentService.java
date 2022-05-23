@@ -11,7 +11,7 @@ import java.util.List;
 public interface TestStudentService {
 
 
-    List<TestStudentResponse> createResult(TestStudentRequest testStudentRequest);
+//    List<TestStudentResponse> createResult(TestStudentRequest testStudentRequest);
 
 
 

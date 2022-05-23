@@ -20,12 +20,12 @@ public class TestStudentApi {
 
     private final TestStudentService service;
 
-
-    @PostMapping("/save")
-    public List<TestStudentResponse> createResult(@RequestBody TestStudentRequest testStudentRequest) {
-
-        return service.createResult(testStudentRequest);
-    }
+//
+//    @PostMapping("/save")
+//    public List<TestStudentResponse> createResult(@RequestBody TestStudentRequest testStudentRequest) {
+//
+//        return service.createResult(testStudentRequest);
+//    }
 
 
 }
