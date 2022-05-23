@@ -19,6 +19,7 @@ import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -178,15 +179,50 @@ public class StudentServiceImpl implements StudentService {
             if (index>0){
                 StudentEntity student = new StudentEntity();
                 XSSFRow row = wordSheet.getRow(index);
-                student.setFirstName(row.getCell(0).getStringCellValue());
-                student.setLastName(row.getCell(1).getStringCellValue());
-                student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
+
+                if(row.getCell(0)==null){
+                    throw new BadRequestException("FirstName in line index "+index+" is empty!");
+                }else {
+                    student.setFirstName(row.getCell(0).getStringCellValue());
+                }
+
+                if(row.getCell(1)==null){
+                    throw new BadRequestException("LastName in line index "+index+" is empty!");
+                }else {
+                    student.setLastName(row.getCell(1).getStringCellValue());
+                }
+
+                if(row.getCell(2)==null){
+                    throw new BadRequestException("Phone number in line index "+index+" is empty!");
+                }else {
+                    student.setPhoneNumber(String.valueOf((int) row.getCell(2).getNumericCellValue()));
+                }
+
+                if(row.getCell(3,Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)==null){
+                    throw new BadRequestException("Study format in line index "+index+" is empty!");
+                }else {
+                    student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
+                }
 
                 AuthInfo authInfo = new AuthInfo();
-                authInfo.setEmail(row.getCell(4).getStringCellValue());
-                authInfo.setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
-                authInfo.setPassword(passwordEncoder.encode(row.getCell(6).getStringCellValue()));
+
+                if(row.getCell(4,Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)==null){
+                    throw new BadRequestException("Email in line index "+index+" is empty!");
+                }else {
+                    authInfo.setEmail(row.getCell(4).getStringCellValue());
+                }
+
+                if(row.getCell(5)==null){
+                    throw new BadRequestException("Role in line index "+index+" is empty!");
+                }else {
+                    authInfo.setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
+                }
+
+                if(row.getCell(6)==null){
+                    throw new BadRequestException("Password in line index "+index+" is empty!");
+                }else {
+                    authInfo.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(6).getStringCellValue())));
+                }
 
                 String email = authInfo.getEmail();
                 checkEmail(email);
