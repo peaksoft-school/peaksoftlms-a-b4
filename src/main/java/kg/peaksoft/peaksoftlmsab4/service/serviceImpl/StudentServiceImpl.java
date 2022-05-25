@@ -243,6 +243,11 @@ public class StudentServiceImpl implements StudentService {
                 }
 
                 String email = authInfo.getEmail();
+                if (!validator.patternMatches(email)) {
+                    throw new InvalidArgumentException(email + " is not valid");
+                } if (!validator.isValid(student.getPhoneNumber())){
+                    throw new InvalidArgumentException("Phone number " + student.getPhoneNumber() + " is not valid");
+                }
                 checkEmail(email);
 
                 student.setAuthInfo(authInfo);
