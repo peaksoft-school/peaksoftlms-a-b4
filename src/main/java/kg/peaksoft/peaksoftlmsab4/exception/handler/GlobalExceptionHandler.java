@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.exception.handler;
 
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -47,6 +48,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.builder()
                 .httpStatus(UNAUTHORIZED)
                 .message(badCredentialsException.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(InvalidArgumentException.class)
+    @ResponseStatus(NOT_ACCEPTABLE)
+    public ResponseEntity invalidArgumentException(InvalidArgumentException invalidArgumentException) {
+        return ResponseEntity.builder()
+                .httpStatus(NOT_ACCEPTABLE)
+                .message(invalidArgumentException.getMessage())
                 .build();
     }
 }
