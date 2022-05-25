@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.Validator;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
@@ -17,6 +18,8 @@ import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.InstructorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -131,6 +134,20 @@ public class InstructorServiceImpl implements InstructorService {
         }
         log.info("Successfully assign instructor with id = {} to course", instructorId);
         return courseViewMapper.viewCourse(courseRepository.save(course));
+    }
+
+    @Override
+    public PaginationResponse<InstructorResponse> getInstructorPagination(int i, int size) {
+        Pageable pageable = PageRequest.of(i, size);
+        List<InstructorResponse> instructorResponses = new ArrayList<>();
+        for (InstructorEntity instructor:instructorRepository.findAll(pageable)) {
+            instructorResponses.add(instructorViewMapper.convertToInstructorResponse(instructor));
+        }
+        PaginationResponse<InstructorResponse> paginationResponse = new PaginationResponse<>();
+        paginationResponse.setResponseList(instructorResponses);
+        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setTotalPage(instructorRepository.findAll(pageable).getTotalPages());
+        return paginationResponse;
     }
 
     @Override
