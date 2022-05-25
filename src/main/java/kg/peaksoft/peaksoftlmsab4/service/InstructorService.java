@@ -22,4 +22,7 @@ public interface InstructorService {
     List<CourseResponse> getInstructorsCourses(String email);
 
     CourseResponse assignInstructorsToCourse(Long courseId, List<Long> instructorId);
+
+    PaginationResponse<InstructorResponse> getInstructorPagination(int i, int size);
+
 }
