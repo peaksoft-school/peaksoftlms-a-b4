@@ -49,7 +49,7 @@ public class LessonApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the lesson ", description = "Deletes lesson by id ")
-    public void deleteById(@PathVariable Long id) {
-        lessonService.deleteById(id);
+    public LessonResponse deleteById(@PathVariable Long id) {
+        return lessonService.deleteById(id);
     }
 }

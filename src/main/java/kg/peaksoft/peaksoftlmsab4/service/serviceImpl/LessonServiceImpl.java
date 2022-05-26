@@ -72,7 +72,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public LessonResponse deleteById(Long id) {
         boolean existById = lessonRepository.existsById(id);
         if (!existById) {
             log.error("Lesson with id = {} does not exists, you can not delete it", id);
@@ -80,6 +80,14 @@ public class LessonServiceImpl implements LessonService {
                     String.format("Lesson with id = %s does not exists, you can not delete it", id)
             );
         }
+        LessonEntity lessonEntity=lessonRepository.findById(id).
+                orElseThrow(() -> {
+                    log.error("Lesson with id = {} does not exists", id);
+                    throw new NotFoundException(
+                            String.format("Lesson with id = %s does not exists", id)
+                    );
+                });
         lessonRepository.deleteById(id);
+       return mapper.mapToResponse(lessonEntity);
     }
 }
