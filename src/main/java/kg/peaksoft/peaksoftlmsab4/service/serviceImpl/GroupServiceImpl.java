@@ -12,6 +12,7 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.GroupViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
@@ -34,11 +35,16 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository repository;
     private final GroupEditMapper editMapper;
     private final CourseRepository courseRepository;
+    private final StudentViewMapper studentViewMapper;
 
     @Override
     public GroupResponse update(Long groupId, GroupRequest groupRequest) {
         GroupEntity group = getByMethod(groupId);
-
+        String groupName = groupRequest.getGroupName();
+        String groupEntityName = group.getGroupName();
+        if (!groupName.equals(groupEntityName)) {
+            checkByName(groupName);
+        }
         editMapper.update(group, groupRequest);
         repository.save(group);
         return viewMapper.viewGroup(group);
@@ -74,13 +80,8 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupResponse saveGroup(GroupRequest groupRequest) {
-        boolean exists = repository.existsByGroupName(groupRequest.getGroupName());
-        if (exists) {
-            log.warn("Group with name = {} already exists", groupRequest.getGroupName());
-            throw new AlreadyExistsException(
-                    "Course with name = " + groupRequest.getGroupName() + " already exists"
-            );
-        }
+        checkByName(groupRequest.getGroupName());
+
         GroupEntity group = editMapper.convert(groupRequest);
         GroupEntity savedGroup = repository.save(group);
         return viewMapper.viewGroup(savedGroup);
@@ -97,6 +98,11 @@ public class GroupServiceImpl implements GroupService {
                     );
                 });
         GroupEntity group = getByMethod(groupId);
+        for (GroupEntity groupEntity : course.getGroups()) {
+            if (group.getId().equals(groupEntity.getId())) {
+                throw new AlreadyExistsException(groupEntity.getGroupName() + " already assigned to course " + course.getCourseName());
+            }
+        }
         group.setCourse(course);
         log.info("Group with id = {} h as successfully added to course with id = {}", groupId, courseId);
         return viewMapper.viewGroup(group);
@@ -106,14 +112,24 @@ public class GroupServiceImpl implements GroupService {
     public PaginationResponse<GroupResponse> getGroupPagination(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<GroupResponse> groupResponses = new ArrayList<>();
-        for (GroupEntity group:repository.findAllPag(pageable)) {
+        for (GroupEntity group : repository.findAllPag(pageable)) {
             groupResponses.add(viewMapper.viewGroup(group));
         }
         PaginationResponse<GroupResponse> paginationResponse = new PaginationResponse<>();
         paginationResponse.setResponseList(groupResponses);
-        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setCurrentPage(pageable.getPageNumber() + 1);
         paginationResponse.setTotalPage(repository.findAll(pageable).getTotalPages());
         return paginationResponse;
+    }
+
+    @Override
+    public List<StudentResponse> getAllStudentsByGroupId(Long id) {
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity s : getByMethod(id).getStudents()) {
+            studentResponses.add(studentViewMapper.convertToStudentResponse(s));
+        }
+        log.info("Successfully got all Students by Group Id");
+        return studentResponses;
     }
 
     private GroupEntity getByMethod(Long groupId) {
@@ -124,5 +140,15 @@ public class GroupServiceImpl implements GroupService {
                             String.format("Group with id = %d does not exists", groupId)
                     );
                 });
+    }
+
+    private void checkByName(String name) {
+        boolean exists = repository.existsByGroupName(name);
+        if (exists) {
+            log.info("Group with name = {} already exists", name);
+            throw new AlreadyExistsException(
+                    "Group with name = " + name + " already exists"
+            );
+        }
     }
 }

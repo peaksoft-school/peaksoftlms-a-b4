@@ -10,5 +10,5 @@ import java.util.List;
 public class AssignRequest {
 
     private Long courseId;
-    private List<Long> teacherId;
+    private List<Long> instructorsId;
 }

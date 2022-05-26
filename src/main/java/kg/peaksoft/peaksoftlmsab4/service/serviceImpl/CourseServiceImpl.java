@@ -37,13 +37,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
-        boolean exists = courseRepository.existsByCourseName(courseRequest.getCourseName());
-        if (exists) {
-            log.info("Course with name = {} already exists", courseRequest.getCourseName());
-            throw new AlreadyExistsException(
-                    "Course with name = " + courseRequest.getCourseName() + " already exists"
-            );
-        }
+        checkByName(courseRequest.getCourseName());
+
         CourseEntity course = courseMapper.create(courseRequest);
         CourseEntity savedCourse = courseRepository.save(course);
 
@@ -91,6 +86,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
         CourseEntity course = getByIdMethod(courseId);
+        String courseName = courseRequest.getCourseName();
+        String courseEntityName = course.getCourseName();
+        if (!courseName.equals(courseEntityName)) {
+            checkByName(courseName);
+        }
         courseMapper.update(course, courseRequest);
         courseRepository.save(course);
         return courseViewMapper.viewCourse(course);
@@ -107,7 +107,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<InstructorResponse> getAllTeacherByCourseId(Long id) {
+    public List<InstructorResponse> getAllInstructorByCourseId(Long id) {
         List<InstructorResponse> instructorResponses = new ArrayList<>();
         for (InstructorEntity i : getByIdMethod(id).getInstructors()) {
             instructorResponses.add(instructorViewMapper.convertToInstructorResponse(i));
@@ -118,26 +118,35 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public String assignTeacherToCourse(AssignRequest assignRequest) {
+    public String assignInstructorToCourse(AssignRequest assignRequest) {
         CourseEntity course = courseRepository.findById(assignRequest.getCourseId())
-                .orElseThrow(() -> new NotFoundException("this id not found"));
-        for (Long id : assignRequest.getTeacherId()) {
-            course.setInstructor(instructorRepository.findById(id).orElseThrow(() -> new NotFoundException("this id not found")));
+                .orElseThrow(() -> new NotFoundException("Course not found by this id"));
+        for (Long id : assignRequest.getInstructorsId()) {
+            InstructorEntity instructor = instructorRepository.findById(id).orElseThrow(() ->
+                    new NotFoundException("Instructor not found by this id"));
+            for (InstructorEntity instructorEntity : course.getInstructors()) {
+                if (instructor.getId().equals(instructorEntity.getId())) {
+                    throw new AlreadyExistsException(
+                            "Instructors with id: " + instructor.getId() +
+                                    " already assigned to course " + course.getCourseName());
+                }
+            }
+            course.setInstructor(instructor);
         }
         courseRepository.save(course);
-        return String.format("Muhammed add teacher to course=%s", course);
+        return String.format("All instructors added to course = %s", course.getCourseName());
     }
 
     @Override
     public PaginationResponse<CourseResponse> getCoursePagination(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         List<CourseResponse> courseResponses = new ArrayList<>();
-        for (CourseEntity course:courseRepository.findAllPag(pageable)) {
+        for (CourseEntity course : courseRepository.findAllPag(pageable)) {
             courseResponses.add(courseViewMapper.viewCourse(course));
         }
         PaginationResponse<CourseResponse> paginationResponse = new PaginationResponse<>();
         paginationResponse.setResponseList(courseResponses);
-        paginationResponse.setCurrentPage(pageable.getPageNumber()+1);
+        paginationResponse.setCurrentPage(pageable.getPageNumber() + 1);
         paginationResponse.setTotalPage(courseRepository.findAll(pageable).getTotalPages());
         return paginationResponse;
     }
@@ -150,5 +159,15 @@ public class CourseServiceImpl implements CourseService {
                             String.format("Course with id = %s does not exists", courseId)
                     );
                 });
+    }
+
+    private void checkByName(String name) {
+        boolean exists = courseRepository.existsByCourseName(name);
+        if (exists) {
+            log.info("Course with name = {} already exists", name);
+            throw new AlreadyExistsException(
+                    "Course with name = " + name + " already exists"
+            );
+        }
     }
 }

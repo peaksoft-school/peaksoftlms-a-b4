@@ -1,15 +1,15 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.model.entity.Validator;
 import kg.peaksoft.peaksoftlmsab4.api.payload.CourseResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorEditMapper;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
@@ -38,10 +38,16 @@ public class InstructorServiceImpl implements InstructorService {
     private final PasswordEncoder passwordEncoder;
     private final CourseRepository courseRepository;
     private final CourseViewMapper courseViewMapper;
+    private final Validator validator;
 
     @Override
     public InstructorResponse saveInstructor(InstructorRequest instructorRequest) {
         String email = instructorRequest.getEmail();
+        if (!validator.patternMatches(email)) {
+            throw new InvalidArgumentException(email + " is not valid");
+        } else if (!validator.isValid(instructorRequest.getPhoneNumber())){
+            throw new InvalidArgumentException(instructorRequest.getPhoneNumber() + " is not valid");
+        }
         checkEmail(email);
 
         String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
@@ -73,6 +79,11 @@ public class InstructorServiceImpl implements InstructorService {
         InstructorEntity instructor = getByIdMethod(id);
         String email = instructorRequest.getEmail();
         String entityEmail = instructor.getAuthInfo().getEmail();
+        if (!validator.patternMatches(email)) {
+            throw new InvalidArgumentException(email + " is not valid");
+        } else if (!validator.isValid(instructorRequest.getPhoneNumber())){
+            throw new InvalidArgumentException(instructorRequest.getPhoneNumber() + " is not valid");
+        }
         if (!email.equals(entityEmail)) {
             checkEmail(email);
         }
