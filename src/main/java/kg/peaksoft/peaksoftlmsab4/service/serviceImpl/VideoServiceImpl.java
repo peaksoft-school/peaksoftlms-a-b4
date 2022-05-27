@@ -75,4 +75,15 @@ public class VideoServiceImpl implements VideoService {
         log.info("video with id ={} successfully deleted", videoId);
         return mapper.mapToResponse(videoEntity);
     }
+
+    @Override
+    public VideoResponse getVideoByLessonId(Long id) {
+        LessonEntity lesson=lessonRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new NotFoundException(String.format("lesson with id = %s does not exists", id));
+                });
+        return mapper.mapToResponse(lesson.getVideoEntity());
+    }
+
+
 }
