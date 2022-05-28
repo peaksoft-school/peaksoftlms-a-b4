@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionRequestForTest {
-    @NotBlank
-    private String question;
-    private List<OptionRequestForTest> options;
+    private Long questionId;
+    private List<Long> options;
 }

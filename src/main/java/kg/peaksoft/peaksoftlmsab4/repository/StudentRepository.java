@@ -22,4 +22,6 @@ public interface StudentRepository extends JpaRepository<StudentEntity,Long> {
 
     Page<StudentEntity> findStudentEntitiesByStudyFormat(Pageable pageable, StudyFormat studyFormat);
 
+    @Query("select s from StudentEntity s where s.authInfo.email=?1")
+    StudentEntity getByEmail(String email);
 }

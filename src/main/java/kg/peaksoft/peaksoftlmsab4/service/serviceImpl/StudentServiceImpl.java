@@ -5,10 +5,7 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.*;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentEditMapper;
@@ -47,11 +44,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
+        TestStudentEntity testStudentEntity = new TestStudentEntity();
         String email = studentRequest.getEmail();
         checkEmail(email);
         StudentEntity student = studentRepository.save(studentEditMapper
                 .convertToStudent(studentRequest));
         log.info("Student with name : {} has successfully saved to database", student.getFirstName());
+        student.setTestStudentEntity(testStudentEntity);
         return studentViewMapper.convertToStudentResponse(student);
     }
 

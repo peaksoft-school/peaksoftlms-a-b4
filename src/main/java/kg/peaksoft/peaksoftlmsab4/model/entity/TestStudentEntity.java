@@ -21,11 +21,9 @@ public class TestStudentEntity {
 
     private int result;
 
-    private String student;
-
     @CreatedDate
     private LocalDate localDate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private QuestionEntity questionEntity;
+    private StudentEntity studentEntity;
 }

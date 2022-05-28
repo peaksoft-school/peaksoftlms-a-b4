@@ -21,7 +21,6 @@ import java.util.List;
 public class TestMapper {
     private final QuestionMapper mapper;
 
-
     public TestEntity create(TestRequest testRequest) {
         List<QuestionEntity> questions = new ArrayList<>();
         TestEntity test = new TestEntity();
@@ -39,16 +38,14 @@ public class TestMapper {
                 } else {
                     questions.add(mapper.create(q));
                     test.setQuestions(questions);
-                    return test;
                 }
 
             } else
                 questions.add(mapper.create(q));
             test.setQuestions(questions);
-            return test;
-
         }
-        return null;
+        test.setQuestions(questions);
+        return test;
     }
 
     public TestResponse viewTest(TestEntity test) {

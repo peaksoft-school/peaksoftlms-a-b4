@@ -39,7 +39,7 @@ public class QuestionEntity {
 
     private int countOfPoints;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionEntity")
+    @ManyToOne(cascade = CascadeType.ALL)
     private TestStudentEntity testStudentEntity;
 
 }

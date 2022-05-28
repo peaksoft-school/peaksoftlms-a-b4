@@ -2,75 +2,86 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequestForTest;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.*;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class AnswerServiceImpl {
-    private final QuestionRepository questionRepository;
 
-    public AnswerResponse createAnswers(Long questionId, AnswerRequest answerRequest, AuthInfo authInfo) {
+    private final TestStudentRepository testStudentRepository;
+    private final TestRepository testRepository;
+    private final StudentRepository studentRepository;
+
+    List<Integer> testResult;
+    List<Long> optionsList;
+
+    public void createAnswers(AnswerRequest answerRequest,AuthInfo authInfo) {
 
         int correctOption = 0;
         int userRightAnswer = 0;
 
-        QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new NotFoundException(
-                String.format("object 'question'")
-        ));
-        for (OptionEntity options : question.getOptions()) {
-            if (options.getIsTrue()) {
-                correctOption++;
-            }
-        }
-
-        List<Long> uniqueList = answerRequest.getOptionId().stream().distinct().collect(Collectors.toList());
-
-        for (int j = 0; j < question.getOptions().size(); j++) {
-            for (Long aLong : uniqueList) {
-                if (Objects.equals(aLong,
-                        question.getOptions().get(j).getId())
-                        && question.getOptions().get(j).getIsTrue()) {
-                    userRightAnswer++;
+        List<QuestionEntity> questionEntity = testRepository.allQuestionsFromTest(answerRequest.getTestId());
+        for (QuestionEntity question:questionEntity) {
+            for (OptionEntity options : question.getOptions()) {
+                if (options.getIsTrue()) {
+                    correctOption++;
                 }
             }
         }
 
-        int score = (userRightAnswer * 100 / correctOption) / 10;
+        List<QuestionRequestForTest> answerRequestQuestion = answerRequest.getQuestion();
+        for (QuestionRequestForTest questionRequestForTest:answerRequestQuestion) {
+            optionsList = questionRequestForTest.getOptions();
+        }
 
-        AnswerResponse answerResponse = new AnswerResponse();
-        answerResponse.setQuestionId(questionId);
-        answerResponse.setStudent(authInfo.getUsername());
-        answerResponse.setResult(score);
+            for (QuestionEntity question : questionEntity) {
+                for (int j = 0; j < question.getOptions().size(); j++) {
+                    for (Long aLong : optionsList) {
+                        if (Objects.equals(aLong,
+                                question.getOptions().get(j).getId())
+                                && question.getOptions().get(j).getIsTrue()) {
+                            userRightAnswer++;
+                        }
+                    }
+                }
+            }
+        int score = (userRightAnswer * 100 / correctOption) / 10;
+        if (testResult == null){
+            testResult = new ArrayList<>();
+        }
+            testResult.add(score);
+
+        int result = 0;
+
+        for (int i = 0; i < testResult.size(); i++) {
+            int a = testResult.get(i);
+            result = result + a;
+        }
 
         TestStudentEntity testStudentEntity = new TestStudentEntity();
-        testStudentEntity.setResult(score);
-        testStudentEntity.setStudent(authInfo.getUsername());
-        testStudentEntity.setQuestionEntity(question);
+        testStudentEntity.setResult(result);
+        testStudentEntity.setStudentEntity(studentRepository.getByEmail(authInfo.getEmail()));
         testStudentEntity.setLocalDate(LocalDate.now());
-        question.setTestStudentEntity(testStudentEntity);
-        questionRepository.save(question);
-//        if(question.getTestStudentEntity().getResult() != 0){
-//            question.getTestStudentEntity().setResult(score);
-//            questionRepository.save(question);
-//        }else{
-//            question.getTestStudentEntity().setResult(question.getTestStudentEntity().getResult() + score);
-//            questionRepository.save(question);
-//        }
 
-        return answerResponse;
+        testStudentRepository.save(testStudentEntity);
+    }
+
+    public TestStudentEntity resultTest(AuthInfo authInfo) {
+        return testStudentRepository.getByEmail(authInfo.getEmail());
     }
 }

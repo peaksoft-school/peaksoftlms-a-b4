@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.OptionService;
 import kg.peaksoft.peaksoftlmsab4.service.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,10 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final TestRepository testRepository;
+    private final TestStudentRepository testStudentRepository;
 
     @Override
     public QuestionResponse create(Long id, QuestionRequest questionRequest) {
-
         return questionMapper.viewQuestion(questionRepository.save(questionMapper.create(questionRequest)));
     }
 

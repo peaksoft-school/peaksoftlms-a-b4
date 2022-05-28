@@ -49,6 +49,9 @@ public class StudentEntity {
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "students")
     private List<CourseEntity> courses;
 
+    @OneToOne(cascade = ALL)
+    private TestStudentEntity testStudentEntity;
+
 
 
     public void setCourse(CourseEntity course) {
