@@ -43,6 +43,7 @@ public class StudentApi {
     }
 
     @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @GetMapping
     public List<StudentResponse> getAllStudents() {
         return studentService.getAllStudent();
