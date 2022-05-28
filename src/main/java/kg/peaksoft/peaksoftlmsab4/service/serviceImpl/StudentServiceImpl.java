@@ -3,7 +3,9 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.*;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
@@ -16,6 +18,7 @@ import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 @Service
@@ -39,13 +43,18 @@ public class StudentServiceImpl implements StudentService {
     private final GroupRepository groupRepository;
     private final CourseRepository courseRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final Validator validator;
 
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         TestStudentEntity testStudentEntity = new TestStudentEntity();
         String email = studentRequest.getEmail();
+        if (!validator.patternMatches(email)) {
+            throw new InvalidArgumentException(email + " is not valid");
+        } else if (!validator.isValid(studentRequest.getPhoneNumber())) {
+            throw new InvalidArgumentException(studentRequest.getPhoneNumber() + " is not valid");
+        }
         checkEmail(email);
         StudentEntity student = studentRepository.save(studentEditMapper
                 .convertToStudent(studentRequest));
@@ -75,6 +84,11 @@ public class StudentServiceImpl implements StudentService {
         StudentEntity student = getByIdMethod(studentId);
         String email = studentRequest.getEmail();
         String entityEmail = student.getAuthInfo().getEmail();
+        if (!validator.patternMatches(email)) {
+            throw new InvalidArgumentException(email + " is not valid");
+        } else if (!validator.isValid(studentRequest.getPhoneNumber())){
+            throw new InvalidArgumentException(studentRequest.getPhoneNumber() + " is not valid");
+        }
         if (!email.equals(entityEmail)) {
             checkEmail(email);
         }
@@ -137,13 +151,18 @@ public class StudentServiceImpl implements StudentService {
                     );
                 });
         StudentEntity student = getByIdMethod(studentId);
+        for (StudentEntity studentEntity: course.getStudents()) {
+            if (student.getId().equals(studentEntity.getId())) {
+                throw new AlreadyExistsException(studentEntity.getFirstName() + " already assigned to course " + course.getCourseName());
+            }
+        }
         student.setCourse(course);
         log.info("Student with id = {} has successfully added to course with id = {}", studentId, courseId);
         return studentViewMapper.convertToStudentResponse(studentRepository.save(student));
     }
 
     @Override
-    public StudentResponse saveStudentWithGroup( StudentRequest studentRequest) {
+    public StudentResponse saveStudentWithGroup(StudentRequest studentRequest) {
         GroupEntity group = groupRepository.findById(studentRequest.getGroupId())
                 .orElseThrow(() -> {
                     log.error("Group with id = {} does not exists", studentRequest.getGroupId());
@@ -151,8 +170,12 @@ public class StudentServiceImpl implements StudentService {
                             String.format("Group with id = %s does not exists", studentRequest.getGroupId())
                     );
                 });
-        System.out.println(group);
         String email = studentRequest.getEmail();
+        if (!validator.patternMatches(email)) {
+            throw new InvalidArgumentException(email + " is not valid");
+        } else if (!validator.isValid(studentRequest.getPhoneNumber())){
+            throw new InvalidArgumentException(studentRequest.getPhoneNumber() + " is not valid");
+        }
         checkEmail(email);
 
         StudentEntity convertedStudent = studentEditMapper.convertToStudent(studentRequest);
@@ -173,21 +196,61 @@ public class StudentServiceImpl implements StudentService {
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
         XSSFSheet wordSheet = workbook.getSheetAt(0);
 
-        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++){
-            if (index>0){
+        for (int index = 0; index < wordSheet.getPhysicalNumberOfRows(); index++) {
+            if (index > 0) {
                 StudentEntity student = new StudentEntity();
                 XSSFRow row = wordSheet.getRow(index);
-                student.setFirstName(row.getCell(0).getStringCellValue());
-                student.setLastName(row.getCell(1).getStringCellValue());
-                student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
+
+                if(row.getCell(0)==null){
+                    throw new BadRequestException("FirstName in line index "+index+" is empty!");
+                }else {
+                    student.setFirstName(row.getCell(0).getStringCellValue());
+                }
+
+                if(row.getCell(1)==null){
+                    throw new BadRequestException("LastName in line index "+index+" is empty!");
+                }else {
+                    student.setLastName(row.getCell(1).getStringCellValue());
+                }
+
+                if(row.getCell(2)==null){
+                    throw new BadRequestException("Phone number in line index "+index+" is empty!");
+                }else {
+                    student.setPhoneNumber(String.valueOf((int) row.getCell(2).getNumericCellValue()));
+                }
+
+                if(row.getCell(3,Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)==null){
+                    throw new BadRequestException("Study format in line index "+index+" is empty!");
+                }else {
+                    student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
+                }
 
                 AuthInfo authInfo = new AuthInfo();
-                authInfo.setEmail(row.getCell(4).getStringCellValue());
-                authInfo.setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
-                authInfo.setPassword(passwordEncoder.encode(row.getCell(6).getStringCellValue()));
+
+                if(row.getCell(4,Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)==null){
+                    throw new BadRequestException("Email in line index "+index+" is empty!");
+                }else {
+                    authInfo.setEmail(row.getCell(4).getStringCellValue());
+                }
+
+                if(row.getCell(5)==null){
+                    throw new BadRequestException("Role in line index "+index+" is empty!");
+                }else {
+                    authInfo.setRole(Role.valueOf(row.getCell(5).getStringCellValue()));
+                }
+
+                if(row.getCell(6)==null){
+                    throw new BadRequestException("Password in line index "+index+" is empty!");
+                }else {
+                    authInfo.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(6).getStringCellValue())));
+                }
 
                 String email = authInfo.getEmail();
+                if (!validator.patternMatches(email)) {
+                    throw new InvalidArgumentException(email + " is not valid");
+                } if (!validator.isValid(student.getPhoneNumber())){
+                    throw new InvalidArgumentException("Phone number " + student.getPhoneNumber() + " is not valid");
+                }
                 checkEmail(email);
 
                 student.setAuthInfo(authInfo);
@@ -195,7 +258,7 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
-        for (StudentEntity student: students){
+        for (StudentEntity student : students) {
             GroupEntity groupEntity = groupRepository.getById(groupId);
             student.setGroup(groupEntity);
             studentRepository.save(student);
@@ -210,17 +273,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size,StudyFormat studyFormat) {
+    public PaginationResponse<StudentResponse> getStudentPagination(int page, int size, StudyFormat studyFormat) {
         Pageable pageable = PageRequest.of(page, size);
         List<StudentResponse> studentResponses = new ArrayList<>();
         PaginationResponse<StudentResponse> paginationResponse = new PaginationResponse<>();
 
-        if(studyFormat.equals(StudyFormat.ALL)) {
-            for (StudentEntity student:studentRepository.findAll(pageable)) {
+        if (studyFormat.equals(StudyFormat.ALL)) {
+            for (StudentEntity student : studentRepository.findAll(pageable)) {
                 studentResponses.add(studentViewMapper.convertToStudentResponse(student));
             }
-        }else {
-            for (StudentEntity student:studentRepository.findStudentEntitiesByStudyFormat(pageable,studyFormat)) {
+        } else {
+            for (StudentEntity student : studentRepository.findStudentEntitiesByStudyFormat(pageable, studyFormat)) {
                 studentResponses.add(studentViewMapper.convertToStudentResponse(student));
             }
         }
@@ -240,6 +303,11 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    @Override
+    public List<StudentResponse> findByStudentName(String name) {
+        return studentViewMapper.convertToStudents(studentRepository.findByStudentName(name));
+    }
+
     private StudentEntity getByIdMethod(Long studentId) {
         return studentRepository.findById(studentId).
                 orElseThrow(() -> {
@@ -249,4 +317,5 @@ public class StudentServiceImpl implements StudentService {
                     );
                 });
     }
+
 }

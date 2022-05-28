@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/courses")
 @AllArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Course", description = "The Course CRUD operations")
 public class CourseApi {
 
@@ -60,23 +60,23 @@ public class CourseApi {
         return courseService.getAllStudentsByCourseId(id);
     }
 
-    @Operation(summary = "Get teachers by course id",
-            description = "Get all teachers in this course")
-    @GetMapping("/teachers/{id}")
+    @Operation(summary = "Get instructor by course id",
+            description = "Get all instructor in this course")
+    @GetMapping("/instructors/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    public List<InstructorResponse> getAllTeacherByCourseId(@PathVariable Long id) {
-        return courseService.getAllTeacherByCourseId(id);
+    public List<InstructorResponse> getAllInstructorByCourseId(@PathVariable Long id) {
+        return courseService.getAllInstructorByCourseId(id);
     }
 
-    @Operation(summary = "Assign Teacher to Course",description = "Assign Teacher to Course")
+    @Operation(summary = "Assign Instructor to Course", description = "Assign Instructor to Course")
     @PostMapping("/assign")
-    public String assignTeacher(@RequestBody AssignRequest assignRequest){
+    public String assignInstructor(@RequestBody AssignRequest assignRequest) {
 
-        return  courseService.assignTeacherToCourse(assignRequest);
+        return courseService.assignInstructorToCourse(assignRequest);
     }
 
     @GetMapping("/pagination")
-    public PaginationResponse<CourseResponse> getCoursePagination(@RequestParam int page,@RequestParam int size){
-        return courseService.getCoursePagination(page-1,size);
+    public PaginationResponse<CourseResponse> getCoursePagination(@RequestParam int page, @RequestParam int size) {
+        return courseService.getCoursePagination(page - 1, size);
     }
 }

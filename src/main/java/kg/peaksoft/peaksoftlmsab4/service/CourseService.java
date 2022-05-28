@@ -18,9 +18,9 @@ public interface CourseService {
 
     List<StudentResponse> getAllStudentsByCourseId(Long id);
 
-    List<InstructorResponse> getAllTeacherByCourseId(Long id);
+    List<InstructorResponse> getAllInstructorByCourseId(Long id);
 
-    String assignTeacherToCourse(AssignRequest assignRequest);
+    String assignInstructorToCourse(AssignRequest assignRequest);
 
     PaginationResponse<CourseResponse> getCoursePagination(int page, int size);
 

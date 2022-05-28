@@ -10,13 +10,18 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NotBlank
 public class StudentRequest {
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @NotBlank
     private String phoneNumber;
+    @NotBlank
     private String password;
+    @NotBlank
     private String email;
+    @NotBlank
     @Enumerated(value = EnumType.STRING)
     private StudyFormat studyFormat;
     private Long groupId;
