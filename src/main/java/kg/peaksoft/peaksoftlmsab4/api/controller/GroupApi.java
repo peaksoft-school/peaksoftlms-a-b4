@@ -48,6 +48,7 @@ public class GroupApi {
     }
 
     @Operation(summary = "Gets all existed groups", description = "Returns all groups in a list ")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @GetMapping
     public List<GroupResponse> getAllGroup() {
         return service.getAllGroup();
