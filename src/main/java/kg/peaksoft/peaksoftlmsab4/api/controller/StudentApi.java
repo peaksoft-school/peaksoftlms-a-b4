@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.AllArgsConstructor;
@@ -87,4 +88,10 @@ public class StudentApi {
     public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat){
         return studentService.getStudentPagination(page-1,size,studyFormat);
     }
+
+    @GetMapping("/firstname/{name}")
+    public List<StudentResponse> finByStudentName(@PathVariable String name){
+        return studentService.findByStudentName(name);
+    }
+
 }

@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.service;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.web.multipart.MultipartFile;
 import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
@@ -31,4 +32,6 @@ public interface StudentService {
     List<StudentResponse> importExcel(MultipartFile file,Long groupId) throws IOException;
 
     PaginationResponse<StudentResponse> getStudentPagination(int page, int size, StudyFormat studyFormat);
+
+    List<StudentResponse> findByStudentName(String name);
 }

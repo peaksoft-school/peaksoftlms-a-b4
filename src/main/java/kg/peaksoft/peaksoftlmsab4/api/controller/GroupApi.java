@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/groups")
 @PreAuthorize("hasAuthority('ADMIN')")
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Group", description = "The Group CRUD operations")
 public class GroupApi {
     private final GroupService service;
@@ -61,8 +62,16 @@ public class GroupApi {
         return service.setGroupToCourse(groupId, courseId);
     }
 
+    @Operation(summary = "Get students by group id",
+            description = "Get all students in this group")
+    @GetMapping("/students/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    public List<StudentResponse> getAllStudentByGroupId(@PathVariable Long id) {
+        return service.getAllStudentsByGroupId(id);
+    }
+
     @GetMapping("/pagination")
-    public PaginationResponse<GroupResponse> getGroupPagination(@RequestParam int page,@RequestParam int size){
-        return service.getGroupPagination(page-1,size);
+    public PaginationResponse<GroupResponse> getGroupPagination(@RequestParam int page, @RequestParam int size) {
+        return service.getGroupPagination(page - 1, size);
     }
 }
