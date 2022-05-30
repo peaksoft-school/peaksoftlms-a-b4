@@ -35,6 +35,7 @@ public class CourseApi {
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public CourseResponse findCourseById(@PathVariable Long id) {
         return courseService.getById(id);
     }
