@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface OptionRepository extends JpaRepository<OptionEntity,Long> {
 
-    @Query("select count(q.options) from QuestionEntity q where q.id=?1")
-    int getCount(Long questionId);
+    @Query("select q.options from QuestionEntity q where q.id =?1")
+    List<OptionEntity> getOptions(Long id);
 }

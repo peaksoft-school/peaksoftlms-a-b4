@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequestForTest;
+import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
@@ -49,15 +50,24 @@ public class AnswerServiceImpl {
         List<QuestionRequestForTest> answerRequestQuestion = answerRequest.getQuestion();
         for (QuestionRequestForTest requestForTest : answerRequestQuestion) {
 
+            int count = 0;
             List<Long> uniqueList = requestForTest.getOptions().stream().distinct().collect(Collectors.toList());
-            QuestionEntity question = questionRepository.getOptionsId(requestForTest.getQuestionId());
+            QuestionEntity question = questionRepository.getById(requestForTest.getQuestionId());
+            List<OptionEntity> optionEntityList = optionRepository.getOptions(question.getId());
+            for (OptionEntity option:optionEntityList) {
+                if (option.getIsTrue()){
+                    count++;
+                }
+            }
 
-            for (int i = 0; i < question.getOptions().size(); i++) {
+            System.out.println(count);
+            for (int i = 0; i < count; i++) {
+                System.out.println(question.getOptions().size()+"======");
                 for (Long aLong : uniqueList) {
                     if (Objects.equals(aLong,
                             question.getOptions().get(i).getId())
                             && question.getOptions().get(i).getIsTrue()) {
-                        userRightAnswer = userRightAnswer + (10/question.getOptions().size());
+                        userRightAnswer = userRightAnswer + (10/count);
                     }
                 }
             }
@@ -67,7 +77,13 @@ public class AnswerServiceImpl {
         testStudentEntity.setResult(userRightAnswer);
         testStudentEntity.setStudentEntity(studentRepository.getByEmail(authInfo.getEmail()));
         testStudentEntity.setLocalDate(LocalDate.now());
-        testStudentRepository.save(testStudentEntity);
+        if (testStudentRepository.existsByEmail(authInfo.getEmail())){
+            throw new AlreadyExistsException(
+                    String.format("student with email = %s already passed this test",authInfo.getEmail())
+            );
+        }else {
+            testStudentRepository.save(testStudentEntity);
+        }
     }
 
     public TestStudentEntity resultTest(AuthInfo authInfo) {
