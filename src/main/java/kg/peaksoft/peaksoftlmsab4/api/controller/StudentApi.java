@@ -27,6 +27,7 @@ public class StudentApi {
     private final StudentService studentService;
 
     @Operation(summary = "Creates new entity: Student", description = "Saves a new student")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @PostMapping
     public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
@@ -53,6 +54,7 @@ public class StudentApi {
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     public StudentResponse getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
@@ -83,12 +85,13 @@ public class StudentApi {
     public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
         return studentService.setStudentToCourse(courseId, studentId);
     }
-
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @GetMapping("/pagination")
     public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat){
         return studentService.getStudentPagination(page-1,size,studyFormat);
     }
 
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @GetMapping("/firstname/{name}")
     public List<StudentResponse> finByStudentName(@PathVariable String name){
         return studentService.findByStudentName(name);
