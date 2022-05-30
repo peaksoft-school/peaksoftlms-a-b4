@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AnswerServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +31,7 @@ public class AnswerApi {
     @GetMapping
     @PermitAll
     @Operation(summary = "authenticate", description = "it is authenticate http method")
-    public TestStudentEntity resultTest(Authentication authentication) {
+    public AnswerResponse resultTest(Authentication authentication) {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
         return answerService.resultTest(authInfo);
     }

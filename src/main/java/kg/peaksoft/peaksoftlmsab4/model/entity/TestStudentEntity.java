@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import kg.peaksoft.peaksoftlmsab4.model.enums.TestResult;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -20,6 +21,9 @@ public class TestStudentEntity {
     private Long id;
 
     private int result;
+
+    @Enumerated(EnumType.STRING)
+    private TestResult testResult;
 
     @CreatedDate
     private LocalDate localDate;

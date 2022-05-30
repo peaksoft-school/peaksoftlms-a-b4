@@ -1,13 +1,13 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequestForTest;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.*;
 import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
+import kg.peaksoft.peaksoftlmsab4.model.enums.TestResult;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.AnswerMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +29,15 @@ public class AnswerServiceImpl {
     private final StudentRepository studentRepository;
     private final QuestionRepository questionRepository;
     private final OptionRepository optionRepository;
+    private final AnswerMapper answerMapper;
 
     List<Integer> testResult;
-//    List<Long> optionsList;
 
     public void createAnswers(AnswerRequest answerRequest, AuthInfo authInfo) {
 
         int correctOption = 0;
         int userRightAnswer = 0;
+        int countRightAnswers = 0;
 
         List<QuestionEntity> questionEntity = testRepository.allQuestionsFromTest(answerRequest.getTestId());
         for (QuestionEntity question : questionEntity) {
@@ -68,6 +69,7 @@ public class AnswerServiceImpl {
                             question.getOptions().get(i).getId())
                             && question.getOptions().get(i).getIsTrue()) {
                         userRightAnswer = userRightAnswer + (10/count);
+                        countRightAnswers++;
                     }
                 }
             }
@@ -75,8 +77,15 @@ public class AnswerServiceImpl {
 
         TestStudentEntity testStudentEntity = new TestStudentEntity();
         testStudentEntity.setResult(userRightAnswer);
+        int result = countRightAnswers*100/correctOption;
+        if (result>50) {
+            testStudentEntity.setTestResult(TestResult.PASSED);
+        }else {
+            testStudentEntity.setTestResult(TestResult.FAILED);
+        }
         testStudentEntity.setStudentEntity(studentRepository.getByEmail(authInfo.getEmail()));
         testStudentEntity.setLocalDate(LocalDate.now());
+
         if (testStudentRepository.existsByEmail(authInfo.getEmail())){
             throw new AlreadyExistsException(
                     String.format("student with email = %s already passed this test",authInfo.getEmail())
@@ -86,7 +95,7 @@ public class AnswerServiceImpl {
         }
     }
 
-    public TestStudentEntity resultTest(AuthInfo authInfo) {
-        return testStudentRepository.getByEmail(authInfo.getEmail());
+    public AnswerResponse resultTest(AuthInfo authInfo) {
+        return answerMapper.viewAnswer(testStudentRepository.getByEmail(authInfo.getEmail()));
     }
 }
