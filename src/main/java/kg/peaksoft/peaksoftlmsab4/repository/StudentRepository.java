@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.repository;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
     boolean existsByEmail(String email);
 
 
-    @Query("select f from StudentEntity f where f.firstName like %?1%")
+    @Query("select f from StudentEntity f where upper(f.firstName) like %?1% or lower(f.firstName)  like %?1%  or upper(f.lastName)  like %?1% or lower(f.lastName)  like %?1% ")
     List<StudentEntity> findByStudentName(@Param("firstName") String firstName);
 
     Page<StudentEntity> findStudentEntitiesByStudyFormat(Pageable pageable, StudyFormat studyFormat);
