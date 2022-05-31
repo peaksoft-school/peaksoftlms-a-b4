@@ -92,7 +92,7 @@ public class StudentApi {
     }
 
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
-    @GetMapping("/firstname/{name}")
+    @GetMapping("/fullName/{name}")
     public List<StudentResponse> finByStudentName(@PathVariable String name){
         return studentService.findByStudentName(name);
     }
