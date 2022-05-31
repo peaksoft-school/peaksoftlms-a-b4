@@ -303,7 +303,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentResponse> findByStudentName(String name) {
-        return studentViewMapper.convertToStudents(studentRepository.findByStudentName(name));
+       return studentViewMapper.convertToStudents(studentRepository.findByStudentName(name.toLowerCase()));
     }
 
     private StudentEntity getByIdMethod(Long studentId) {

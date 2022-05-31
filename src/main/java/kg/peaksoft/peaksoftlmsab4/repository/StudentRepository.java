@@ -17,9 +17,8 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
             " from StudentEntity s where s.authInfo.email =?1")
     boolean existsByEmail(String email);
 
-
-    @Query("select f from StudentEntity f where upper(f.firstName) like %?1% or lower(f.firstName)  like %?1%  or upper(f.lastName)  like %?1% or lower(f.lastName)  like %?1% ")
-    List<StudentEntity> findByStudentName(@Param("firstName") String firstName);
+    @Query("select f from StudentEntity f where lower(concat(f.firstName,f.lastName)) like %?1%")
+    List<StudentEntity> findByStudentName(@Param("fullName") String fullName);
 
     Page<StudentEntity> findStudentEntitiesByStudyFormat(Pageable pageable, StudyFormat studyFormat);
 
