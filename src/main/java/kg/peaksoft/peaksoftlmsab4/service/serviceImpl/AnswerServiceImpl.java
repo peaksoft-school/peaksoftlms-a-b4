@@ -55,20 +55,20 @@ public class AnswerServiceImpl {
             List<Long> uniqueList = requestForTest.getOptions().stream().distinct().collect(Collectors.toList());
             QuestionEntity question = questionRepository.getById(requestForTest.getQuestionId());
             List<OptionEntity> optionEntityList = optionRepository.getOptions(question.getId());
-            for (OptionEntity option:optionEntityList) {
-                if (option.getIsTrue()){
+            for (OptionEntity option : optionEntityList) {
+                if (option.getIsTrue()) {
                     count++;
                 }
             }
 
             System.out.println(count);
             for (int i = 0; i < count; i++) {
-                System.out.println(question.getOptions().size()+"======");
+                System.out.println(question.getOptions().size() + "======");
                 for (Long aLong : uniqueList) {
                     if (Objects.equals(aLong,
                             question.getOptions().get(i).getId())
                             && question.getOptions().get(i).getIsTrue()) {
-                        userRightAnswer = userRightAnswer + (10/count);
+                        userRightAnswer = userRightAnswer + (10 / count);
                         countRightAnswers++;
                     }
                 }
@@ -77,22 +77,23 @@ public class AnswerServiceImpl {
 
         TestStudentEntity testStudentEntity = new TestStudentEntity();
         testStudentEntity.setResult(userRightAnswer);
-        int result = countRightAnswers*100/correctOption;
-        if (result>50) {
+        int result = countRightAnswers * 100 / correctOption;
+        if (result > 50) {
             testStudentEntity.setTestResult(TestResult.PASSED);
-        }else {
+        } else {
             testStudentEntity.setTestResult(TestResult.FAILED);
         }
         testStudentEntity.setStudentEntity(studentRepository.getByEmail(authInfo.getEmail()));
         testStudentEntity.setLocalDate(LocalDate.now());
+        testStudentEntity.setTestEntity(testRepository.getById(answerRequest.getTestId()));
 
-        if (testStudentRepository.existsByEmail(authInfo.getEmail())){
-            throw new AlreadyExistsException(
-                    String.format("student with email = %s already passed this test",authInfo.getEmail())
-            );
-        }else {
-            testStudentRepository.save(testStudentEntity);
-        }
+//            if () {
+//                throw new AlreadyExistsException(
+//                        String.format("student with email = %s already passed this test", authInfo.getEmail())
+//                );
+//            } else {
+//                testStudentRepository.save(testStudentEntity);
+//            }
     }
 
     public AnswerResponse resultTest(AuthInfo authInfo) {

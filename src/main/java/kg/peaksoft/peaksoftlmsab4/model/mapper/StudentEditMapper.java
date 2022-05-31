@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
+import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class StudentEditMapper {
     private final PasswordEncoder passwordEncoder;
+    private final TestStudentRepository testStudentRepository;
     public StudentEntity convertToStudent(StudentRequest studentRequest) {
         if (studentRequest == null) {
             return null;
@@ -28,6 +30,7 @@ public class StudentEditMapper {
         authInfo.setRole(Role.STUDENT);
 
         student.setAuthInfo(authInfo);
+        student.setTestStudentEntity(testStudentRepository.getByEmail(authInfo.getEmail()));
 
         return student;
     }

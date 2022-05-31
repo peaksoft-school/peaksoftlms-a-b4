@@ -15,4 +15,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity,Long> {
 
     @Query("select q.options from QuestionEntity q where q.id=?1")
     int getCountId(Long questionId);
+
+    @Query("select q from QuestionEntity q")
+    boolean alreadyPassed(String email);
 }

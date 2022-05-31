@@ -21,11 +21,12 @@ public class TestEntity {
     private Long id;
     private String testName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private LessonEntity lessonEntity;
 
     @OneToMany( cascade = CascadeType.ALL)
     private List<QuestionEntity> questions = new ArrayList<>();
 
-
+    @OneToMany( cascade = CascadeType.ALL)
+    private List<TestStudentEntity> testStudentEntities;
 }

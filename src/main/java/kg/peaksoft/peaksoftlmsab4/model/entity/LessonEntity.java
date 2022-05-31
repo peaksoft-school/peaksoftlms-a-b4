@@ -43,4 +43,7 @@ public class LessonEntity {
 
     @OneToMany(cascade = ALL, mappedBy = "lesson")
     private List<TaskEntity> task;
+
+    @OneToMany(cascade = ALL,mappedBy = "lessonEntity")
+    private List<TestEntity> test;
 }

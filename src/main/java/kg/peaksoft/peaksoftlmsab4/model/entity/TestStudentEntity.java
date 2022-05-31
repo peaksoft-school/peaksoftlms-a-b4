@@ -30,4 +30,7 @@ public class TestStudentEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     private StudentEntity studentEntity;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private TestEntity testEntity;
 }

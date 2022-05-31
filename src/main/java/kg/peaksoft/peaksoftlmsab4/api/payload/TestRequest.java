@@ -13,4 +13,5 @@ import java.util.List;
 public class TestRequest {
     private String testName;
     private List<QuestionRequest> questions;
+    private Long lessonId;
 }

@@ -34,12 +34,5 @@ public class QuestionEntity {
             options=new ArrayList<>();
         }
         options.add(option);
-
     }
-
-    private int countOfPoints;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private TestStudentEntity testStudentEntity;
-
 }
