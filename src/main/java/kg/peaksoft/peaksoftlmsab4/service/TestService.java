@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface TestService {
 
-    TestResponse create(TestRequest testRequest);
+    TestResponse create(TestRequest testRequest,Long id);
 
     TestResponse update(Long id,TestRequest testRequest);
 
