@@ -18,9 +18,9 @@ public class TestApi {
 
     private final TestService service;
 
-    @PostMapping("/save")
-    public TestResponse create(@RequestBody TestRequest testRequest){
-        return service.create(testRequest);
+    @PostMapping("/save/{lessonId}")
+    public TestResponse create(@RequestBody TestRequest testRequest,@PathVariable Long lessonId){
+        return service.create(testRequest,lessonId);
     }
 
     @PutMapping("/update/{id}")

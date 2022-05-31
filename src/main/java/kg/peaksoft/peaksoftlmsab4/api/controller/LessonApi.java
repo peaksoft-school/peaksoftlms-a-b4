@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("api/lessons")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Lesson", description = "The Lesson CRUD operations")
 public class LessonApi {
 
@@ -27,12 +27,14 @@ public class LessonApi {
         return lessonService.create(lessonRequest, courseId);
     }
 
+    @CrossOrigin
     @GetMapping
     @Operation(summary = "Gets all existed lessons", description = "Returns all lessons in a list ")
     public List<LessonResponse> getAllLessons() {
         return lessonService.getAll();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
