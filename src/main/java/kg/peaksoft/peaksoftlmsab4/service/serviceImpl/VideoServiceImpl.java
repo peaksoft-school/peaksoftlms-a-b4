@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
@@ -28,12 +29,16 @@ public class VideoServiceImpl implements VideoService {
     public VideoResponse create(VideoRequest videoRequest, Long lessonId) {
         LessonEntity lesson = lessonRepository.getById(lessonId);
 
-        VideoEntity videoEntity = mapper.mapToEntity(videoRequest);
-        videoEntity.setLessonEntity(lesson);
-        lesson.setVideoEntity(videoEntity);
-        VideoEntity savedVideoEntity = videoRepository.save(videoEntity);
-        log.info(" Video with name : {} has successfully saved to database", videoEntity.getVideoName());
-        return mapper.mapToResponse(savedVideoEntity);
+        if (lesson.getVideoEntity() == null) {
+            VideoEntity videoEntity = mapper.mapToEntity(videoRequest);
+            videoEntity.setLessonEntity(lesson);
+            lesson.setVideoEntity(videoEntity);
+            VideoEntity savedVideoEntity = videoRepository.save(videoEntity);
+            log.info(" Video with name : {} has successfully saved to database", videoEntity.getVideoName());
+            return mapper.mapToResponse(savedVideoEntity);
+        } else {
+            throw new BadRequestException("In this lesson video already exists");
+        }
     }
 
     @Override
@@ -78,7 +83,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoResponse getVideoByLessonId(Long id) {
-        LessonEntity lesson=lessonRepository.findById(id)
+        LessonEntity lesson = lessonRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("lesson with id = %s does not exists", id));
                 });
