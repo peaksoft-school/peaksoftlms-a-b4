@@ -68,6 +68,13 @@ public class CourseApi {
     public List<InstructorResponse> getAllInstructorByCourseId(@PathVariable Long id) {
         return courseService.getAllInstructorByCourseId(id);
     }
+    @Operation(summary = "Get Lessons by course id",
+    description = "Get all lessons in this course")
+    @GetMapping("/lessons/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    public  List<LessonResponse> getAllLessonByCourseId(@PathVariable Long id){
+        return courseService.getAllLessonByCourseId(id);
+    }
 
     @Operation(summary = "Assign Instructor to Course", description = "Assign Instructor to Course")
     @PostMapping("/assign")
