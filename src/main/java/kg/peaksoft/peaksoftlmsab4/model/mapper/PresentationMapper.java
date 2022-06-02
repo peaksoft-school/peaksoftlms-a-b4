@@ -40,6 +40,9 @@ public class PresentationMapper {
     }
 
     public PresentationResponse mapToResponse(PresentationEntity presentationEntity) {
+        if (presentationEntity == null) {
+            return null;
+        }
         return PresentationResponse.builder()
                 .id(presentationEntity.getId())
                 .presentationName(presentationEntity.getPresentationName())

@@ -28,7 +28,7 @@ public class TaskEntity {
     @Column(name = "task_name")
     private String taskName;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "taskEntity")
     private List<TaskTypeEntity > taskTypes;
 
     @OneToOne (cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})

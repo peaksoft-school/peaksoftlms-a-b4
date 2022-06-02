@@ -4,10 +4,11 @@ import kg.peaksoft.peaksoftlmsab4.model.enums.TaskType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+
+import static javax.persistence.CascadeType.*;
 
 @Entity
-@Table(name = "taskTypes")
+@Table(name = "task_types")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -29,4 +30,8 @@ public class TaskTypeEntity {
     private String value;
     @Enumerated(EnumType.STRING)
     private TaskType taskType;
+
+    @ManyToOne(cascade = {MERGE,DETACH,REFRESH})
+    @JoinColumn(name = "task_entity")
+    private TaskEntity taskEntity;
 }

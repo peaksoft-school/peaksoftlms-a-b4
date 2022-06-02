@@ -36,6 +36,9 @@ public class LinkMapper {
     }
 
     public LinkResponse mapToResponse(LinkEntity link) {
+        if (link == null) {
+            return null;
+        }
         return LinkResponse.builder()
                 .id(link.getId())
                 .link(link.getLink())

@@ -34,36 +34,39 @@ public class LessonMapper {
         return lessonEntity;
     }
 
-    public List<LessonResponse> mapToResponse(List<LessonEntity> lessons){
+    public List<LessonResponse> mapToResponse(List<LessonEntity> lessons) {
         List<LessonResponse> lessonResponses = new ArrayList<>();
-        for (LessonEntity lessonEntity:lessons) {
+        for (LessonEntity lessonEntity : lessons) {
             lessonResponses.add(mapToResponse(lessonEntity));
         }
         return lessonResponses;
     }
 
-    public LessonResponse mapToResponse(LessonEntity lesson){
-       return LessonResponse.builder()
-               .id(lesson.getId())
-               .lessonName(lesson.getLessonName())
-               .build();
+    public LessonResponse mapToResponse(LessonEntity lesson) {
+        return LessonResponse.builder()
+                .id(lesson.getId())
+                .lessonName(lesson.getLessonName())
+                .build();
     }
 
-    public LessonResponseForGet mapToResponseForGetMethod(LessonEntity lesson){
+    public LessonResponseForGet mapToResponseForGetMethod(LessonEntity lesson) {
+        if (lesson == null) {
+            return null;
+        }
         return LessonResponseForGet.builder()
                 .id(lesson.getId())
                 .lessonName(lesson.getLessonName())
                 .linkResponse(linkMapper.mapToResponse(lesson.getLinkEntity()))
                 .presentationResponse(presentationMapper.mapToResponse(lesson.getPresentationEntity()))
                 .videoResponse(videoMapper.mapToResponse(lesson.getVideoEntity()))
-                .taskResponse(taskMapper.mapToResponse(lesson.getTask()))
+                .taskResponse(taskMapper.mapToResponse(lesson.getTaskEntity()))
                 .testResponse(testMapper.viewTest(lesson.getTestEntity()))
                 .build();
     }
 
-    public List<LessonResponseForGet> mapToResponseForGetMethod(List<LessonEntity> lessons){
+    public List<LessonResponseForGet> mapToResponseForGetMethod(List<LessonEntity> lessons) {
         List<LessonResponseForGet> lessonResponses = new ArrayList<>();
-        for (LessonEntity lessonEntity:lessons) {
+        for (LessonEntity lessonEntity : lessons) {
             lessonResponses.add(mapToResponseForGetMethod(lessonEntity));
         }
         return lessonResponses;

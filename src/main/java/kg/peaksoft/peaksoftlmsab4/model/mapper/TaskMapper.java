@@ -23,6 +23,7 @@ public class TaskMapper {
                 .build();
 
     }
+
     public TaskEntity update(TaskEntity taskEntity, TaskRequest taskRequest) {
         taskEntity.setTaskName(taskRequest.getTaskName());
         taskEntity.setTaskTypes(taskRequest.getTaskTypeEntity());
@@ -38,6 +39,9 @@ public class TaskMapper {
     }
 
     public TaskResponse mapToResponse(TaskEntity task) {
+        if (task == null) {
+            return null;
+        }
         return TaskResponse.builder()
                 .id(task.getId())
                 .taskName(task.getTaskName())
