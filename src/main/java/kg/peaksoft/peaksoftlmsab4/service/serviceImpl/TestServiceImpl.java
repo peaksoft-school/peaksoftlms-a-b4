@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
@@ -32,9 +33,13 @@ public class TestServiceImpl implements TestService {
                     String.format("Lesson with id = %s does not exists", lessonId)
             );
         });
-        TestEntity test = testMapper.create(testRequest);
-        test.setLessonEntity(lesson);
-        return testMapper.viewTest(repository.save(test));
+        if (lesson.getTestEntity() == null) {
+            TestEntity test = testMapper.create(testRequest);
+            test.setLessonEntity(lesson);
+            return testMapper.viewTest(repository.save(test));
+        }else {
+            throw new BadRequestException("In this lesson test already exists");
+        }
     }
 
     @Override
