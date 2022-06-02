@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.PresentationEntity;
@@ -27,13 +28,16 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     public PresentationResponse create(PresentationRequest request, Long lessonId) {
         LessonEntity lesson = lessonRepository.getById(lessonId);
-        PresentationEntity presentationEntity = mapper.mapToEntity(request);
-        presentationEntity.setLessonEntity(lesson);
-        lesson.setPresentationEntity(presentationEntity);
-        PresentationEntity savedPresentationEntity = presentationRepository.save(presentationEntity);
-        return mapper.mapToResponse(savedPresentationEntity);
+        if (lesson.getPresentationEntity() == null) {
+            PresentationEntity presentationEntity = mapper.mapToEntity(request);
+            presentationEntity.setLessonEntity(lesson);
+            lesson.setPresentationEntity(presentationEntity);
+            PresentationEntity savedPresentationEntity = presentationRepository.save(presentationEntity);
+            return mapper.mapToResponse(savedPresentationEntity);
+        } else {
+            throw new BadRequestException("In this lesson presentation already exists");
+        }
     }
-
     @Override
     public List<PresentationResponse> getAll() {
         log.info("fount {} presentations", presentationRepository.findAll().size());
