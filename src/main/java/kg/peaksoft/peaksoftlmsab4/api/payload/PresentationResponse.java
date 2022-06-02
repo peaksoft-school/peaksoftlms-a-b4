@@ -13,4 +13,5 @@ public class PresentationResponse {
     private String presentationName;
     private String description;
     private String presentationLink;
+    private Long lessonId;
 }

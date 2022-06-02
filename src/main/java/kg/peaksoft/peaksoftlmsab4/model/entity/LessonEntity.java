@@ -41,6 +41,9 @@ public class LessonEntity {
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     private CourseEntity courseEntity;
 
-    @OneToMany(cascade = ALL, mappedBy = "lesson")
-    private List<TaskEntity> task;
+    @OneToOne(cascade = ALL, mappedBy = "lesson")
+    private TaskEntity task;
+
+    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
+    private TestEntity testEntity;
 }

@@ -40,6 +40,7 @@ public class LinkMapper {
                 .id(link.getId())
                 .link(link.getLink())
                 .text(link.getText())
+                .lessonId(link.getLessonEntity().getId())
                 .build();
     }
 }

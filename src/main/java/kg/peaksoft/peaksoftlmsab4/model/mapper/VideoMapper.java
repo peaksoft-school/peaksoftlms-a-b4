@@ -39,6 +39,7 @@ public class VideoMapper {
                 .videoName(videoEntity.getVideoName())
                 .description(videoEntity.getDescription())
                 .videoLink(videoEntity.getVideoLink())
+                .lessonId(videoEntity.getLessonEntity().getId())
                 .build();
     }
 }

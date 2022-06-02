@@ -27,5 +27,6 @@ public class TaskTypeEntity {
     )
     Long id;
     private String value;
+    @Enumerated(EnumType.STRING)
     private TaskType taskType;
 }

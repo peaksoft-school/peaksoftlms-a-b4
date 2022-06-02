@@ -42,6 +42,7 @@ public class TaskMapper {
                 .id(task.getId())
                 .taskName(task.getTaskName())
                 .taskTypeEntity(task.getTaskTypes())
+                .lessonId(task.getLesson().getId())
                 .build();
     }
 }

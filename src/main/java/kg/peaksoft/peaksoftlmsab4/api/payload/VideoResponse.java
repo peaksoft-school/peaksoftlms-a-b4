@@ -13,4 +13,5 @@ public class VideoResponse {
     private String videoName;
     private String description;
     private String videoLink;
+    private Long lessonId;
 }

@@ -45,6 +45,7 @@ public class PresentationMapper {
                 .presentationName(presentationEntity.getPresentationName())
                 .description(presentationEntity.getDescription())
                 .presentationLink(presentationEntity.getPresentationLink())
+                .lessonId(presentationEntity.getLessonEntity().getId())
                 .build();
     }
 }
