@@ -39,16 +39,14 @@ public class TestMapper {
                 } else {
                     questions.add(mapper.create(q));
                     test.setQuestions(questions);
-                    return test;
                 }
 
             } else
                 questions.add(mapper.create(q));
             test.setQuestions(questions);
-            return test;
 
         }
-        return null;
+        return test;
     }
 
     public TestResponse viewTest(TestEntity test) {
