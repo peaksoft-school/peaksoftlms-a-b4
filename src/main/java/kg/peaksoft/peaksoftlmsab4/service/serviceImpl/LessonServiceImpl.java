@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponseForGet;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
@@ -41,13 +42,13 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<LessonResponse> getAll() {
+    public List<LessonResponseForGet> getAll() {
         log.info("Found {} lessons ", lessonRepository.findAll().size());
-        return mapper.mapToResponse(lessonRepository.findAll());
+        return mapper.mapToResponseForGetMethod(lessonRepository.findAll());
     }
 
     @Override
-    public LessonResponse getById(Long lessonId) {
+    public LessonResponseForGet getById(Long lessonId) {
         LessonEntity lesson = lessonRepository.findById(lessonId).
                 orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", lessonId);
@@ -55,7 +56,7 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        return mapper.mapToResponse(lesson);
+        return mapper.mapToResponseForGetMethod(lesson);
     }
 
     @Override

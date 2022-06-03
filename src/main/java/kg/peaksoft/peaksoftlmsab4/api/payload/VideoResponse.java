@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.api.payload;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,4 +12,5 @@ public class VideoResponse {
     private String videoName;
     private String description;
     private String videoLink;
+    private Long lessonId;
 }
