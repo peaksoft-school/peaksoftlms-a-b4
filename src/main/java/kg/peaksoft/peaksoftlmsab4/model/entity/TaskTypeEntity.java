@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.peaksoft.peaksoftlmsab4.model.enums.TaskType;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class TaskTypeEntity {
     @Enumerated(EnumType.STRING)
     private TaskType taskType;
 
+    @JsonIgnore
     @ManyToOne(cascade = {MERGE,DETACH,REFRESH})
     @JoinColumn(name = "task_entity")
     private TaskEntity taskEntity;
