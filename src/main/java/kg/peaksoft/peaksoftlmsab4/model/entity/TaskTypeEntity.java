@@ -16,13 +16,13 @@ public class TaskTypeEntity {
 
     @Id
     @SequenceGenerator(
-            name = "taskType_sequence",
-            sequenceName = "taskTypes_id_seq",
+            name = "task_types_sequence",
+            sequenceName = "task_types_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "taskTypes_sequence"
+            generator = "task_types_sequence"
     )
     Long id;
     private String value;
