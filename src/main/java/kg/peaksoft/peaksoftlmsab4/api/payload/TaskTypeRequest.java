@@ -14,6 +14,5 @@ import javax.validation.constraints.NotBlank;
 public class TaskTypeRequest {
 
     private String value;
-    @Enumerated(EnumType.STRING)
     private TaskType taskType;
 }
