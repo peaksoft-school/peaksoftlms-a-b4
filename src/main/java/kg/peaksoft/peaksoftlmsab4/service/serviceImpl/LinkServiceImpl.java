@@ -76,7 +76,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public void deleteById(Long linkId) {
+    public LinkResponse deleteById(Long linkId) {
         LinkEntity linkEntity = linkRepository.findById(linkId)
                 .orElseThrow(() -> {
                     log.error("Link with id ={} does not exists", linkId);
@@ -84,6 +84,7 @@ public class LinkServiceImpl implements LinkService {
                             String.format("link with id = %s does not exists", linkId)
                     );
                 });
-        linkRepository.delete(linkEntity);
+        linkRepository.deleteById(linkId);
+        return mapper.mapToResponse(linkEntity);
     }
 }

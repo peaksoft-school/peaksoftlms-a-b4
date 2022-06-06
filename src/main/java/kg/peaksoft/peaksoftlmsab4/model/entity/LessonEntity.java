@@ -29,13 +29,13 @@ public class LessonEntity {
     @Column(name = "lesson_name")
     private String lessonName;
 
-    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER, mappedBy = "lessonEntity")
     private LinkEntity linkEntity;
 
-    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER, mappedBy = "lessonEntity")
     private VideoEntity videoEntity;
 
-    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER, mappedBy = "lessonEntity")
     private PresentationEntity presentationEntity;
 
     @OneToOne(cascade = ALL,mappedBy = "lessonEntity")
@@ -44,6 +44,6 @@ public class LessonEntity {
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     private CourseEntity courseEntity;
 
-    @OneToOne(cascade = ALL, mappedBy = "lesson")
+    @OneToOne(cascade = ALL, fetch = FetchType.EAGER, mappedBy = "lesson")
     private TaskEntity taskEntity;
 }

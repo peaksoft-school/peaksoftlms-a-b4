@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,8 @@ public class VideoEntity {
     private String description;
     @Column(name = "video_link")
     private String videoLink;
-    @OneToOne(cascade = {DETACH, MERGE, REFRESH})
+
+    @OneToOne(cascade = {MERGE, DETACH, REFRESH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
     private LessonEntity lessonEntity;
 }

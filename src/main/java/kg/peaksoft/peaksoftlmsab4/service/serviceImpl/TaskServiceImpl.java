@@ -75,11 +75,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(Long id) {
+    public TaskResponse deleteTask(Long id) {
         TaskEntity taskEntity = taskRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("task with id = %s does not exists", id));
                 });
         taskRepository.delete(taskEntity);
+        return taskMapper.mapToResponse(taskEntity);
     }
 }

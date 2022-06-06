@@ -70,7 +70,7 @@ public class PresentationServiceImpl implements PresentationService {
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("presentation with id = %s does not exists", presentationId));
                 });
-        presentationRepository.delete(presentationEntity);
+        presentationRepository.deleteById(presentationId);
         return mapper.mapToResponse(presentationEntity);
     }
 }
