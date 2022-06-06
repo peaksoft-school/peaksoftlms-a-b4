@@ -14,5 +14,6 @@ import javax.validation.constraints.NotBlank;
 public class TaskTypeRequest {
 
     private String value;
+    private String name;
     private TaskType taskType;
 }
