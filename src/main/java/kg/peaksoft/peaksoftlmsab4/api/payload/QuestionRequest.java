@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class QuestionRequest {
 
-    @NotBlank
+
     private String question;
     private QuestionType questionType;
 
