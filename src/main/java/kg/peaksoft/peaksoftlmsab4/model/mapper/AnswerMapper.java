@@ -16,10 +16,10 @@ public class AnswerMapper {
             answerResponse.setId(testStudentEntity.getId());
         }
         answerResponse.setId(testStudentEntity.getId());
-        answerResponse.setStudent(testStudentEntity.getStudentEntity().getFirstName()+" "+testStudentEntity.getStudentEntity().getLastName());
-        answerResponse.setResult(testStudentEntity.getResult());
-        answerResponse.setTestResult(testStudentEntity.getTestResult());
-        answerResponse.setLocalDate(testStudentEntity.getLocalDate());
+        answerResponse.setStudentName(testStudentEntity.getStudentEntity().getFirstName()+" "+testStudentEntity.getStudentEntity().getLastName());
+        answerResponse.setGrade(testStudentEntity.getResult());
+        answerResponse.setStatus(testStudentEntity.getTestResult());
+        answerResponse.setDate(testStudentEntity.getLocalDate());
 
         return answerResponse;
     }
