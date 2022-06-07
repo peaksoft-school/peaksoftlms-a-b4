@@ -16,6 +16,7 @@ public class TaskTypeMapper {
         }
         return TaskTypeEntity.builder()
                 .value(taskTypeRequest.getValue())
+                .name(taskTypeRequest.getName())
                 .taskType(taskTypeRequest.getTaskType())
                 .build();
 
@@ -25,6 +26,7 @@ public class TaskTypeMapper {
         return TaskTypeResponse.builder()
                 .id(taskTypeEntity.getId())
                 .taskType(taskTypeEntity.getTaskType())
+                .name(taskTypeEntity.getName())
                 .value(taskTypeEntity.getValue())
                 .build();
     }
