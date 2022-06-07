@@ -40,11 +40,15 @@ public class PresentationMapper {
     }
 
     public PresentationResponse mapToResponse(PresentationEntity presentationEntity) {
+        if (presentationEntity == null) {
+            return null;
+        }
         return PresentationResponse.builder()
                 .id(presentationEntity.getId())
                 .presentationName(presentationEntity.getPresentationName())
                 .description(presentationEntity.getDescription())
                 .presentationLink(presentationEntity.getPresentationLink())
+                .lessonId(presentationEntity.getLessonEntity().getId())
                 .build();
     }
 }

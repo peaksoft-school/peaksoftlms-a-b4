@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "tests")
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class TestEntity {
     private Long id;
     private String testName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH},fetch = FetchType.LAZY)
     private LessonEntity lessonEntity;
 
     @OneToMany( cascade = CascadeType.ALL)

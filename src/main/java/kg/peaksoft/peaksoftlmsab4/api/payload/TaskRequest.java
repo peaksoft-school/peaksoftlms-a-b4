@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.api.payload;
 
 
-import kg.peaksoft.peaksoftlmsab4.model.entity.TaskTypeEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +13,5 @@ import java.util.List;
 public class TaskRequest {
 
     private String taskName;
-    private List<TaskTypeEntity> taskTypeEntity;
+    private List<TaskTypeRequest> taskTypeRequests;
 }

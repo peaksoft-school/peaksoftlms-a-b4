@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,8 @@ public class LinkEntity {
 
     private String text;
     private String link;
-    @OneToOne(cascade = {DETACH, MERGE, REFRESH})
+
+    @OneToOne(cascade = {MERGE, DETACH, REFRESH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
     private LessonEntity lessonEntity;
 }

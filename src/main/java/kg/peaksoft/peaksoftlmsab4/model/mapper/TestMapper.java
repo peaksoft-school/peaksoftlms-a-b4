@@ -63,6 +63,7 @@ public class TestMapper {
         }
         testResponse.setTestName(test.getTestName());
         testResponse.setQuestions(mapper.viewQuestions(test.getQuestions()));
+        testResponse.setLessonId(test.getLessonEntity().getId());
         return testResponse;
 
     }
@@ -74,12 +75,6 @@ public class TestMapper {
         }
         return testResponses;
     }
-
-
-
-
-
-
 
     public TestEntity update(TestEntity test, TestRequest testRequest) {
 

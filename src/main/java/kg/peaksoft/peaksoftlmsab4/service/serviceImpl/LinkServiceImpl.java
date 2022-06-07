@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LinkEntity;
@@ -33,13 +34,16 @@ public class LinkServiceImpl implements LinkService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        LinkEntity linkEntity = mapper.mapToEntity(linkRequest);
-        linkEntity.setLessonEntity(lesson);
-        lesson.setLinkEntity(linkEntity);
-        log.info(" Link with name : {} has successfully saved to database", linkEntity.getLink());
-        return mapper.mapToResponse(linkRepository.save(linkEntity));
+        if (lesson.getLinkEntity() == null) {
+            LinkEntity linkEntity = mapper.mapToEntity(linkRequest);
+            linkEntity.setLessonEntity(lesson);
+            lesson.setLinkEntity(linkEntity);
+            log.info(" Link with name : {} has successfully saved to database", linkEntity.getLink());
+            return mapper.mapToResponse(linkRepository.save(linkEntity));
+        }else {
+            throw new BadRequestException("In this lesson link already exists");
+        }
     }
-
     @Override
     public List<LinkResponse> getAll() {
         log.info("Found {} links ", linkRepository.findAll().size());
@@ -72,7 +76,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public void deleteById(Long linkId) {
+    public LinkResponse deleteById(Long linkId) {
         LinkEntity linkEntity = linkRepository.findById(linkId)
                 .orElseThrow(() -> {
                     log.error("Link with id ={} does not exists", linkId);
@@ -80,6 +84,7 @@ public class LinkServiceImpl implements LinkService {
                             String.format("link with id = %s does not exists", linkId)
                     );
                 });
-        linkRepository.delete(linkEntity);
+        linkRepository.deleteById(linkId);
+        return mapper.mapToResponse(linkEntity);
     }
 }

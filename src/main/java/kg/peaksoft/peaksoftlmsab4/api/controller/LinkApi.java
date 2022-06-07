@@ -49,7 +49,7 @@ public class LinkApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the link ", description = "Deletes link by id ")
-    public void deleteById(@PathVariable Long id) {
-        linkService.deleteById(id);
+    public LinkResponse deleteById(@PathVariable Long id) {
+        return linkService.deleteById(id);
     }
 }

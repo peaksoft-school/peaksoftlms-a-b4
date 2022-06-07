@@ -12,5 +12,6 @@ public class TaskTypeResponse {
 
     private Long id;
     private String value;
+    private String name;
     private TaskType taskType;
 }

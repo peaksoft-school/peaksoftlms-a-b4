@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.api.payload.TaskRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TaskResponse;
+import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskEntity;
@@ -35,11 +36,14 @@ public class TaskServiceImpl implements TaskService {
                             String.format("Lesson with id = %s does not exists", id)
                     );
                 });
-        TaskEntity task = taskMapper.mapToEntity(taskRequest);
-        task.setLesson(lessonEntity);
-        log.info(" Task with name : {} has successfully saved to database", task.getTaskName());
-        return taskMapper.mapToResponse(taskRepository.save(task));
-
+        if (lessonEntity.getTaskEntity() == null) {
+            TaskEntity task = taskMapper.mapToEntity(taskRequest);
+            task.setLesson(lessonEntity);
+            log.info(" Task with name : {} has successfully saved to database", task.getTaskName());
+            return taskMapper.mapToResponse(taskRepository.save(task));
+        } else {
+            throw new BadRequestException("In this lesson task already exists");
+        }
     }
 
     @Override
@@ -71,11 +75,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(Long id) {
+    public TaskResponse deleteTask(Long id) {
         TaskEntity taskEntity = taskRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("task with id = %s does not exists", id));
                 });
         taskRepository.delete(taskEntity);
+        return taskMapper.mapToResponse(taskEntity);
     }
 }

@@ -34,11 +34,15 @@ public class VideoMapper {
     }
 
     public VideoResponse mapToResponse(VideoEntity videoEntity) {
+        if (videoEntity == null) {
+            return null;
+        }
         return VideoResponse.builder()
                 .id(videoEntity.getId())
                 .videoName(videoEntity.getVideoName())
                 .description(videoEntity.getDescription())
                 .videoLink(videoEntity.getVideoLink())
+                .lessonId(videoEntity.getLessonEntity().getId())
                 .build();
     }
 }

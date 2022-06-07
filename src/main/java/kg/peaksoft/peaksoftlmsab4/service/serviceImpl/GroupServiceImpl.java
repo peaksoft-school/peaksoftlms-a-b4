@@ -103,6 +103,11 @@ public class GroupServiceImpl implements GroupService {
                 throw new AlreadyExistsException(groupEntity.getGroupName() + " already assigned to course " + course.getCourseName());
             }
         }
+        for (StudentEntity s : group.getStudents()) {
+            course.getStudents().removeIf(studentEntity -> s.getId().equals(studentEntity.getId()));
+            s.setCourse(course);
+        }
+
         group.setCourse(course);
         log.info("Group with id = {} h as successfully added to course with id = {}", groupId, courseId);
         return viewMapper.viewGroup(group);

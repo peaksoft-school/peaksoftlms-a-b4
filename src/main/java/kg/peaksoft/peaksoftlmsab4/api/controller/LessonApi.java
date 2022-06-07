@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
+import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponseForGet;
 import kg.peaksoft.peaksoftlmsab4.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/lessons")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @AllArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Lesson", description = "The Lesson CRUD operations")
 public class LessonApi {
 
@@ -27,16 +28,18 @@ public class LessonApi {
         return lessonService.create(lessonRequest, courseId);
     }
 
+    @CrossOrigin
     @GetMapping
     @Operation(summary = "Gets all existed lessons", description = "Returns all lessons in a list ")
-    public List<LessonResponse> getAllLessons() {
+    public List<LessonResponseForGet> getAllLessons() {
         return lessonService.getAll();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single entity by identifier",
             description = "For valid response try integer IDs with value >= 1 ")
-    public LessonResponse getLessonById(@PathVariable Long id) {
+    public LessonResponseForGet getLessonById(@PathVariable Long id) {
         return lessonService.getById(id);
     }
 

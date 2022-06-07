@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class PresentationEntity {
     @Column(name = "presentation_link")
     private String presentationLink;
 
-    @OneToOne(cascade = {DETACH, MERGE, REFRESH})
+    @OneToOne(cascade = {MERGE, DETACH, REFRESH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
     private LessonEntity lessonEntity;
 }

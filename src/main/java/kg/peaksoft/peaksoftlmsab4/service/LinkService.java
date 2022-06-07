@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
 
@@ -15,5 +14,5 @@ public interface LinkService {
 
     LinkResponse update(Long linkId, LinkRequest linkRequest);
 
-    void deleteById(Long linkId);
+    LinkResponse deleteById(Long linkId);
 }

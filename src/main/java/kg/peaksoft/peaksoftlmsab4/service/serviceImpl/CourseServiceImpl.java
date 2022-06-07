@@ -6,11 +6,9 @@ import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseEditMapper;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.CourseViewMapper;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.InstructorViewMapper;
-import kg.peaksoft.peaksoftlmsab4.model.mapper.StudentViewMapper;
+import kg.peaksoft.peaksoftlmsab4.model.mapper.*;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
@@ -34,6 +32,7 @@ public class CourseServiceImpl implements CourseService {
     private final StudentViewMapper studentViewMapper;
     private final InstructorViewMapper instructorViewMapper;
     private final InstructorRepository instructorRepository;
+    private final LessonMapper lessonMapper;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -114,6 +113,16 @@ public class CourseServiceImpl implements CourseService {
         }
         log.info("successfully getAll teacher by Course Id");
         return instructorResponses;
+    }
+
+    @Override
+    public List<LessonResponseForGet> getAllLessonByCourseId(Long id) {
+        List<LessonResponseForGet> lessonResponses = new ArrayList<>();
+        for (LessonEntity l : getByIdMethod(id).getLessons()) {
+            lessonResponses.add(lessonMapper.mapToResponseForGetMethod(l));
+        }
+        log.info("successfully getAll lesson by Course Id");
+        return lessonResponses;
     }
 
     @Override

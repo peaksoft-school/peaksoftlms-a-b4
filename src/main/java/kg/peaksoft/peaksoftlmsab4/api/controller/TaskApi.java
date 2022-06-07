@@ -50,7 +50,7 @@ public class TaskApi {
 
     @Operation(summary = "Deletes the single task", description = "Delete task with ID")
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    public TaskResponse deleteTask(@PathVariable Long id) {
+        return taskService.deleteTask(id);
     }
 }
