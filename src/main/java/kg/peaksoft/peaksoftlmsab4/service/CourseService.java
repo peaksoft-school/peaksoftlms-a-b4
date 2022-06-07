@@ -20,7 +20,7 @@ public interface CourseService {
 
     List<InstructorResponse> getAllInstructorByCourseId(Long id);
 
-    List<LessonResponse> getAllLessonByCourseId(Long id);
+    List<LessonResponseForGet> getAllLessonByCourseId(Long id);
 
     String assignInstructorToCourse(AssignRequest assignRequest);
 

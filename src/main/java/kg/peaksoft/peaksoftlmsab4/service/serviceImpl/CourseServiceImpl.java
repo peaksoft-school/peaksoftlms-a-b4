@@ -116,10 +116,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<LessonResponse> getAllLessonByCourseId(Long id) {
-        List<LessonResponse> lessonResponses = new ArrayList<>();
+    public List<LessonResponseForGet> getAllLessonByCourseId(Long id) {
+        List<LessonResponseForGet> lessonResponses = new ArrayList<>();
         for (LessonEntity l : getByIdMethod(id).getLessons()) {
-            lessonResponses.add(lessonMapper.mapToResponse(l));
+            lessonResponses.add(lessonMapper.mapToResponseForGetMethod(l));
         }
         log.info("successfully getAll lesson by Course Id");
         return lessonResponses;

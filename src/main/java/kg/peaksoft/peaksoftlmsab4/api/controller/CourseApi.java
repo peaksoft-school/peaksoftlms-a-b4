@@ -72,7 +72,7 @@ public class CourseApi {
     description = "Get all lessons in this course")
     @GetMapping("/lessons/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    public  List<LessonResponse> getAllLessonByCourseId(@PathVariable Long id){
+    public  List<LessonResponseForGet> getAllLessonByCourseId(@PathVariable Long id){
         return courseService.getAllLessonByCourseId(id);
     }
 
