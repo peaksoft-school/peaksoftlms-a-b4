@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Setter
 public class AnswerResponse {
     private Long id;
-    private int result;
-    private TestResult testResult;
-    private LocalDate localDate;
-    private String student;
+    private int grade;
+    private TestResult status;
+    private LocalDate date;
+    private String studentName;
 }
