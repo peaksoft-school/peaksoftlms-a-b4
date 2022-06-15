@@ -214,7 +214,7 @@ public class StudentServiceImpl implements StudentService {
                 if(row.getCell(2)==null){
                     throw new BadRequestException("Phone number in line index "+index+" is empty!");
                 }else {
-                    student.setPhoneNumber(String.valueOf((int) row.getCell(2).getNumericCellValue()));
+                    student.setPhoneNumber(String.valueOf((long) row.getCell(2).getNumericCellValue()));
                 }
 
                 if(row.getCell(3,Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)==null){

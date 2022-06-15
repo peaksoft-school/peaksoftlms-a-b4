@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.repository;
 
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,7 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
 
     @Query("select c from CourseEntity c")
     List<CourseEntity> findAllPag(Pageable pageable);
+
+    @Query("select s from StudentEntity s inner join s.courses c where c.id = :id order by s.id desc ")
+    List<StudentEntity> getStudents(Long id);
 }

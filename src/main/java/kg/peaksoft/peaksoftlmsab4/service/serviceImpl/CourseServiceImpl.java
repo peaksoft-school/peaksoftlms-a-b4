@@ -98,7 +98,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<StudentResponse> getAllStudentsByCourseId(Long id) {
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (StudentEntity s : getByIdMethod(id).getStudents()) {
+        for (StudentEntity s : courseRepository.getStudents(id)) {
             studentResponses.add(studentViewMapper.convertToStudentResponse(s));
         }
         log.info("Successfully getAll Students by Course Id");
