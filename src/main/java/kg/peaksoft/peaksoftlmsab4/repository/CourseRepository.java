@@ -18,6 +18,6 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
     @Query("select c from CourseEntity c")
     List<CourseEntity> findAllPag(Pageable pageable);
 
-    @Query("select s from StudentEntity s inner join s.courses c where c.id = :id order by s.id desc ")
+    @Query("select s from StudentEntity s inner join s.courses c where c.id = :id order by s.id asc ")
     List<StudentEntity> getStudents(Long id);
 }
