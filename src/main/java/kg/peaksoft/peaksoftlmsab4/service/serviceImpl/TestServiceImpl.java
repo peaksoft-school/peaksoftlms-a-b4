@@ -1,16 +1,11 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
-import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.TestMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
@@ -50,47 +45,15 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-
     public TestResponse update(Long id, TestRequest testRequest) {
         TestEntity test = repository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("test not found this=%s", id)));
-        String currentTest = test.getTestName();
-        String newTest = testRequest.getTestName();
-        if (!currentTest.equals(newTest)) {
-            test.setTestName(newTest);
-        }
-        for (QuestionEntity question : test.getQuestions()) {
-            for (QuestionRequest questionRequest : testRequest.getQuestions()) {
-                String currentQuestion = question.getQuestion();
-                String newQuestion = questionRequest.getQuestion();
-                if (!currentQuestion.equals(newQuestion)) {
-                    question.setQuestion(newQuestion);
-                }
 
-                QuestionType currentQuestionType = question.getQuestionType();
-                QuestionType newQuestionType = questionRequest.getQuestionType();
-                if (!currentQuestionType.equals(newQuestionType)) {
-                    question.setQuestionType(newQuestionType);
-                }
-
-                for (OptionEntity option : question.getOptions()) {
-                    for (OptionRequest optionRequest : questionRequest.getOptions()) {
-                        String currentOption = option.getOption();
-                        String newOption = optionRequest.getOption();
-                        if (!currentOption.equals(newOption)) {
-                            option.setOption(newOption);
-                        }
-
-                        Boolean currentAnswer = option.getIsTrue();
-                        Boolean newAnswer = optionRequest.getIsTrue();
-                        if (!currentAnswer.equals(newAnswer)) {
-                            option.setIsTrue(newAnswer);
-                        }
-                    }
-                }
-            }
-        }
-        return testMapper.viewTest(test);
+        repository.deleteById(id);
+        TestEntity newTest = testMapper.create(testRequest);
+        newTest.setLessonEntity(test.getLessonEntity());
+        repository.save(newTest);
+        return testMapper.viewTest(newTest);
     }
 
     @Override

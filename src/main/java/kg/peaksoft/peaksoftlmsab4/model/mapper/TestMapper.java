@@ -28,8 +28,8 @@ public class TestMapper {
         List<QuestionEntity> questions = new ArrayList<>();
         TestEntity test = new TestEntity();
         test.setTestName(testRequest.getTestName());
-        int counter = 0;
         for (QuestionRequest q : testRequest.getQuestions()) {
+            int counter = 0;
             if (q.getQuestionType() == QuestionType.ONE) {
                 for (OptionRequest v : q.getOptions()) {
                     if (v.getIsTrue()) {
@@ -40,15 +40,11 @@ public class TestMapper {
                     throw new BadRequestException("You can't choose multiply answer");
                 } else {
                     questions.add(mapper.create(q));
-                    test.setQuestions(questions);
                 }
-
             } else
                 questions.add(mapper.create(q));
-            test.setQuestions(questions);
         }
         test.setQuestions(questions);
-        test.setLessonEntity(lessonRepository.getById(testRequest.getLessonId()));
         return test;
     }
 
