@@ -15,21 +15,19 @@ import javax.annotation.security.PermitAll;
 @RestController
 @RequestMapping("/api/answers")
 @AllArgsConstructor
-@PreAuthorize("hasAuthority('STUDENT')")
+@PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
 @CrossOrigin(origins = "*",maxAge = 3600)
 public class AnswerApi {
 
     private final AnswerServiceImpl answerService;
 
     @PostMapping
-    @PermitAll
     @Operation(summary = "authenticate", description = "it is authenticate http method")
     public void create(@RequestBody AnswerRequest answerRequest,Authentication authentication) {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
         answerService.createAnswers(answerRequest,authInfo);
     }
     @GetMapping
-    @PermitAll
     @Operation(summary = "authenticate", description = "it is authenticate http method")
     public AnswerResponse resultTest(Authentication authentication) {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
