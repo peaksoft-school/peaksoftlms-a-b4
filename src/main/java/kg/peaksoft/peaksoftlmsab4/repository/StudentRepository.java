@@ -1,5 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.repository;
 
+import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.data.domain.Page;
@@ -22,4 +24,6 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
     Page<StudentEntity> findStudentEntitiesByStudyFormat(Pageable pageable, StudyFormat studyFormat);
 
+    @Query("select s from StudentEntity s where s.authInfo.email=?1")
+    StudentEntity getByEmail(String email);
 }

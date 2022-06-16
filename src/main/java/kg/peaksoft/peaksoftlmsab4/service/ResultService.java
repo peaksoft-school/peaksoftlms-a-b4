@@ -10,8 +10,8 @@ import java.util.List;
 public interface ResultService {
 
 
-    ResultResponse createResult(ResultRequest resultRequest);
-
-
-    List<ResultResponse> getAll();
+//    ResultResponse createResult(ResultRequest resultRequest);
+//
+//
+//    List<ResultResponse> getAll();
 }

@@ -13,5 +13,4 @@ public class ResultRequest {
     @NotBlank
     private Boolean accepted;
 
-
 }

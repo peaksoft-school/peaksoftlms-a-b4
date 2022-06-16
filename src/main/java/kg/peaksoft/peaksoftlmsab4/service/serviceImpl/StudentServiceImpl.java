@@ -48,6 +48,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
+        TestStudentEntity testStudentEntity = new TestStudentEntity();
         String email = studentRequest.getEmail();
         if (!validator.patternMatches(email)) {
             throw new InvalidArgumentException(email + " is not valid");
@@ -58,6 +59,7 @@ public class StudentServiceImpl implements StudentService {
         StudentEntity student = studentRepository.save(studentEditMapper
                 .convertToStudent(studentRequest));
         log.info("Student with name : {} has successfully saved to database", student.getFirstName());
+        student.setTestStudentEntity(testStudentEntity);
         return studentViewMapper.convertToStudentResponse(student);
     }
 

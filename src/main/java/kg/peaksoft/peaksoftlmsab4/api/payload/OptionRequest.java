@@ -13,5 +13,4 @@ public class OptionRequest {
     @NotBlank
     private Boolean isTrue;
 
-
 }

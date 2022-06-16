@@ -5,9 +5,11 @@ import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
+import kg.peaksoft.peaksoftlmsab4.repository.LessonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ import java.util.List;
 @Slf4j
 public class TestMapper {
     private final QuestionMapper mapper;
-
+    private final LessonRepository lessonRepository;
 
     public TestEntity create(TestRequest testRequest) {
         List<QuestionEntity> questions = new ArrayList<>();

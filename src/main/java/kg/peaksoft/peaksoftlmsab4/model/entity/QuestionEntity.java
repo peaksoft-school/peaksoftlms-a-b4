@@ -34,7 +34,5 @@ public class QuestionEntity {
             options=new ArrayList<>();
         }
         options.add(option);
-
     }
-
 }

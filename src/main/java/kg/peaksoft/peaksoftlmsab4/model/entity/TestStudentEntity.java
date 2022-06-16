@@ -1,8 +1,11 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
+import kg.peaksoft.peaksoftlmsab4.model.enums.TestResult;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Entity
@@ -16,11 +19,18 @@ public class TestStudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String answer;
-    private Boolean isTrue;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "student_entity_id")
+    private int result;
+
+    @Enumerated(EnumType.STRING)
+    private TestResult testResult;
+
+    @CreatedDate
+    private LocalDate localDate;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private StudentEntity studentEntity;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private TestEntity testEntity;
 }

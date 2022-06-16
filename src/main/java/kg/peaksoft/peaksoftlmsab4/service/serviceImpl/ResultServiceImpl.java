@@ -22,15 +22,15 @@ public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
     private final ResultMapper editMapper;
 
-    @Override
-    public ResultResponse createResult(ResultRequest resultRequest) {
-
-        return editMapper.viewResult(resultRepository.save(editMapper.createResult(resultRequest)));
-
-    }
-
-    @Override
-    public List<ResultResponse> getAll() {
-        return editMapper.viewResults(resultRepository.findAll());
-    }
+//    @Override
+//    public ResultResponse createResult(ResultRequest resultRequest) {
+//
+//        return editMapper.viewResult(resultRepository.save(editMapper.createResult(resultRequest)));
+//
+//    }
+//
+//    @Override
+//    public List<ResultResponse> getAll() {
+//        return editMapper.viewResults(resultRepository.findAll());
+//    }
 }

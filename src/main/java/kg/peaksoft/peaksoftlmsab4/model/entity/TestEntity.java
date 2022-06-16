@@ -29,5 +29,6 @@ public class TestEntity {
     @OneToMany( cascade = CascadeType.ALL)
     private List<QuestionEntity> questions;
 
-
+    @OneToMany( cascade = CascadeType.ALL)
+    private List<TestStudentEntity> testStudentEntities;
 }
