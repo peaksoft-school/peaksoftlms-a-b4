@@ -47,7 +47,6 @@ public class AnswerServiceImpl {
                 }
             }
         }
-
         List<QuestionRequestForTest> answerRequestQuestion = answerRequest.getQuestion();
         for (QuestionRequestForTest requestForTest : answerRequestQuestion) {
 
@@ -74,7 +73,6 @@ public class AnswerServiceImpl {
                 }
             }
         }
-
         TestStudentEntity testStudentEntity = new TestStudentEntity();
         testStudentEntity.setResult(userRightAnswer);
         int result = countRightAnswers * 100 / correctOption;
@@ -92,8 +90,8 @@ public class AnswerServiceImpl {
 //                        String.format("student with email = %s already passed this test", authInfo.getEmail())
 //                );
 //            } else {
-//                testStudentRepository.save(testStudentEntity);
 //            }
+                testStudentRepository.save(testStudentEntity);
     }
 
     public AnswerResponse resultTest(AuthInfo authInfo) {
