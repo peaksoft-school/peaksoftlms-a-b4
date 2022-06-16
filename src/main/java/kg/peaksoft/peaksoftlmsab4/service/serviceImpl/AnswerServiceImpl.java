@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
 import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequestForTest;
+import kg.peaksoft.peaksoftlmsab4.api.payload.ResultResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.*;
 import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
@@ -91,10 +92,11 @@ public class AnswerServiceImpl {
 //                );
 //            } else {
 //            }
-                testStudentRepository.save(testStudentEntity);
+        testStudentRepository.save(testStudentEntity);
+//        return answerMapper.viewAnswer(testStudentEntity);
     }
 
-    public AnswerResponse resultTest(AuthInfo authInfo) {
-        return answerMapper.viewAnswer(testStudentRepository.getByEmail(authInfo.getEmail()));
+    public List<AnswerResponse> resultTest() {
+       return answerMapper.mapToResponse(testStudentRepository.findAll());
     }
 }

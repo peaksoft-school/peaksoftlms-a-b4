@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/answers")
@@ -29,8 +30,7 @@ public class AnswerApi {
     }
     @GetMapping
     @Operation(summary = "authenticate", description = "it is authenticate http method")
-    public AnswerResponse resultTest(Authentication authentication) {
-        AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
-        return answerService.resultTest(authInfo);
+    public List<AnswerResponse> resultTest() {
+        return answerService.resultTest();
     }
 }
