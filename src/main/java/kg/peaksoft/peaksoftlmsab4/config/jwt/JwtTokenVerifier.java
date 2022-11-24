@@ -12,7 +12,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @AllArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
@@ -22,11 +21,11 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
 
+    @SuppressWarnings("NullableProblems")
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException, java.io.IOException {
-
+                                    FilterChain filterChain) throws ServletException, java.io.IOException {
         String header = request.getHeader(jwtConfig.getAuthorizationHeader());
         String email = null;
         String token = null;
@@ -39,7 +38,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             }
         }
 
-
         if (email != null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             if (jwtUtils.verifyToken(token)) {
@@ -48,15 +46,14 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                 );
-
                 authenticationToken.setDetails(
                         new WebAuthenticationDetailsSource()
                                 .buildDetails(request)
                 );
-
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
         filterChain.doFilter(request, response);
     }
+
 }
