@@ -62,6 +62,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/api/public/**").permitAll()
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .antMatchers("/api/answer/**").hasAnyAuthority("ROLE_INSTRUCTOR", "ROLE_STUDENT")
                 .anyRequest()
                 .permitAll();
 

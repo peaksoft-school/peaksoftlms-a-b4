@@ -1,35 +1,42 @@
 package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AnswerServiceImpl;
-import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/answers")
-@AllArgsConstructor
-@PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
-@CrossOrigin(origins = "*",maxAge = 3600)
+@RequiredArgsConstructor
+@RequestMapping("api/answers")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Answer API", description = "Answer endpoints")
 public class AnswerApi {
 
     private final AnswerServiceImpl answerService;
 
+    @Operation(summary = "authenticate", description = "it is authenticate http method")
     @PostMapping
-    @Operation(summary = "authenticate", description = "it is authenticate http method")
-    public void create(@RequestBody AnswerRequest answerRequest,Authentication authentication) {
+    public void create(@RequestBody AnswerRequest answerRequest, Authentication authentication) {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
-        answerService.createAnswers(answerRequest,authInfo);
+        answerService.createAnswers(answerRequest, authInfo);
     }
-    @GetMapping
+
     @Operation(summary = "authenticate", description = "it is authenticate http method")
+    @GetMapping
     public List<AnswerResponse> resultTest() {
         return answerService.resultTest();
     }
+
 }
