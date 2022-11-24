@@ -1,22 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.*;
-import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
-import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
-import kg.peaksoft.peaksoftlmsab4.repository.OptionRepository;
-import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
-import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
-import kg.peaksoft.peaksoftlmsab4.service.ResultService;
-import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.ResultServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Component
 @Slf4j

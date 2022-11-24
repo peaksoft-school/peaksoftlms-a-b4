@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.*;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.*;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;

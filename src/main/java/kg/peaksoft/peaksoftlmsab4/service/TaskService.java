@@ -1,8 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.TaskEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskResponse;
 
 import java.util.List;
 

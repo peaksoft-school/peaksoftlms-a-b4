@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

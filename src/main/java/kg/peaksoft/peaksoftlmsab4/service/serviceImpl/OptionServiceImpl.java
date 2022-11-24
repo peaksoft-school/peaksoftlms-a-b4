@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;

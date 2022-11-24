@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TestRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TestResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

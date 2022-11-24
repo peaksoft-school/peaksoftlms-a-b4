@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.*;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.*;
 
 import java.util.List;
 

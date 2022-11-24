@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import lombok.RequiredArgsConstructor;

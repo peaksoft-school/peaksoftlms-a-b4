@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;
@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @RequiredArgsConstructor
 @Service

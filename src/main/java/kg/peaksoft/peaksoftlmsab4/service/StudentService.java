@@ -1,12 +1,10 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.web.multipart.MultipartFile;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;

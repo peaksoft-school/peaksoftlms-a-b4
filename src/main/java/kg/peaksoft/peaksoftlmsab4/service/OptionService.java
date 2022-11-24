@@ -1,8 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

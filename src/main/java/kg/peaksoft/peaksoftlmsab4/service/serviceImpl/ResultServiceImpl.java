@@ -1,18 +1,13 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.ResultRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.ResultResponse;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.ResultMapper;
-import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.ResultRepository;
-import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
 import kg.peaksoft.peaksoftlmsab4.service.ResultService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Slf4j

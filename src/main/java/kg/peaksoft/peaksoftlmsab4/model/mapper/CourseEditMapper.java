@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import org.springframework.stereotype.Component;
 

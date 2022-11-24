@@ -1,9 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.GroupRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;

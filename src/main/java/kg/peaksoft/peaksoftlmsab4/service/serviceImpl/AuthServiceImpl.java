@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.AuthRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.AuthResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.AuthRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;

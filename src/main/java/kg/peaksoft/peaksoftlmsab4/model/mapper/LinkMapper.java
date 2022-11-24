@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.LinkRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LinkResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.LinkRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.LinkResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LinkEntity;
 import org.springframework.stereotype.Component;
 

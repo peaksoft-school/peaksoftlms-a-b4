@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskTypeRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskTypeRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskTypeEntity;
 import lombok.AllArgsConstructor;

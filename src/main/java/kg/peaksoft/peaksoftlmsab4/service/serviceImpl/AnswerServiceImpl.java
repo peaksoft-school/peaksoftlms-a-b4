@@ -1,12 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequestForTest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.ResultResponse;
-import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequestForTest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.*;
-import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsab4.model.enums.TestResult;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.AnswerMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.*;
@@ -15,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

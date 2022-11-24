@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
@@ -9,7 +9,6 @@ import kg.peaksoft.peaksoftlmsab4.model.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
-import kg.peaksoft.peaksoftlmsab4.service.OptionService;
 import kg.peaksoft.peaksoftlmsab4.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

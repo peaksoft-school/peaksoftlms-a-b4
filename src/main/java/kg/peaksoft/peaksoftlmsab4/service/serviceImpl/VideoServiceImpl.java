@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
