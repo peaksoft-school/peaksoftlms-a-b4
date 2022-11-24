@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AuthServiceImpl;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/public")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Auth API", description = "Authentication endpoints")
 public class AuthApi {
 
     private final AuthServiceImpl authService;
