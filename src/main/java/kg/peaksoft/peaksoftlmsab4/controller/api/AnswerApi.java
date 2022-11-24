@@ -26,14 +26,14 @@ public class AnswerApi {
 
     private final AnswerServiceImpl answerService;
 
-    @Operation(summary = "authenticate", description = "it is authenticate http method")
+    @Operation(summary = "Student answer", description = "Student answering")
     @PostMapping
-    public void create(@RequestBody AnswerRequest answerRequest, Authentication authentication) {
+    public void create(@RequestBody AnswerRequest request, Authentication authentication) {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
-        answerService.createAnswers(answerRequest, authInfo);
+        answerService.createAnswers(request, authInfo);
     }
 
-    @Operation(summary = "authenticate", description = "it is authenticate http method")
+    @Operation(summary = "Test result", description = "Instructor can see the test result")
     @GetMapping
     public List<AnswerResponse> resultTest() {
         return answerService.resultTest();
