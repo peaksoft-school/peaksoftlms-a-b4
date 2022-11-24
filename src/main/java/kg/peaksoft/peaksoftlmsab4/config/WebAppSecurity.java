@@ -23,14 +23,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Slf4j
+@AllArgsConstructor
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true
-)
-@AllArgsConstructor
-@Slf4j
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
     private final AuthInfoRepository authInfoRepository;
@@ -38,7 +35,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     private final JwtUtils jwtUtils;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -51,13 +48,11 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService getUserDetailsService() {
-        return (email) -> authInfoRepository.findByEmail(email)
-                .orElseThrow(() -> {
-                    log.error("User with email = {} does not registered", email);
-                    throw new BadCredentialsException(
-                            String.format("User with email = %s does not registered", email)
-                    );
-                });
+        return (email) -> authInfoRepository.findByEmail(email).orElseThrow(() -> {
+            log.error("User with email = {} does not registered", email);
+            throw new BadCredentialsException(
+                    String.format("User with email = %s does not registered", email));
+        });
     }
 
     @Override
@@ -76,7 +71,6 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
                         getUserDetailsService()),
                 UsernamePasswordAuthenticationFilter.class
         );
-
     }
 
     @Bean
@@ -89,5 +83,6 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+
 }
 
