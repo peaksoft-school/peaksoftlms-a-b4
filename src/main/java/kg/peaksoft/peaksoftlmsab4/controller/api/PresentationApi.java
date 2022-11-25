@@ -5,18 +5,26 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PresentationRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PresentationResponse;
 import kg.peaksoft.peaksoftlmsab4.service.PresentationService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/presentations")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
-@AllArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
-@Tag(name = "Presentation", description = "The Presentation CRUD operations")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Presentation API", description = "Presentation endpoints")
 public class PresentationApi {
 
     private final PresentationService presentationService;
