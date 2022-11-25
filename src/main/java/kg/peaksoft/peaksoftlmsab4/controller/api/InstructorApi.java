@@ -8,19 +8,28 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.service.InstructorService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/instructors")
-@AllArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
-@CrossOrigin(origins = "*",maxAge = 3600)
-@Tag(name = "Instructor", description = "The Instructor CRUD operations")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Instructor API", description = "Instructor endpoints")
 public class InstructorApi {
 
     private final InstructorService instructorService;
@@ -81,8 +90,8 @@ public class InstructorApi {
     }
 
     @GetMapping("/pagination")
-    public PaginationResponse<InstructorResponse> getCoursePagination(@RequestParam int page, @RequestParam int size){
-        return instructorService.getInstructorPagination(page-1,size);
+    public PaginationResponse<InstructorResponse> getCoursePagination(@RequestParam int page, @RequestParam int size) {
+        return instructorService.getInstructorPagination(page - 1, size);
     }
 
 }
