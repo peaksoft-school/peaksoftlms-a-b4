@@ -29,16 +29,14 @@ public class TaskApi {
 
     private final TaskService taskService;
 
-    @Operation(summary = "Creates new entity: Task",
-            description = "This method saves new task. Only instructors can add new task to lesson")
-    @PostMapping("/{lessonId}")
-    public TaskResponse saveTask(@RequestBody TaskRequest taskRequest, @PathVariable Long lessonId) {
-        return taskService.saveTask(lessonId, taskRequest);
+    @Operation(summary = "Creates new entity: Task", description = "This method saves new task. Only instructors can add new task to lesson")
+    @PostMapping("{lessonId}")
+    public TaskResponse saveTask(@RequestBody TaskRequest request, @PathVariable Long lessonId) {
+        return taskService.saveTask(lessonId, request);
     }
 
-    @Operation(summary = "Gets a single tasks by identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
-    @GetMapping("/{id}")
+    @Operation(summary = "Gets a single tasks by identifier", description = "For valid response try integer IDs with value >= 1 and...")
+    @GetMapping("{id}")
     public TaskResponse GetTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
@@ -50,14 +48,15 @@ public class TaskApi {
     }
 
     @Operation(summary = "Updates the task ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public TaskResponse updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
         return taskService.updateTask(id, taskRequest);
     }
 
     @Operation(summary = "Deletes the single task", description = "Delete task with ID")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public TaskResponse deleteTask(@PathVariable Long id) {
         return taskService.deleteTask(id);
     }
+
 }
