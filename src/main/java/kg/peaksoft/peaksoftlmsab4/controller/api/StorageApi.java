@@ -42,7 +42,7 @@ public class StorageApi {
     }
 
     @Operation(summary = "Download file", description = "Download file from aws s3 repository by file name")
-    @GetMapping("/download/{filename}")
+    @GetMapping("{filename}")
     public ResponseEntity<byte[]> download(@PathVariable("filename") String filename) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", MediaType.ALL_VALUE);
@@ -52,7 +52,7 @@ public class StorageApi {
     }
 
     @Operation(summary = "Delete file", description = "Delete file from aws s3 by file name")
-    @DeleteMapping("/{filename}")
+    @DeleteMapping("{filename}")
     public String deleteFile(@PathVariable("filename") String filename) {
         return fileService.deleteFile(filename);
     }
