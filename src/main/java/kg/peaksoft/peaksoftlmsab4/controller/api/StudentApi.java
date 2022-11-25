@@ -37,8 +37,8 @@ public class StudentApi {
     @Operation(summary = "Creates new entity: Student", description = "Saves a new student")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @PostMapping
-    public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest) {
-        return studentService.saveStudent(studentRequest);
+    public StudentResponse saveStudent(@RequestBody StudentRequest request) {
+        return studentService.saveStudent(request);
     }
 
     @Operation(summary = "Import Excel file", description = "Admin can import Excel file")
@@ -50,8 +50,8 @@ public class StudentApi {
 
     @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
     @PostMapping("with-group")
-    public StudentResponse saveStudentWithGroup(@RequestBody StudentRequest studentRequestDto) {
-        return studentService.saveStudentWithGroup(studentRequestDto);
+    public StudentResponse saveStudentWithGroup(@RequestBody StudentRequest request) {
+        return studentService.saveStudentWithGroup(request);
     }
 
     @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
@@ -70,8 +70,8 @@ public class StudentApi {
 
     @Operation(summary = "Updates the student ", description = "Updates the details of an endpoint with ID ")
     @PutMapping("{id}")
-    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody StudentRequest studentRequest) {
-        return studentService.updateStudent(id, studentRequest);
+    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody StudentRequest request) {
+        return studentService.updateStudent(id, request);
     }
 
     @Operation(summary = "Deletes the single student", description = "Deletes student by id ")
