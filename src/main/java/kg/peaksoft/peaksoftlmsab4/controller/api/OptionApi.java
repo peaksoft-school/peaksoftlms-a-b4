@@ -1,5 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.controller.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionResponse;
 import kg.peaksoft.peaksoftlmsab4.service.OptionService;
@@ -22,34 +24,41 @@ import java.util.List;
 @RequestMapping("api/options")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Option API", description = "Option endpoints")
 public class OptionApi {
     private final OptionService service;
 
+    @Operation(summary = "Create option", description = "Save a new option")
     @PostMapping
     public OptionResponse create(@RequestBody OptionRequest request) {
         return service.create(request);
     }
 
+    @Operation(summary = "Update option", description = "Update a existing option")
     @PutMapping("{id}")
     public OptionResponse update(@PathVariable Long id, @RequestBody OptionRequest request) {
         return service.update(id, request);
     }
 
+    @Operation(summary = "Find option by question", description = "Find option by question")
     @PutMapping("{questionId}/set/{optionId}")
     public OptionResponse findByOptionToQuestion(@PathVariable Long questionId, @PathVariable Long optionId) {
         return service.findByOptionToQuestion(questionId, optionId);
     }
 
+    @Operation(summary = "Get option", description = "Get a existing option")
     @GetMapping("{id}")
     public OptionResponse findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
+    @Operation(summary = "Delete option", description = "Delete a existing option")
     @DeleteMapping("{id}")
     public OptionResponse deleteById(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
+    @Operation(summary = "Get all options", description = "Get all existing options")
     @GetMapping
     public List<OptionResponse> findAll() {
         return service.findAll();
