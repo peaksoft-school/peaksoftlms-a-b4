@@ -25,33 +25,34 @@ import java.util.List;
 public class OptionApi {
     private final OptionService service;
 
-    @PostMapping("/save")
-    public OptionResponse create(@RequestBody OptionRequest optionRequest) {
-        return service.create(optionRequest);
+    @PostMapping
+    public OptionResponse create(@RequestBody OptionRequest request) {
+        return service.create(request);
     }
 
-    @PutMapping("/update/{id}")
-    public OptionResponse update(@PathVariable Long id, @RequestBody OptionRequest optionRequest) {
-        return service.update(id, optionRequest);
+    @PutMapping("{id}")
+    public OptionResponse update(@PathVariable Long id, @RequestBody OptionRequest request) {
+        return service.update(id, request);
     }
 
-    @PutMapping("/{questionId}/set/{optionId}")
+    @PutMapping("{questionId}/set/{optionId}")
     public OptionResponse findByOptionToQuestion(@PathVariable Long questionId, @PathVariable Long optionId) {
         return service.findByOptionToQuestion(questionId, optionId);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     public OptionResponse findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public OptionResponse deleteById(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<OptionResponse> findAll() {
         return service.findAll();
     }
+
 }
