@@ -29,35 +29,34 @@ public class LinkApi {
 
     private final LinkService linkService;
 
-    @PostMapping("/{lessonId}")
     @Operation(summary = "Creates new entity: Link", description = "Saves a new link")
-    public LinkResponse addLink(@RequestBody LinkRequest linkRequest, @PathVariable Long lessonId) {
-        return linkService.create(linkRequest, lessonId);
+    @PostMapping("{lessonId}")
+    public LinkResponse addLink(@RequestBody LinkRequest request, @PathVariable Long lessonId) {
+        return linkService.create(request, lessonId);
     }
 
-    @GetMapping
     @Operation(summary = "Gets all existed links", description = "Returns all links in a list ")
+    @GetMapping
     public List<LinkResponse> getAllLinks() {
         return linkService.getAll();
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single entity by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
+    @Operation(summary = "Gets a single entity by identifier", description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("{id}")
     public LinkResponse getLinkById(@PathVariable Long id) {
         return linkService.getById(id);
     }
 
-    @PutMapping("/{id}")
     @Operation(summary = "Updates the link ", description = "Updates the details of an endpoint with ID ")
-    public LinkResponse updateLink(@PathVariable Long id,
-                                   @RequestBody LinkRequest linkRequest) {
-        return linkService.update(id, linkRequest);
+    @PutMapping("{id}")
+    public LinkResponse updateLink(@PathVariable Long id, @RequestBody LinkRequest request) {
+        return linkService.update(id, request);
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the link ", description = "Deletes link by id ")
+    @DeleteMapping("{id}")
     public LinkResponse deleteById(@PathVariable Long id) {
         return linkService.deleteById(id);
     }
+
 }
