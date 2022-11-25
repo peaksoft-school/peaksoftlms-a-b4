@@ -41,60 +41,55 @@ public class CourseApi {
         return courseService.findAllCourse();
     }
 
-    @Operation(summary = "Gets a single entity by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/{id}")
+    @Operation(summary = "Gets a single entity by identifier", description = "For valid response try integer IDs with value >= 1 ")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("{id}")
     public CourseResponse findCourseById(@PathVariable Long id) {
         return courseService.getById(id);
     }
 
     @Operation(summary = "Deletes the courses ", description = "Deletes courses by id ")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public CourseResponse deleteCourse(@PathVariable Long id) {
         return courseService.deleteCourseById(id);
     }
 
     @Operation(summary = "Updates the course ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/{id}")
-    public CourseResponse updateCourse(@PathVariable Long id,
-                                       @RequestBody CourseRequest courseRequest) {
-        return courseService.updateCourseById(id, courseRequest);
+    @PutMapping("{id}")
+    public CourseResponse updateCourse(@PathVariable Long id, @RequestBody CourseRequest request) {
+        return courseService.updateCourseById(id, request);
     }
 
-    @Operation(summary = "Get students by course id",
-            description = "Get all students in this course")
-    @GetMapping("/students/{id}")
+    @Operation(summary = "Get students by course id", description = "Get all students in this course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("students/{id}")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return courseService.getAllStudentsByCourseId(id);
     }
 
-    @Operation(summary = "Get instructor by course id",
-            description = "Get all instructor in this course")
-    @GetMapping("/instructors/{id}")
+    @Operation(summary = "Get instructor by course id", description = "Get all instructor in this course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("instructors/{id}")
     public List<InstructorResponse> getAllInstructorByCourseId(@PathVariable Long id) {
         return courseService.getAllInstructorByCourseId(id);
     }
 
-    @Operation(summary = "Get Lessons by course id",
-            description = "Get all lessons in this course")
-    @GetMapping("/lessons/{id}")
+    @Operation(summary = "Get Lessons by course id", description = "Get all lessons in this course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("lessons/{id}")
     public List<LessonResponseForGet> getAllLessonByCourseId(@PathVariable Long id) {
         return courseService.getAllLessonByCourseId(id);
     }
 
     @Operation(summary = "Assign Instructor to Course", description = "Assign Instructor to Course")
-    @PostMapping("/assign")
-    public String assignInstructor(@RequestBody AssignRequest assignRequest) {
-
-        return courseService.assignInstructorToCourse(assignRequest);
+    @PostMapping("assign")
+    public String assignInstructor(@RequestBody AssignRequest request) {
+        return courseService.assignInstructorToCourse(request);
     }
 
-    @GetMapping("/pagination")
+    @GetMapping("pagination")
     public PaginationResponse<CourseResponse> getCoursePagination(@RequestParam int page, @RequestParam int size) {
         return courseService.getCoursePagination(page - 1, size);
     }
+
 }
