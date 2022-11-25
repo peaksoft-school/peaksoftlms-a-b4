@@ -61,6 +61,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/", "/api/public/**").permitAll()
+                .antMatchers("/api/files/**").permitAll()
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .antMatchers("/api/answer/**").hasAnyAuthority("ROLE_INSTRUCTOR", "ROLE_STUDENT")
                 .anyRequest()
