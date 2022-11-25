@@ -28,33 +28,34 @@ public class QuestionApi {
 
     private final QuestionService service;
 
-    @PostMapping("/save")
+    @PostMapping
     public QuestionResponse create(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
         return service.create(id, questionRequest);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public QuestionResponse update(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
         return service.update(id, questionRequest);
     }
 
-    @PutMapping("/{testId}/set/{questionId}")
+    @PutMapping("{testId}/set/{questionId}")
     public QuestionResponse findByQuestionToTest(@PathVariable Long testId, @PathVariable Long questionId) {
         return service.findByQuestionToTest(testId, questionId);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     public QuestionResponse findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public QuestionResponse deleteById(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<QuestionResponse> findAll() {
         return service.findAll();
     }
+
 }
