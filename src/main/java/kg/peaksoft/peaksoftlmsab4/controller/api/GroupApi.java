@@ -9,18 +9,27 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/groups")
+@RequestMapping("api/groups")
 @PreAuthorize("hasAuthority('ADMIN')")
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "Group", description = "The Group CRUD operations")
+@Tag(name = "Group API", description = "Group endpoints")
 public class GroupApi {
+
     private final GroupService service;
 
     @Operation(summary = "Creates new entity: Group ", description = "Saves a new group")
