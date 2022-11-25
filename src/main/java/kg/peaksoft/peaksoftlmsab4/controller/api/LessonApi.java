@@ -6,18 +6,26 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonResponseForGet;
 import kg.peaksoft.peaksoftlmsab4.service.LessonService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/lessons")
 @PreAuthorize("hasAuthority('INSTRUCTOR')")
-@AllArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "Lesson", description = "The Lesson CRUD operations")
+@Tag(name = "Lesson API", description = "Lesson endpoints")
 public class LessonApi {
 
     private final LessonService lessonService;
