@@ -7,20 +7,29 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/students")
-@AllArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "Student", description = "The Student CRUD operations")
+@Tag(name = "Student API", description = "Student endpoints")
 public class StudentApi {
 
     private final StudentService studentService;
@@ -84,15 +93,16 @@ public class StudentApi {
     public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
         return studentService.setStudentToCourse(courseId, studentId);
     }
+
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @GetMapping("/pagination")
-    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat){
-        return studentService.getStudentPagination(page-1,size,studyFormat);
+    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat) {
+        return studentService.getStudentPagination(page - 1, size, studyFormat);
     }
 
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
     @GetMapping("/fullName/{name}")
-    public List<StudentResponse> finByStudentName(@PathVariable String name){
+    public List<StudentResponse> finByStudentName(@PathVariable String name) {
         return studentService.findByStudentName(name);
     }
 
