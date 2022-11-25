@@ -29,38 +29,34 @@ public class PresentationApi {
 
     private final PresentationService presentationService;
 
-    @PostMapping("/{lessonId}")
     @Operation(summary = "Creates new entity: Presentation", description = "Saves a new presentation")
-    public PresentationResponse addPresentation(
-            @RequestBody PresentationRequest presentationRequest
-            , @PathVariable Long lessonId) {
-        return presentationService.create(presentationRequest, lessonId);
+    @PostMapping("{lessonId}")
+    public PresentationResponse addPresentation(@RequestBody PresentationRequest request, @PathVariable Long lessonId) {
+        return presentationService.create(request, lessonId);
     }
 
-    @GetMapping
     @Operation(summary = "Gets all existed presentations", description = "Returns all presentations in a list ")
+    @GetMapping
     public List<PresentationResponse> getAllPresentations() {
         return presentationService.getAll();
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single entity by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
+    @Operation(summary = "Gets a single entity by identifier", description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("{id}")
     public PresentationResponse getPresentationsById(@PathVariable Long id) {
         return presentationService.getById(id);
     }
 
-
-    @PutMapping("/{id}")
     @Operation(summary = "Updates the presentation ", description = "Updates the details of an endpoint with ID ")
-    public PresentationResponse updatePresentation(@PathVariable Long id,
-                                                   @RequestBody PresentationRequest presentationRequest) {
-        return presentationService.update(id, presentationRequest);
+    @PutMapping("{id}")
+    public PresentationResponse updatePresentation(@PathVariable Long id, @RequestBody PresentationRequest request) {
+        return presentationService.update(id, request);
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the presentation ", description = "Deletes presentation by id ")
+    @DeleteMapping("{id}")
     public PresentationResponse deleteById(@PathVariable Long id) {
         return presentationService.deleteById(id);
     }
+
 }
