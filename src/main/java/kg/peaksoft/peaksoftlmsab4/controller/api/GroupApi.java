@@ -34,53 +34,52 @@ public class GroupApi {
 
     @Operation(summary = "Creates new entity: Group ", description = "Saves a new group")
     @PostMapping
-    public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
-        return service.saveGroup(groupRequest);
+    public GroupResponse saveGroup(@RequestBody GroupRequest request) {
+        return service.saveGroup(request);
     }
 
     @Operation(summary = "Updates the group ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/{id}")
-    public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
-        return service.update(id, groupRequest);
+    @PutMapping("{id}")
+    public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest request) {
+        return service.update(id, request);
     }
 
-    @Operation(summary = "Gets a group by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/{id}")
+    @Operation(summary = "Gets a group by identifier", description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("{id}")
     public GroupResponse getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Deletes the group ", description = "Deletes groups by id ")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public GroupResponse deleteById(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
     @Operation(summary = "Gets all existed groups", description = "Returns all groups in a list ")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @GetMapping
     public List<GroupResponse> getAllGroup() {
         return service.getAllGroup();
     }
 
     @Operation(summary = "Assign group to course", description = "Add a group to course")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
-    @PutMapping("/accept-to-course")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PutMapping("accept-to-course")
     public GroupResponse setGroupToCourse(@RequestParam Long groupId, @RequestParam Long courseId) {
         return service.setGroupToCourse(groupId, courseId);
     }
 
-    @Operation(summary = "Get students by group id",
-            description = "Get all students in this group")
-    @GetMapping("/students/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @Operation(summary = "Get students by group id", description = "Get all students in this group")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("students/{id}")
     public List<StudentResponse> getAllStudentByGroupId(@PathVariable Long id) {
         return service.getAllStudentsByGroupId(id);
     }
 
-    @GetMapping("/pagination")
+    @GetMapping("pagination")
     public PaginationResponse<GroupResponse> getGroupPagination(@RequestParam int page, @RequestParam int size) {
         return service.getGroupPagination(page - 1, size);
     }
+
 }
