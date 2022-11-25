@@ -49,8 +49,8 @@ public class TaskApi {
 
     @Operation(summary = "Updates the task ", description = "Updates the details of an endpoint with ID ")
     @PutMapping("{id}")
-    public TaskResponse updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
-        return taskService.updateTask(id, taskRequest);
+    public TaskResponse updateTask(@PathVariable Long id, @RequestBody TaskRequest request) {
+        return taskService.updateTask(id, request);
     }
 
     @Operation(summary = "Deletes the single task", description = "Delete task with ID")
