@@ -28,27 +28,27 @@ public class TestApi {
 
     private final TestService service;
 
-    @PostMapping("/save/{lessonId}")
+    @PostMapping("{lessonId}")
     public TestResponse create(@RequestBody TestRequest testRequest, @PathVariable Long lessonId) {
         return service.create(testRequest, lessonId);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public TestResponse update(@PathVariable Long id, @RequestBody TestRequest testRequest) {
         return service.update(id, testRequest);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     public TestResponse finById(@PathVariable Long id) {
         return service.findById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public TestResponse deleteById(@PathVariable Long id) {
         return service.deleteById(id);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<TestResponse> findAll() {
         return service.findAll();
     }
