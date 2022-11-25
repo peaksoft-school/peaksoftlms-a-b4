@@ -35,73 +35,77 @@ public class StudentApi {
     private final StudentService studentService;
 
     @Operation(summary = "Creates new entity: Student", description = "Saves a new student")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @PostMapping
     public StudentResponse saveStudent(@RequestBody StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
-    @PostMapping("/import/{groupId}")
-    public List<StudentResponse> importExcelFile(@RequestParam("file") MultipartFile files, @PathVariable Long groupId) throws IOException {
+    @Operation(summary = "Import Excel file", description = "Admin can import Excel file")
+    @PostMapping("import/{groupId}")
+    public List<StudentResponse> importExcelFile(@RequestParam("file") MultipartFile files,
+                                                 @PathVariable Long groupId) throws IOException {
         return studentService.importExcel(files, groupId);
     }
 
     @Operation(summary = "Creates new entity: Student with group", description = "Saves a new student and add him/her to existed group")
-    @PostMapping("/withGroup")
+    @PostMapping("with-group")
     public StudentResponse saveStudentWithGroup(@RequestBody StudentRequest studentRequestDto) {
         return studentService.saveStudentWithGroup(studentRequestDto);
     }
 
     @Operation(summary = "Gets all existed students", description = "Returns all students in a list ")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @GetMapping
     public List<StudentResponse> getAllStudents() {
         return studentService.getAllStudent();
     }
 
-    @Operation(summary = "Gets a single entity by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @Operation(summary = "Gets a single entity by identifier", description = "For valid response try integer IDs with value >= 1 ")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("{id}")
     public StudentResponse getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
 
     @Operation(summary = "Updates the student ", description = "Updates the details of an endpoint with ID ")
-    @PutMapping("/{id}")
-    public StudentResponse updateStudent(@PathVariable Long id,
-                                         @RequestBody StudentRequest studentRequest) {
+    @PutMapping("{id}")
+    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
     @Operation(summary = "Deletes the single student", description = "Deletes student by id ")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public StudentResponse deleteById(@PathVariable Long id) {
         return studentService.deleteStudent(id);
     }
 
     @Operation(summary = "Assigns student to a group", description = "Adds a student to a group")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @PutMapping("accept-to-group")
     public StudentResponse setStudentToGroup(@RequestParam Long studentId, @RequestParam Long groupId) {
         return studentService.setStudentToGroup(groupId, studentId);
     }
 
     @Operation(summary = "Assign student to a course", description = "Adds a student to a course")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
-    @PutMapping("/accept-to-course")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PutMapping("accept-to-course")
     public StudentResponse setStudentToCourse(@RequestParam Long courseId, @RequestParam Long studentId) {
         return studentService.setStudentToCourse(courseId, studentId);
     }
 
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
-    @GetMapping("/pagination")
-    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page, @RequestParam int size, @RequestParam StudyFormat studyFormat) {
+    @Operation(summary = "Pagination", description = "Get student pagination")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("pagination")
+    public PaginationResponse<StudentResponse> getStudentPagination(@RequestParam int page,
+                                                                    @RequestParam int size,
+                                                                    @RequestParam StudyFormat studyFormat) {
         return studentService.getStudentPagination(page - 1, size, studyFormat);
     }
 
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
-    @GetMapping("/fullName/{name}")
+    @Operation(summary = "Get student", description = "Get student by name")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("{name}")
     public List<StudentResponse> finByStudentName(@PathVariable String name) {
         return studentService.findByStudentName(name);
     }
