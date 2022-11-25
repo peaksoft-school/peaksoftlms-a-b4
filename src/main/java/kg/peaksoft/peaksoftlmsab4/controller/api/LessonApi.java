@@ -30,37 +30,34 @@ public class LessonApi {
 
     private final LessonService lessonService;
 
-    @PostMapping("/{courseId}")
     @Operation(summary = "Creates new entity: Lesson", description = "Saves a new lesson")
-    public LessonResponse addLesson(@RequestBody LessonRequest lessonRequest, @PathVariable Long courseId) {
-        return lessonService.create(lessonRequest, courseId);
+    @PostMapping("{courseId}")
+    public LessonResponse addLesson(@RequestBody LessonRequest request, @PathVariable Long courseId) {
+        return lessonService.create(request, courseId);
     }
 
-    @CrossOrigin
-    @GetMapping
     @Operation(summary = "Gets all existed lessons", description = "Returns all lessons in a list ")
+    @GetMapping
     public List<LessonResponseForGet> getAllLessons() {
         return lessonService.getAll();
     }
 
-    @CrossOrigin
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single entity by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
+    @Operation(summary = "Gets a single entity by identifier", description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("{id}")
     public LessonResponseForGet getLessonById(@PathVariable Long id) {
         return lessonService.getById(id);
     }
 
-    @PutMapping("/{id}")
     @Operation(summary = "Updates the lesson ", description = "Updates the details of an endpoint with ID ")
-    public LessonResponse updateLesson(@PathVariable Long id,
-                                       @RequestBody LessonRequest lessonRequest) {
-        return lessonService.update(id, lessonRequest);
+    @PutMapping("{id}")
+    public LessonResponse updateLesson(@PathVariable Long id, @RequestBody LessonRequest request) {
+        return lessonService.update(id, request);
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the lesson ", description = "Deletes lesson by id ")
+    @DeleteMapping("{id}")
     public LessonResponse deleteById(@PathVariable Long id) {
         return lessonService.deleteById(id);
     }
+
 }
