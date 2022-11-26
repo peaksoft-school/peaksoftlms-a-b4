@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.*;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AssignRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.CourseRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.*;
 
 import java.util.List;
 

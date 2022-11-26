@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.LessonRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonResponse;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonResponseForGet;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.LessonResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.LessonResponseForGet;
 
 import java.util.List;
 

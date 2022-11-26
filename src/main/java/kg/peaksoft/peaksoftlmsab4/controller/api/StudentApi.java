@@ -2,9 +2,9 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.StudentRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsab4.service.StudentService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.VideoRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.VideoResponse;
 
 import java.util.List;
 

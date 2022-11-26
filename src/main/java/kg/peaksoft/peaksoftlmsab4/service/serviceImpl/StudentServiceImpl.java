@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.StudentRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;

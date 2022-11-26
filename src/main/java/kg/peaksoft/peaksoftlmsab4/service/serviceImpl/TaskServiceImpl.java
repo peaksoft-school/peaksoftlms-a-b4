@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TaskRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TaskResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;

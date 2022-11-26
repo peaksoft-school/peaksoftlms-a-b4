@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.OptionResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

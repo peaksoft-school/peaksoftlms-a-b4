@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AnswerRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequestForTest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.*;
 import kg.peaksoft.peaksoftlmsab4.model.enums.TestResult;

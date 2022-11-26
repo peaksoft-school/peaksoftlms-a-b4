@@ -1,7 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.*;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.InstructorRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.CourseResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.PaginationResponse;
 
 import java.util.List;
 

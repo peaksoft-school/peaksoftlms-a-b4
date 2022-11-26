@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsab4.controller.payload;
+package kg.peaksoft.peaksoftlmsab4.controller.payload.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class PresentationResponse {
+public class VideoResponse {
     Long id;
-    private String presentationName;
+    private String videoName;
     private String description;
-    private String presentationLink;
+    private String videoLink;
     private Long lessonId;
 }

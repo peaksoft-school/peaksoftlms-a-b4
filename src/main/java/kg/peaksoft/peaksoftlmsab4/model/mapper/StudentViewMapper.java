@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
 import org.springframework.stereotype.Component;
 

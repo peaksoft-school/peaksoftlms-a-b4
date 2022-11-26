@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TaskRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TaskResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TaskTypeRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskTypeEntity;
