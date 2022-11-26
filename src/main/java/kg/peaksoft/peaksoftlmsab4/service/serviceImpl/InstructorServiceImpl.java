@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.model.entity.Validator;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.InstructorRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;

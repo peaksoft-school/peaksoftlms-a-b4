@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.InstructorRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;

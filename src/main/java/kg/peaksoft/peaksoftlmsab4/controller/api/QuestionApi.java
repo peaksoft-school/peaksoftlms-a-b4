@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionResponse;
 import kg.peaksoft.peaksoftlmsab4.service.QuestionService;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AnswerRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.service.serviceImpl.AnswerServiceImpl;

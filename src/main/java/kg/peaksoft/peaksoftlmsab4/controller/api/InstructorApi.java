@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.CourseResponse;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.InstructorRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;

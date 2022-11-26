@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.GroupRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;

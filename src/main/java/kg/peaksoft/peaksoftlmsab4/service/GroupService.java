@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.GroupRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.GroupRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.GroupResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;

@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;

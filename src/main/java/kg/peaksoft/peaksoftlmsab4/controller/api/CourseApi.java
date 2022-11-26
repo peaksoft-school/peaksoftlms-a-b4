@@ -3,6 +3,8 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.*;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AssignRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.TestRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.TestResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;

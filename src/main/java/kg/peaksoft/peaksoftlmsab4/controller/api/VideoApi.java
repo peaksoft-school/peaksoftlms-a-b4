@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.VideoRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.service.VideoService;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
-package kg.peaksoft.peaksoftlmsab4.controller.payload;
+package kg.peaksoft.peaksoftlmsab4.controller.payload.request;
 
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
 import lombok.Getter;
 import lombok.Setter;
 

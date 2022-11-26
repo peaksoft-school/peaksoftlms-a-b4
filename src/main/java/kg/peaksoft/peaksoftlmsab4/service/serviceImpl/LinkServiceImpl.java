@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.LinkRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.LinkRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.LinkResponse;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;

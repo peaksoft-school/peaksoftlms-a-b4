@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.QuestionResponse;
 import org.springframework.stereotype.Service;
 

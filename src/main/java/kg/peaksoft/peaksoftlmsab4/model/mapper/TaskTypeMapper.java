@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskTypeRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TaskTypeRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.TaskTypeResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskTypeEntity;
 import org.springframework.stereotype.Component;

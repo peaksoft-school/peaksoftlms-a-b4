@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.VideoRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
 import lombok.AllArgsConstructor;

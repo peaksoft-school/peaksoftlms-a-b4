@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.PaginationResponse;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.StudentRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.web.multipart.MultipartFile;

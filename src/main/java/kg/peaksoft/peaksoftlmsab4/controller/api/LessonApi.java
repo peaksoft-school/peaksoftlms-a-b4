@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsab4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.LessonRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.LessonResponseForGet;
 import kg.peaksoft.peaksoftlmsab4.service.LessonService;
