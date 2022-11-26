@@ -29,41 +29,39 @@ public class VideoApi {
 
     private final VideoService videoService;
 
-    @PostMapping("/{lessonId}")
     @Operation(summary = "Creates new entity: Video", description = "Saves a new video")
+    @PostMapping("{lessonId}")
     public VideoResponse addVideo(@RequestBody VideoRequest videoRequest, @PathVariable Long lessonId) {
         return videoService.create(videoRequest, lessonId);
     }
 
-    @GetMapping
     @Operation(summary = "Gets all existed videos", description = "Returns all videos in a list ")
+    @GetMapping
     public List<VideoResponse> getAllVideos() {
         return videoService.getAll();
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single entity by identifier",
-            description = "For valid response try integer IDs with value >= 1 ")
+    @Operation(summary = "Gets a single entity by identifier", description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("{id}")
     public VideoResponse getVideoById(@PathVariable Long id) {
         return videoService.getById(id);
     }
 
-    @PutMapping("/{id}")
     @Operation(summary = "Updates the video ", description = "Updates the details of an endpoint with ID ")
+    @PutMapping("{id}")
     public VideoResponse updateVideo(@PathVariable Long id,
                                      @RequestBody VideoRequest videoRequest) {
         return videoService.update(id, videoRequest);
     }
 
-    @DeleteMapping("/{id}")
     @Operation(summary = "Deletes the video ", description = "Deletes video by id ")
+    @DeleteMapping("{id}")
     public VideoResponse deleteById(@PathVariable Long id) {
         return videoService.deleteById(id);
     }
 
-    @GetMapping("videoLesson/{id}")
-    @Operation(summary = "Gets a single video by lesson id",
-            description = "For valid response try integer IDs with value >= 1 ")
+    @Operation(summary = "Gets a single video by lesson id", description = "For valid response try integer IDs with value >= 1 ")
+    @GetMapping("video-lesson/{id}")
     public VideoResponse getVideoByLessonId(@PathVariable Long id) {
         return videoService.getVideoByLessonId(id);
     }
