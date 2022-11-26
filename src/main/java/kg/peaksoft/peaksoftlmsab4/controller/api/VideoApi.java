@@ -31,8 +31,8 @@ public class VideoApi {
 
     @Operation(summary = "Creates new entity: Video", description = "Saves a new video")
     @PostMapping("{lessonId}")
-    public VideoResponse addVideo(@RequestBody VideoRequest videoRequest, @PathVariable Long lessonId) {
-        return videoService.create(videoRequest, lessonId);
+    public VideoResponse addVideo(@RequestBody VideoRequest request, @PathVariable Long lessonId) {
+        return videoService.create(request, lessonId);
     }
 
     @Operation(summary = "Gets all existed videos", description = "Returns all videos in a list ")
@@ -49,9 +49,8 @@ public class VideoApi {
 
     @Operation(summary = "Updates the video ", description = "Updates the details of an endpoint with ID ")
     @PutMapping("{id}")
-    public VideoResponse updateVideo(@PathVariable Long id,
-                                     @RequestBody VideoRequest videoRequest) {
-        return videoService.update(id, videoRequest);
+    public VideoResponse updateVideo(@PathVariable Long id, @RequestBody VideoRequest request) {
+        return videoService.update(id, request);
     }
 
     @Operation(summary = "Deletes the video ", description = "Deletes video by id ")
