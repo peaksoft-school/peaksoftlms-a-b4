@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class LessonResponse {
+
     private Long id;
     private String lessonName;
+
 }
