@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.controller.payload.request;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +13,5 @@ public class TaskRequest {
 
     private String taskName;
     private List<TaskTypeRequest> taskTypeRequests;
+
 }
