@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class ResultRequest {
+
     @NotBlank
     private Boolean accepted;
 
