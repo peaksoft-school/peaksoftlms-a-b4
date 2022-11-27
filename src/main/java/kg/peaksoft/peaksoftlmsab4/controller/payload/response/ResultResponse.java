@@ -9,10 +9,10 @@ import java.time.LocalDate;
 @Setter
 public class ResultResponse {
 
-
     private String studentName;
     private int error;
     private int correct;
     private int point;
     private LocalDate localDate;
+
 }
