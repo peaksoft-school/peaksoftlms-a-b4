@@ -9,5 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class LessonRequest {
+
     private String lessonName;
+
 }
