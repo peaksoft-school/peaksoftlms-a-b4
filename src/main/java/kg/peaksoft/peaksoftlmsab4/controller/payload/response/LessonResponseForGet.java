@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class LessonResponseForGet {
+
     private Long id;
     private String lessonName;
     private LinkResponse linkResponse;
@@ -15,4 +16,5 @@ public class LessonResponseForGet {
     private PresentationResponse presentationResponse;
     private TaskResponse taskResponse;
     private TestResponse testResponse;
+
 }
