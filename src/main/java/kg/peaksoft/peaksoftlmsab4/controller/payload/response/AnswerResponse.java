@@ -9,9 +9,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class AnswerResponse {
+
     private Long id;
     private int grade;
     private TestResult status;
     private LocalDate date;
     private String studentName;
+
 }
