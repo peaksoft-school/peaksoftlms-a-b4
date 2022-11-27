@@ -12,13 +12,18 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class CourseRequest {
+
     @NotBlank
     private String courseName;
+
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfStart;
+
     @NotBlank
     private String description;
+
     @NotBlank
     private String image;
+
 }
