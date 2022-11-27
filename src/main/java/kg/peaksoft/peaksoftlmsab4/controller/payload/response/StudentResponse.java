@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentResponse {
+
     private String id;
     private String fullName;
     private String phoneNumber;
@@ -15,4 +16,5 @@ public class StudentResponse {
     private StudyFormat studyFormat;
     private String groupName;
     private Role role;
+
 }
