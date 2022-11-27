@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class GroupRequest {
+
     @NotBlank
     private String groupName;
 
@@ -19,6 +20,8 @@ public class GroupRequest {
 
     @NotBlank
     private String description;
+
     @NotBlank
     private String image;
+
 }
