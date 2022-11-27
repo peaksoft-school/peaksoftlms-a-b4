@@ -14,4 +14,5 @@ public class TaskTypeResponse {
     private String value;
     private String name;
     private TaskType taskType;
+
 }
