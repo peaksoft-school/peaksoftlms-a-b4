@@ -8,9 +8,11 @@ import lombok.Setter;
 @Setter
 @Builder
 public class VideoResponse {
-    Long id;
+
+    private Long id;
     private String videoName;
     private String description;
     private String videoLink;
     private Long lessonId;
+
 }
