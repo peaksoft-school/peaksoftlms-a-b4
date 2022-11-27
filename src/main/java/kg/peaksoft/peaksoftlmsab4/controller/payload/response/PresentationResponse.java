@@ -8,9 +8,11 @@ import lombok.Setter;
 @Setter
 @Builder
 public class PresentationResponse {
-    Long id;
+
+    private Long id;
     private String presentationName;
     private String description;
     private String presentationLink;
     private Long lessonId;
+
 }
