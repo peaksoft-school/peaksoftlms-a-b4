@@ -9,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class LinkRequest {
+
     private String text;
     private String link;
+
 }
