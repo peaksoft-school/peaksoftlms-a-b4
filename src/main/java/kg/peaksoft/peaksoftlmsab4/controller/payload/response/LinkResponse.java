@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class LinkResponse {
+
     Long id;
     private String text;
     private String link;
