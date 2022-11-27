@@ -15,4 +15,5 @@ public class TaskResponse {
     private String taskName;
     private List<TaskTypeResponse> taskTypeResponses;
     private Long lessonId;
+
 }
