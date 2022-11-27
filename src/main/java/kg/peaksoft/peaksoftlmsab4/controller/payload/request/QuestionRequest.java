@@ -11,11 +11,8 @@ import java.util.List;
 @Setter
 public class QuestionRequest {
 
-
     private String question;
     private QuestionType questionType;
-
     private List<OptionRequest> options;
-
 
 }
