@@ -8,8 +8,10 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class OptionRequest {
+
     @NotBlank
     private String option;
+
     @NotBlank
     private Boolean isTrue;
 
