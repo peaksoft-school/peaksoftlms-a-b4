@@ -9,7 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class VideoRequest {
+
     private String videoName;
     private String description;
     private String videoLink;
+
 }
