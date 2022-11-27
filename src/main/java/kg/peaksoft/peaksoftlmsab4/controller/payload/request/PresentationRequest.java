@@ -9,7 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NotBlank
 public class PresentationRequest {
+
     private String presentationName;
     private String description;
     private String presentationLink;
+
 }
