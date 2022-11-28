@@ -7,14 +7,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "courses")
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Setter
 @Getter
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "courses")
 public class CourseEntity {
+
     @Id
     @SequenceGenerator(name = "courses_gen", sequenceName = "courses_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "courses_gen")
