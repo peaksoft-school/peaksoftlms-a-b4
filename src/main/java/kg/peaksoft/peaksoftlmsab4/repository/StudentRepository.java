@@ -13,8 +13,8 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
-    @Query("select case when count(s)>0 then true else false end" +
-            " from StudentEntity s where s.authInfo.email =?1")
+
+    @Query("select case when count(s)>0 then true else false end from StudentEntity s where s.authInfo.email =?1")
     boolean existsByEmail(String email);
 
     @Query("select f from StudentEntity f where lower(concat(f.firstName,f.lastName)) like %?1%")
@@ -24,4 +24,5 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
     @Query("select s from StudentEntity s where s.authInfo.email=?1")
     StudentEntity getByEmail(String email);
+
 }
