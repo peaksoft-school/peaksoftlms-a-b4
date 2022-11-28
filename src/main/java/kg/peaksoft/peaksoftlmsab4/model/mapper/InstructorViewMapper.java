@@ -19,4 +19,5 @@ public class InstructorViewMapper {
         instructorResponse.setEmail(instructor.getAuthInfo().getEmail());
         return instructorResponse;
     }
+
 }
