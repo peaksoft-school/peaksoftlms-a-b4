@@ -64,12 +64,5 @@ public class GroupEntity {
         course.setGroup(this);
     }
 
-    public void setStudent(StudentEntity student) {
-        if (students == null) {
-            students = new ArrayList<>();
-        }
-        students.add(student);
-        student.setGroup(this);
-    }
 }
 
