@@ -17,7 +17,6 @@ public class VideoMapper {
         if (videoRequest == null) {
             return null;
         }
-
         return VideoEntity.builder()
                 .videoName(videoRequest.getVideoName())
                 .description(videoRequest.getDescription())
@@ -45,4 +44,5 @@ public class VideoMapper {
                 .lessonId(videoEntity.getLessonEntity().getId())
                 .build();
     }
+
 }
