@@ -1,17 +1,28 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
 import kg.peaksoft.peaksoftlmsab4.model.enums.TaskType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-@Entity
-@Table(name = "task_types")
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "task_types")
 public class TaskTypeEntity {
 
     @Id
