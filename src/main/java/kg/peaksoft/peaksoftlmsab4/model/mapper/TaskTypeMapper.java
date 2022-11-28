@@ -10,6 +10,7 @@ import java.util.List;
 
 @Component
 public class TaskTypeMapper {
+
     public TaskTypeEntity mapToEntity(TaskTypeRequest taskTypeRequest) {
         if (taskTypeRequest == null) {
             return null;
@@ -19,7 +20,6 @@ public class TaskTypeMapper {
                 .name(taskTypeRequest.getName())
                 .taskType(taskTypeRequest.getTaskType())
                 .build();
-
     }
 
     public TaskTypeResponse mapToResponse(TaskTypeEntity taskTypeEntity) {
@@ -38,4 +38,5 @@ public class TaskTypeMapper {
         }
         return taskTypeResponses;
     }
+
 }
