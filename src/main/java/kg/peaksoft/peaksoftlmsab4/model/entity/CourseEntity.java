@@ -16,35 +16,34 @@ import java.util.List;
 @Builder
 public class CourseEntity {
     @Id
-    @SequenceGenerator(
-            name = "courses_sequence",
-            sequenceName = "courses_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "courses_sequence"
-    )
+    @SequenceGenerator(name = "courses_gen", sequenceName = "courses_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "courses_gen")
     private Long id;
+
     private String courseName;
+
     private LocalDate dateOfStart;
+
     private String description;
+
     private String image;
 
     @ManyToMany(mappedBy = "courses", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     private List<GroupEntity> groups = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "courses_instructors", joinColumns = @JoinColumn(name = "course_id"),
+    @JoinTable(name = "courses_instructors",
+            joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<InstructorEntity> instructors;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(name = "courses_students", joinColumns = @JoinColumn(name = "course_id"),
+    @JoinTable(name = "courses_students",
+            joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<StudentEntity> students;
 
-    @OneToMany(mappedBy = "courseEntity",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseEntity", cascade = CascadeType.ALL)
     private List<LessonEntity> lessons;
 
     @PreRemove
@@ -59,7 +58,6 @@ public class CourseEntity {
             groups = new ArrayList<>();
         }
         groups.add(group);
-
     }
 
     public void setInstructor(InstructorEntity instructor) {
@@ -75,6 +73,5 @@ public class CourseEntity {
         }
         students.add(student);
     }
-
 
 }
