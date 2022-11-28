@@ -31,23 +31,20 @@ import static javax.persistence.CascadeType.REFRESH;
 public class PresentationEntity {
 
     @Id
-    @SequenceGenerator(
-            name = "presentations_sequence",
-            sequenceName = "presentations_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "presentations_sequence"
-    )
+    @SequenceGenerator(name = "presentations_gen", sequenceName = "presentations_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "presentations_gen")
     private Long id;
+
     @Column(name = "presentation_name")
     private String presentationName;
+
     private String description;
+
     @Column(name = "presentation_link")
     private String presentationLink;
 
     @OneToOne(cascade = {MERGE, DETACH, REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
     private LessonEntity lessonEntity;
+
 }
