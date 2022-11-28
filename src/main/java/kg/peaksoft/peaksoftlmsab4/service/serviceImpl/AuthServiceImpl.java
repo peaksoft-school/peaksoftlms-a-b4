@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AuthResponse;
 import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.Validation.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;

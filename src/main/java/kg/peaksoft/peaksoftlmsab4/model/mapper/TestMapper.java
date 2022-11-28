@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.request.OptionRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TestResponse;
-import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.Validation.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
