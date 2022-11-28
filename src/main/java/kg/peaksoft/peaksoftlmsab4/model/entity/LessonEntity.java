@@ -1,20 +1,36 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Builder
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "lessons")
 public class LessonEntity {
+
     @Id
     @SequenceGenerator(
             name = "lessons_sequence",
@@ -38,7 +54,7 @@ public class LessonEntity {
     @OneToOne(cascade = ALL, fetch = FetchType.EAGER, mappedBy = "lessonEntity")
     private PresentationEntity presentationEntity;
 
-    @OneToOne(cascade = ALL,mappedBy = "lessonEntity")
+    @OneToOne(cascade = ALL, mappedBy = "lessonEntity")
     private TestEntity testEntity;
 
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
