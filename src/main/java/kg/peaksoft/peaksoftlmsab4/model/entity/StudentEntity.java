@@ -43,24 +43,21 @@ import static javax.persistence.CascadeType.REFRESH;
 public class StudentEntity {
 
     @Id
-    @SequenceGenerator(
-            name = "students_sequence",
-            sequenceName = "students_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "students_sequence"
-    )
+    @SequenceGenerator(name = "students_gen", sequenceName = "students_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "students_gen")
     Long id;
+
     @Column(name = "first_name")
     String firstName;
+
     @Column(name = "last_name")
     String lastName;
+
     @Column(name = "phone_number")
     String phoneNumber;
-    @Column(name = "study_format")
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "study_format")
     StudyFormat studyFormat;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -75,7 +72,6 @@ public class StudentEntity {
 
     @OneToOne(cascade = ALL)
     private TestStudentEntity testStudentEntity;
-
 
     public void setCourse(CourseEntity course) {
         if (courses == null) {
