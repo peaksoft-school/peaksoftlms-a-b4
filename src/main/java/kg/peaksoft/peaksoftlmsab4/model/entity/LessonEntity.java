@@ -32,16 +32,10 @@ import static javax.persistence.CascadeType.REFRESH;
 public class LessonEntity {
 
     @Id
-    @SequenceGenerator(
-            name = "lessons_sequence",
-            sequenceName = "lessons_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "lessons_sequence"
-    )
+    @SequenceGenerator(name = "lessons_gen", sequenceName = "lessons_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lessons_gen")
     Long id;
+
     @Column(name = "lesson_name")
     private String lessonName;
 
@@ -62,4 +56,5 @@ public class LessonEntity {
 
     @OneToOne(cascade = ALL, fetch = FetchType.EAGER, mappedBy = "lesson")
     private TaskEntity taskEntity;
+
 }
