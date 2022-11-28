@@ -9,8 +9,8 @@ import java.util.List;
 
 @Component
 public class CourseViewMapper {
-    public CourseResponse viewCourse(CourseEntity course) {
 
+    public CourseResponse viewCourse(CourseEntity course) {
         if (course == null) {
             return null;
         }
@@ -23,7 +23,6 @@ public class CourseViewMapper {
         courseResponse.setDateOfStart(course.getDateOfStart());
         courseResponse.setDescription(course.getDescription());
         courseResponse.setImage(course.getImage());
-
         return courseResponse;
     }
 
@@ -34,4 +33,5 @@ public class CourseViewMapper {
         }
         return courseResponses;
     }
+
 }
