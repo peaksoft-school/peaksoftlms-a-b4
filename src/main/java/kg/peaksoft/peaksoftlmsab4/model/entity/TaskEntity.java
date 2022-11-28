@@ -24,25 +24,20 @@ import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.REFRESH;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder@Entity
+@Entity
 @Table(name = "tasks")
 public class TaskEntity {
 
     @Id
-    @SequenceGenerator(
-            name = "tasks_sequence",
-            sequenceName = "tasks_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "tasks_sequence"
-    )
+    @SequenceGenerator(name = "tasks_gen", sequenceName = "tasks_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tasks_gen")
     Long id;
+
     @Column(name = "task_name")
     private String taskName;
 
@@ -52,4 +47,5 @@ public class TaskEntity {
     @OneToOne(cascade = {MERGE, DETACH, REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
     private LessonEntity lesson;
+
 }
