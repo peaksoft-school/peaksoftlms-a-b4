@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.VideoRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.response.VideoResponse;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.VideoMapper;

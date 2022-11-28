@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsab4.Validation.exception;
+package kg.peaksoft.peaksoftlmsab4.validation.exception;
 
 public class NotFoundException extends RuntimeException {
 

@@ -1,9 +1,9 @@
-package kg.peaksoft.peaksoftlmsab4.Validation.exception.handler;
+package kg.peaksoft.peaksoftlmsab4.validation.exception.handler;
 
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.AlreadyExistsException;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.InvalidArgumentException;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.AlreadyExistsException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.InvalidArgumentException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.SimpleResponse;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TestRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TestResponse;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.Validation.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.TestMapper;
