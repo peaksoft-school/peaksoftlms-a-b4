@@ -8,16 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @ToString
@@ -30,7 +21,8 @@ import java.time.LocalDate;
 public class TestStudentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "test_results_gen", sequenceName = "test_results_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "test_results_gen")
     private Long id;
 
     private int result;
@@ -46,4 +38,5 @@ public class TestStudentEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private TestEntity testEntity;
+
 }
