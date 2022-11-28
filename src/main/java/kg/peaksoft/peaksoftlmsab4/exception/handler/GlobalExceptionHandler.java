@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.exception.InvalidArgumentException;
 import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.SimpleResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.SimpleResponse;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
