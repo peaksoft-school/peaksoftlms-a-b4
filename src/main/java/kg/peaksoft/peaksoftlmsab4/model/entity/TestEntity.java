@@ -5,15 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.CascadeType.DETACH;
@@ -29,8 +21,10 @@ import static javax.persistence.CascadeType.REFRESH;
 public class TestEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "tests_gen", sequenceName = "tests_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tests_gen")
     private Long id;
+
     private String testName;
 
     @OneToOne(cascade = {DETACH, MERGE, REFRESH}, fetch = FetchType.LAZY)
@@ -41,4 +35,5 @@ public class TestEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<TestStudentEntity> testStudentEntities;
+
 }
