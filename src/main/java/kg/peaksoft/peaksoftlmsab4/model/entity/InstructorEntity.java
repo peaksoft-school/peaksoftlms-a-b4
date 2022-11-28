@@ -34,13 +34,18 @@ public class InstructorEntity {
     @SequenceGenerator(name = "instructors_gen", sequenceName = "instructors_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructors_gen")
     Long id;
+
     @Column(name = "first_name")
     String firstName;
+
     @Column(name = "last_name")
     String lastName;
+
     @Column(name = "phone_number")
     String phoneNumber;
+
     String specialization;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     AuthInfo authInfo;
 
@@ -61,4 +66,5 @@ public class InstructorEntity {
             course.getInstructors().remove(this);
         }
     }
+
 }
