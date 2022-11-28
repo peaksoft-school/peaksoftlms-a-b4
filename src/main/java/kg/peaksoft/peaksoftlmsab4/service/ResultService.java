@@ -1,13 +1,13 @@
-package kg.peaksoft.peaksoftlmsab4.service;
-
-import org.springframework.stereotype.Service;
-
-@Service
-public interface ResultService {
-
-
-//    ResultResponse createResult(ResultRequest resultRequest);
+//package kg.peaksoft.peaksoftlmsab4.service;
+//
+//import org.springframework.stereotype.Service;
+//
+//@Service
+//public interface ResultService {
 //
 //
-//    List<ResultResponse> getAll();
-}
+////    ResultResponse createResult(ResultRequest resultRequest);
+////
+////
+////    List<ResultResponse> getAll();
+//}
