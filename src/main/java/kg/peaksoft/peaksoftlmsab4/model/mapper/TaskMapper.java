@@ -22,22 +22,21 @@ public class TaskMapper {
             return null;
         }
         List<TaskTypeEntity> taskTypeEntity = new ArrayList<>();
-        for (TaskTypeRequest t:taskRequest.getTaskTypeRequests()) {
+        for (TaskTypeRequest t : taskRequest.getTaskTypeRequests()) {
             taskTypeEntity.add(taskTypeMapper.mapToEntity(t));
         }
         return TaskEntity.builder()
                 .taskName(taskRequest.getTaskName())
                 .taskTypes(taskTypeEntity)
                 .build();
-
     }
 
     public TaskEntity update(TaskEntity taskEntity, TaskRequest taskRequest) {
         List<TaskTypeEntity> taskTypeEntity = new ArrayList<>();
-        for (TaskTypeRequest t:taskRequest.getTaskTypeRequests()) {
+        for (TaskTypeRequest t : taskRequest.getTaskTypeRequests()) {
             taskTypeEntity.add(taskTypeMapper.mapToEntity(t));
         }
-            taskEntity.setTaskName(taskRequest.getTaskName());
+        taskEntity.setTaskName(taskRequest.getTaskName());
         taskEntity.setTaskTypes(taskTypeEntity);
         return taskEntity;
     }
@@ -61,5 +60,6 @@ public class TaskMapper {
                 .lessonId(task.getLesson().getId())
                 .build();
     }
+
 }
 
