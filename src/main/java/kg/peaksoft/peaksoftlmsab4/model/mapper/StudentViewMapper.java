@@ -9,11 +9,12 @@ import java.util.List;
 
 @Component
 public class StudentViewMapper {
-    public StudentResponse convertToStudentResponse(StudentEntity student){
-        if(student==null){
+
+    public StudentResponse convertToStudentResponse(StudentEntity student) {
+        if (student == null) {
             return null;
         }
-        StudentResponse studentResponse=new StudentResponse();
+        StudentResponse studentResponse = new StudentResponse();
         studentResponse.setId(String.valueOf(student.getId()));
         studentResponse.setFullName(student.getFirstName() + " " + student.getLastName());
         studentResponse.setPhoneNumber(student.getPhoneNumber());
@@ -24,13 +25,12 @@ public class StudentViewMapper {
         return studentResponse;
     }
 
-    public List<StudentResponse> convertToStudents(List<StudentEntity> studentEntityList){
-        List<StudentResponse>studentResponses=new ArrayList<>();
-
-        for (StudentEntity s:studentEntityList) {
+    public List<StudentResponse> convertToStudents(List<StudentEntity> studentEntityList) {
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (StudentEntity s : studentEntityList) {
             studentResponses.add(convertToStudentResponse(s));
         }
-
         return studentResponses;
     }
+
 }
