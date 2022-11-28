@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.exception;
 
-public class NotFoundException extends RuntimeException{
+public class NotFoundException extends RuntimeException {
+
     public NotFoundException() {
         super();
     }
@@ -8,4 +9,5 @@ public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {
         super(message);
     }
+
 }
