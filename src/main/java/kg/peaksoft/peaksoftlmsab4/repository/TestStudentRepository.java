@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TestStudentRepository extends JpaRepository<TestStudentEntity, Long> {
 
-    @Query("select s from TestStudentEntity s where s.studentEntity.authInfo.email=?1")
+    @Query("SELECT s FROM TestStudentEntity s WHERE s.studentEntity.authInfo.email=?1")
     TestStudentEntity getByEmail(String email);
 
 }
