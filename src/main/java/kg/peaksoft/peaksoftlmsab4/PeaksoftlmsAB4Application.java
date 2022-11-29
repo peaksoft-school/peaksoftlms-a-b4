@@ -41,8 +41,9 @@ public class PeaksoftlmsAB4Application {
         authInfo.setEmail("admin@gmail.com");
         authInfo.setPassword(passwordEncoder.encode("admin"));
         authInfo.setRole(Role.ADMIN);
+
         user.setAuthInfo(authInfo);
         repository.save(user);
-        System.out.println(user);
     }
+
 }
