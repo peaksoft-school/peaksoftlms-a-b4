@@ -28,7 +28,7 @@ public class TaskServiceImpl implements TaskService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public TaskResponse saveTask(Long id, TaskRequest taskRequest) {
+    public TaskResponse saveTask(Long id, TaskRequest request) {
         LessonEntity lessonEntity = lessonRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", id);
@@ -37,7 +37,7 @@ public class TaskServiceImpl implements TaskService {
                     );
                 });
         if (lessonEntity.getTaskEntity() == null) {
-            TaskEntity task = taskMapper.mapToEntity(taskRequest);
+            TaskEntity task = taskMapper.mapToEntity(request);
             task.setLesson(lessonEntity);
             log.info(" Task with name : {} has successfully saved to database", task.getTaskName());
             return taskMapper.mapToResponse(taskRepository.save(task));
@@ -61,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponse updateTask(Long id, TaskRequest taskRequest) {
+    public TaskResponse updateTask(Long id, TaskRequest request) {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("Task with id ={} does not exists", id);
@@ -69,7 +69,7 @@ public class TaskServiceImpl implements TaskService {
                             String.format("task with id = %s does not exists", id)
                     );
                 });
-        taskMapper.update(task, taskRequest);
+        taskMapper.update(task, request);
         taskRepository.save(task);
         return taskMapper.mapToResponse(task);
     }

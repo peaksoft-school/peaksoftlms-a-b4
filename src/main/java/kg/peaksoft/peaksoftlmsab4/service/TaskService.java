@@ -7,13 +7,14 @@ import java.util.List;
 
 public interface TaskService {
 
-    TaskResponse saveTask(Long id, TaskRequest taskRequest);
+    TaskResponse saveTask(Long id, TaskRequest request);
 
     TaskResponse getTaskById(Long id);
 
     List<TaskResponse> getAllTask();
 
-    TaskResponse updateTask(Long id, TaskRequest taskRequest);
+    TaskResponse updateTask(Long id, TaskRequest request);
 
     TaskResponse deleteTask(Long id);
+
 }
