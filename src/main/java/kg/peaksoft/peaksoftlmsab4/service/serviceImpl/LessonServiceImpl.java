@@ -27,7 +27,7 @@ public class LessonServiceImpl implements LessonService {
     private final CourseRepository courseRepository;
 
     @Override
-    public LessonResponse create(LessonRequest lessonRequest, Long courseId) {
+    public LessonResponse create(LessonRequest request, Long courseId) {
         CourseEntity courseEntity = courseRepository.findById(courseId)
                 .orElseThrow(() -> {
                     log.error("Course with id = {} does not exists", courseId);
@@ -35,7 +35,7 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Course with id = %s does not exists", courseId)
                     );
                 });
-        LessonEntity lesson = mapper.mapToEntity(lessonRequest);
+        LessonEntity lesson = mapper.mapToEntity(request);
         lesson.setCourseEntity(courseEntity);
         log.info(" Lesson with name : {} has successfully saved to database", lesson.getLessonName());
         return mapper.mapToResponse(lessonRepository.save(lesson));
@@ -60,7 +60,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public LessonResponse update(Long lessonId, LessonRequest lessonRequest) {
+    public LessonResponse update(Long lessonId, LessonRequest request) {
         LessonEntity lesson = lessonRepository.findById(lessonId).
                 orElseThrow(() -> {
                     log.error("Lesson with id = {} does not exists", lessonId);
@@ -68,7 +68,7 @@ public class LessonServiceImpl implements LessonService {
                             String.format("Lesson with id = %s does not exists", lessonId)
                     );
                 });
-        mapper.update(lesson, lessonRequest);
+        mapper.update(lesson, request);
         return mapper.mapToResponse(lessonRepository.save(lesson));
     }
 

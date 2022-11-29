@@ -7,13 +7,15 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.response.LessonResponseForG
 import java.util.List;
 
 public interface LessonService {
-    LessonResponse create (LessonRequest lessonRequest,Long courseId);
+
+    LessonResponse create(LessonRequest request, Long courseId);
 
     List<LessonResponseForGet> getAll();
 
     LessonResponseForGet getById(Long id);
 
-    LessonResponse update(Long id, LessonRequest lessonRequest);
+    LessonResponse update(Long id, LessonRequest request);
 
     LessonResponse deleteById(Long id);
+
 }
