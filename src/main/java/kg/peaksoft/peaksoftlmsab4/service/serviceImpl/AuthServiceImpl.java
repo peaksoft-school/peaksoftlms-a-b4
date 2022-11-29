@@ -1,9 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
+import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AuthResponse;
-import kg.peaksoft.peaksoftlmsab4.config.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
@@ -13,6 +12,7 @@ import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsab4.service.AuthService;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +20,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @AllArgsConstructor
-@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
@@ -32,24 +32,17 @@ public class AuthServiceImpl implements AuthService {
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
 
-
     public AuthResponse authenticate(AuthRequest request) {
         Authentication authentication;
-
         authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
                 request.getPassword()
         ));
-
         String generatedToken = jwtUtils.generateToken(authentication);
-
-        AuthInfo authInfo = authInfoRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> {
-                    log.error("User with email = {} does not exist", request.getEmail());
-                    throw new NotFoundException(
-                            String.format("User with email = %s does not exist", request.getEmail())
-                    );
-                });
+        AuthInfo authInfo = authInfoRepository.findByEmail(request.getEmail()).orElseThrow(() -> {
+            log.error("User with email = {} does not exist", request.getEmail());
+            throw new NotFoundException(String.format("User with email = %s does not exist", request.getEmail()));
+        });
 
         String firstName = "";
         String lastName = "";
@@ -71,7 +64,6 @@ public class AuthServiceImpl implements AuthService {
                 }
             }
         }
-
         return AuthResponse.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -80,4 +72,5 @@ public class AuthServiceImpl implements AuthService {
                 .token(generatedToken)
                 .build();
     }
+
 }
