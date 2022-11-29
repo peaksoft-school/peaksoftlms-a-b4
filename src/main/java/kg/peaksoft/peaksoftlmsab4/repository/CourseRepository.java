@@ -14,10 +14,10 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
 
     boolean existsByCourseName(String courseName);
 
-    @Query("select c from CourseEntity c")
+    @Query("SELECT c FROM CourseEntity c")
     List<CourseEntity> findAllPag(Pageable pageable);
 
-    @Query("select s from StudentEntity s inner join s.courses c where c.id = :id order by s.id asc ")
+    @Query("SELECT s FROM StudentEntity s INNER JOIN s.courses c WHERE c.id = :id ORDER BY s.id ASC")
     List<StudentEntity> getStudents(Long id);
 
 }
