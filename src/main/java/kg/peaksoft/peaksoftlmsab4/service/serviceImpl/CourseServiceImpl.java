@@ -37,10 +37,10 @@ public class CourseServiceImpl implements CourseService {
     private final LessonMapper lessonMapper;
 
     @Override
-    public CourseResponse saveCourse(CourseRequest courseRequest) {
-        checkByName(courseRequest.getCourseName());
+    public CourseResponse saveCourse(CourseRequest request) {
+        checkByName(request.getCourseName());
 
-        CourseEntity course = courseMapper.create(courseRequest);
+        CourseEntity course = courseMapper.create(request);
         CourseEntity savedCourse = courseRepository.save(course);
 
         log.info("Course with name = {} has successfully saved to database", savedCourse.getCourseName());
@@ -85,14 +85,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
+    public CourseResponse updateCourseById(Long courseId, CourseRequest request) {
         CourseEntity course = getByIdMethod(courseId);
-        String courseName = courseRequest.getCourseName();
+        String courseName = request.getCourseName();
         String courseEntityName = course.getCourseName();
         if (!courseName.equals(courseEntityName)) {
             checkByName(courseName);
         }
-        courseMapper.update(course, courseRequest);
+        courseMapper.update(course, request);
         courseRepository.save(course);
         return courseViewMapper.viewCourse(course);
     }
@@ -129,10 +129,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public String assignInstructorToCourse(AssignRequest assignRequest) {
-        CourseEntity course = courseRepository.findById(assignRequest.getCourseId())
+    public String assignInstructorToCourse(AssignRequest request) {
+        CourseEntity course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found by this id"));
-        for (Long id : assignRequest.getInstructorsId()) {
+        for (Long id : request.getInstructorsId()) {
             InstructorEntity instructor = instructorRepository.findById(id).orElseThrow(() ->
                     new NotFoundException("Instructor not found by this id"));
             for (InstructorEntity instructorEntity : course.getInstructors()) {
