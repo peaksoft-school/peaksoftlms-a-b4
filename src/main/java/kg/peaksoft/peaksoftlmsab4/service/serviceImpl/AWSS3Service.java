@@ -24,11 +24,9 @@ public class AWSS3Service implements FileService {
     @Override
     public String uploadFile(MultipartFile file) {
         String key = file.getOriginalFilename();
-
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
         metadata.setContentType(file.getContentType());
-
         try {
             awsS3Client.putObject("peaksoft-lms-a4", key, file.getInputStream(), metadata);
         } catch (IOException e) {
