@@ -9,18 +9,17 @@ import java.util.List;
 
 public interface InstructorService {
 
-    InstructorResponse saveInstructor(InstructorRequest instructorRequest);
+    InstructorResponse saveInstructor(InstructorRequest request);
 
     List<InstructorResponse> getAllInstructor();
 
     InstructorResponse getInstructorById(Long id);
 
-    InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest);
+    InstructorResponse updateInstructor(Long id, InstructorRequest request);
 
     InstructorResponse deleteInstructor(Long id);
 
     InstructorResponse addInstructorToCourse(Long courseId, Long instructorId);
-
 
     List<CourseResponse> getInstructorsCourses(String email);
 

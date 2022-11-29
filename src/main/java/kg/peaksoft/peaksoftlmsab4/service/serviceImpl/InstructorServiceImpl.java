@@ -41,19 +41,19 @@ public class InstructorServiceImpl implements InstructorService {
     private final Validator validator;
 
     @Override
-    public InstructorResponse saveInstructor(InstructorRequest instructorRequest) {
-        String email = instructorRequest.getEmail();
+    public InstructorResponse saveInstructor(InstructorRequest request) {
+        String email = request.getEmail();
         if (!validator.patternMatches(email)) {
             throw new InvalidArgumentException(email + " is not valid");
-        } else if (!validator.isValid(instructorRequest.getPhoneNumber())){
-            throw new InvalidArgumentException(instructorRequest.getPhoneNumber() + " is not valid");
+        } else if (!validator.isValid(request.getPhoneNumber())){
+            throw new InvalidArgumentException(request.getPhoneNumber() + " is not valid");
         }
         checkEmail(email);
 
-        String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
-        instructorRequest.setPassword(encoderPassword);
+        String encoderPassword = passwordEncoder.encode(request.getPassword());
+        request.setPassword(encoderPassword);
         InstructorEntity instructor = instructorRepository.save(instructorEditMapper
-                .convertToInstructor(instructorRequest));
+                .convertToInstructor(request));
         log.info(" Instructor with name : {} has successfully saved to database", instructor.getFirstName());
         return instructorViewMapper.convertToInstructorResponse(instructor);
     }
@@ -75,21 +75,21 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public InstructorResponse updateInstructor(Long id, InstructorRequest instructorRequest) {
+    public InstructorResponse updateInstructor(Long id, InstructorRequest request) {
         InstructorEntity instructor = getByIdMethod(id);
-        String email = instructorRequest.getEmail();
+        String email = request.getEmail();
         String entityEmail = instructor.getAuthInfo().getEmail();
         if (!validator.patternMatches(email)) {
             throw new InvalidArgumentException(email + " is not valid");
-        } else if (!validator.isValid(instructorRequest.getPhoneNumber())){
-            throw new InvalidArgumentException(instructorRequest.getPhoneNumber() + " is not valid");
+        } else if (!validator.isValid(request.getPhoneNumber())){
+            throw new InvalidArgumentException(request.getPhoneNumber() + " is not valid");
         }
         if (!email.equals(entityEmail)) {
             checkEmail(email);
         }
-        String encoderPassword = passwordEncoder.encode(instructorRequest.getPassword());
-        instructorRequest.setPassword(encoderPassword);
-        instructorEditMapper.updateInstructor(instructor, instructorRequest);
+        String encoderPassword = passwordEncoder.encode(request.getPassword());
+        request.setPassword(encoderPassword);
+        instructorEditMapper.updateInstructor(instructor, request);
         InstructorEntity savedInstructor = instructorRepository.save(instructor);
         log.info(" Instructor with name : {} has successfully updated", savedInstructor.getFirstName());
         return instructorViewMapper.convertToInstructorResponse(savedInstructor);
