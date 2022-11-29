@@ -28,7 +28,7 @@ public class TestServiceImpl implements TestService {
     private final TestMapper testMapper;
 
     @Override
-    public TestResponse create(TestRequest testRequest, Long lessonId) {
+    public TestResponse create(TestRequest request, Long lessonId) {
         LessonEntity lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
             log.error("Lesson with id = {} does not exists", lessonId);
             throw new NotFoundException(
@@ -36,7 +36,7 @@ public class TestServiceImpl implements TestService {
             );
         });
         if (lesson.getTestEntity() == null) {
-            TestEntity test = testMapper.create(testRequest);
+            TestEntity test = testMapper.create(request);
             test.setLessonEntity(lesson);
             return testMapper.viewTest(repository.save(test));
         } else {
@@ -45,12 +45,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestResponse update(Long id, TestRequest testRequest) {
+    public TestResponse update(Long id, TestRequest request) {
         TestEntity test = repository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("test not found this=%s", id)));
 
         repository.deleteById(id);
-        TestEntity newTest = testMapper.create(testRequest);
+        TestEntity newTest = testMapper.create(request);
         newTest.setLessonEntity(test.getLessonEntity());
         repository.save(newTest);
         return testMapper.viewTest(newTest);
