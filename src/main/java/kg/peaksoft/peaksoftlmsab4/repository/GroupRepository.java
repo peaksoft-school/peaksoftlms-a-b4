@@ -14,7 +14,7 @@ public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
 
     boolean existsByGroupName(String groupName);
 
-    @Query("select g from GroupEntity g")
+    @Query("SELECT g FROM GroupEntity g")
     List<GroupEntity> findAllPag(Pageable pageable);
 
 }
