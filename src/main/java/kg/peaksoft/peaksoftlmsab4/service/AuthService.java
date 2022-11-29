@@ -4,5 +4,7 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AuthRequest;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AuthResponse;
 
 public interface AuthService {
-    AuthResponse authenticate(AuthRequest authRequest);
+
+    AuthResponse authenticate(AuthRequest request);
+
 }

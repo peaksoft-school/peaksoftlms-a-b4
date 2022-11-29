@@ -33,21 +33,21 @@ public class AuthServiceImpl implements AuthService {
     private final StudentRepository studentRepository;
 
 
-    public AuthResponse authenticate(AuthRequest authRequest) {
+    public AuthResponse authenticate(AuthRequest request) {
         Authentication authentication;
 
         authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authRequest.getEmail(),
-                authRequest.getPassword()
+                request.getEmail(),
+                request.getPassword()
         ));
 
         String generatedToken = jwtUtils.generateToken(authentication);
 
-        AuthInfo authInfo = authInfoRepository.findByEmail(authRequest.getEmail())
+        AuthInfo authInfo = authInfoRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
-                    log.error("User with email = {} does not exist", authRequest.getEmail());
+                    log.error("User with email = {} does not exist", request.getEmail());
                     throw new NotFoundException(
-                            String.format("User with email = %s does not exist", authRequest.getEmail())
+                            String.format("User with email = %s does not exist", request.getEmail())
                     );
                 });
 
@@ -76,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
                 .firstName(firstName)
                 .lastName(lastName)
                 .role(authInfo.getRole())
-                .email(authRequest.getEmail())
+                .email(request.getEmail())
                 .token(generatedToken)
                 .build();
     }
