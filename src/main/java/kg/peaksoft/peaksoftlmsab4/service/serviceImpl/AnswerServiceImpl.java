@@ -1,12 +1,19 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AnswerRequest;
-import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequestForTest;
-import kg.peaksoft.peaksoftlmsab4.model.entity.*;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AnswerResponse;
+import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
+import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
+import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.TestResult;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.AnswerMapper;
-import kg.peaksoft.peaksoftlmsab4.repository.*;
+import kg.peaksoft.peaksoftlmsab4.repository.OptionRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.QuestionRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.StudentRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.TestRepository;
+import kg.peaksoft.peaksoftlmsab4.repository.TestStudentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,9 +23,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @AllArgsConstructor
-@Slf4j
 public class AnswerServiceImpl {
 
     private final TestStudentRepository testStudentRepository;
@@ -30,13 +37,12 @@ public class AnswerServiceImpl {
 
     List<Integer> testResult;
 
-    public void createAnswers(AnswerRequest answerRequest, AuthInfo authInfo) {
-
+    public void createAnswers(AnswerRequest request, AuthInfo authInfo) {
         int correctOption = 0;
         int userRightAnswer = 0;
         int countRightAnswers = 0;
 
-        List<QuestionEntity> questionEntity = testRepository.allQuestionsFromTest(answerRequest.getTestId());
+        List<QuestionEntity> questionEntity = testRepository.allQuestionsFromTest(request.getTestId());
         for (QuestionEntity question : questionEntity) {
             for (OptionEntity options : question.getOptions()) {
                 if (options.getIsTrue()) {
@@ -44,7 +50,7 @@ public class AnswerServiceImpl {
                 }
             }
         }
-        List<QuestionRequestForTest> answerRequestQuestion = answerRequest.getQuestion();
+        List<QuestionRequestForTest> answerRequestQuestion = request.getQuestion();
         for (QuestionRequestForTest requestForTest : answerRequestQuestion) {
 
             int count = 0;
@@ -57,7 +63,6 @@ public class AnswerServiceImpl {
                 }
             }
 
-            System.out.println(count);
             for (int i = 0; i < count; i++) {
                 System.out.println(question.getOptions().size() + "======");
                 for (Long aLong : uniqueList) {
@@ -80,19 +85,12 @@ public class AnswerServiceImpl {
         }
         testStudentEntity.setStudentEntity(studentRepository.getByEmail(authInfo.getEmail()));
         testStudentEntity.setLocalDate(LocalDate.now());
-        testStudentEntity.setTestEntity(testRepository.getById(answerRequest.getTestId()));
-
-//            if () {
-//                throw new AlreadyExistsException(
-//                        String.format("student with email = %s already passed this test", authInfo.getEmail())
-//                );
-//            } else {
-//            }
+        testStudentEntity.setTestEntity(testRepository.getById(request.getTestId()));
         testStudentRepository.save(testStudentEntity);
-//        return answerMapper.viewAnswer(testStudentEntity);
     }
 
     public List<AnswerResponse> resultTest() {
-       return answerMapper.mapToResponse(testStudentRepository.findAll());
+        return answerMapper.mapToResponse(testStudentRepository.findAll());
     }
+
 }
