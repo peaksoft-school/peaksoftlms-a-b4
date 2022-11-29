@@ -26,11 +26,11 @@ public class VideoServiceImpl implements VideoService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public VideoResponse create(VideoRequest videoRequest, Long lessonId) {
+    public VideoResponse create(VideoRequest request, Long lessonId) {
         LessonEntity lesson = lessonRepository.getById(lessonId);
 
         if (lesson.getVideoEntity() == null) {
-            VideoEntity videoEntity = mapper.mapToEntity(videoRequest);
+            VideoEntity videoEntity = mapper.mapToEntity(request);
             videoEntity.setLessonEntity(lesson);
             lesson.setVideoEntity(videoEntity);
             VideoEntity savedVideoEntity = videoRepository.save(videoEntity);
@@ -57,14 +57,14 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public VideoResponse update(Long videoId, VideoRequest videoRequest) {
+    public VideoResponse update(Long videoId, VideoRequest request) {
         VideoEntity videoEntity = videoRepository.findById(videoId)
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
                 });
-        videoEntity.setVideoName(videoRequest.getVideoName());
-        videoEntity.setDescription(videoRequest.getDescription());
-        videoEntity.setVideoLink(videoRequest.getVideoLink());
+        videoEntity.setVideoName(request.getVideoName());
+        videoEntity.setDescription(request.getDescription());
+        videoEntity.setVideoLink(request.getVideoLink());
         videoRepository.save(videoEntity);
         log.info("video with id = {} updated", videoId);
         return mapper.mapToResponse(videoEntity);

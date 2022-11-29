@@ -6,15 +6,17 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.response.VideoResponse;
 import java.util.List;
 
 public interface VideoService {
-    VideoResponse create(VideoRequest videoRequest, Long lessonId);
+
+    VideoResponse create(VideoRequest request, Long lessonId);
 
     List<VideoResponse> getAll();
 
     VideoResponse getById(Long videoId);
 
-    VideoResponse update(Long videoId, VideoRequest videoRequest);
+    VideoResponse update(Long videoId, VideoRequest request);
 
     VideoResponse deleteById(Long videoId);
 
     VideoResponse getVideoByLessonId(Long id);
+
 }
