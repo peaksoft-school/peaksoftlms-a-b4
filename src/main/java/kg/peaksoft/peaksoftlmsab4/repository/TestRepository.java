@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TestRepository extends JpaRepository<TestEntity, Long> {
 
-    @Query("select t.questions from TestEntity t where t.id=?1")
+    @Query("SELECT t.questions FROM TestEntity t WHERE t.id=?1")
     List<QuestionEntity> allQuestionsFromTest(Long testId);
 
 }
