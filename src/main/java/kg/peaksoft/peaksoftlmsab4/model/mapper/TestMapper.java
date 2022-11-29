@@ -1,15 +1,13 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.QuestionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TestRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TestResponse;
-import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.QuestionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TestRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TestResponse;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsab4.model.entity.QuestionEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
-import kg.peaksoft.peaksoftlmsab4.repository.LessonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,12 +15,12 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class TestMapper {
+
     private final QuestionMapper mapper;
-    private final LessonRepository lessonRepository;
 
     public TestEntity create(TestRequest testRequest) {
         List<QuestionEntity> questions = new ArrayList<>();
@@ -61,7 +59,6 @@ public class TestMapper {
         testResponse.setQuestions(mapper.viewQuestions(test.getQuestions()));
         testResponse.setLessonId(test.getLessonEntity().getId());
         return testResponse;
-
     }
 
     public List<TestResponse> viewTests(List<TestEntity> tests) {
@@ -73,9 +70,8 @@ public class TestMapper {
     }
 
     public TestEntity update(TestEntity test, TestRequest testRequest) {
-
         test.setTestName(testRequest.getTestName());
         return test;
-
     }
+
 }

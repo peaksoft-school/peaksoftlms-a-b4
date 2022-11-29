@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OptionRepository extends JpaRepository<OptionEntity,Long> {
+public interface OptionRepository extends JpaRepository<OptionEntity, Long> {
 
-    @Query("select q.options from QuestionEntity q where q.id =?1")
+    @Query("SELECT q.options FROM QuestionEntity q WHERE q.id =?1")
     List<OptionEntity> getOptions(Long id);
+
 }

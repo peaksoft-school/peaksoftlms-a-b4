@@ -1,15 +1,15 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskResponse;
-import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TaskRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TaskResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.TaskMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.TaskRepository;
 import kg.peaksoft.peaksoftlmsab4.service.TaskService;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@RequiredArgsConstructor
-@Service
 @Slf4j
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
     private final TaskMapper taskMapper;
@@ -28,16 +28,13 @@ public class TaskServiceImpl implements TaskService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public TaskResponse saveTask(Long id, TaskRequest taskRequest) {
-        LessonEntity lessonEntity = lessonRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Lesson with id = {} does not exists", id);
-                    throw new NotFoundException(
-                            String.format("Lesson with id = %s does not exists", id)
-                    );
-                });
+    public TaskResponse saveTask(Long id, TaskRequest request) {
+        LessonEntity lessonEntity = lessonRepository.findById(id).orElseThrow(() -> {
+            log.error("Lesson with id = {} does not exists", id);
+            throw new NotFoundException(String.format("Lesson with id = %s does not exists", id));
+        });
         if (lessonEntity.getTaskEntity() == null) {
-            TaskEntity task = taskMapper.mapToEntity(taskRequest);
+            TaskEntity task = taskMapper.mapToEntity(request);
             task.setLesson(lessonEntity);
             log.info(" Task with name : {} has successfully saved to database", task.getTaskName());
             return taskMapper.mapToResponse(taskRepository.save(task));
@@ -61,26 +58,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponse updateTask(Long id, TaskRequest taskRequest) {
-        TaskEntity task = taskRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Task with id ={} does not exists", id);
-                    throw new NotFoundException(
-                            String.format("task with id = %s does not exists", id)
-                    );
-                });
-        taskMapper.update(task, taskRequest);
+    public TaskResponse updateTask(Long id, TaskRequest request) {
+        TaskEntity task = taskRepository.findById(id).orElseThrow(() -> {
+            log.error("Task with id ={} does not exists", id);
+            throw new NotFoundException(String.format("task with id = %s does not exists", id));
+        });
+        taskMapper.update(task, request);
         taskRepository.save(task);
         return taskMapper.mapToResponse(task);
     }
 
     @Override
     public TaskResponse deleteTask(Long id) {
-        TaskEntity taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> {
-                    throw new NotFoundException(String.format("task with id = %s does not exists", id));
-                });
+        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> {
+            throw new NotFoundException(String.format("task with id = %s does not exists", id));
+        });
         taskRepository.delete(taskEntity);
         return taskMapper.mapToResponse(taskEntity);
     }
+
 }

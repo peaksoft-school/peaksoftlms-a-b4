@@ -1,42 +1,63 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Builder
 @ToString
-@Entity
-@Table(name = "students")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "students")
 public class StudentEntity {
+
     @Id
-    @SequenceGenerator(
-            name = "students_sequence",
-            sequenceName = "students_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "students_sequence"
-    )
+    @SequenceGenerator(name = "students_gen", sequenceName = "students_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "students_gen")
     Long id;
+
     @Column(name = "first_name")
     String firstName;
+
     @Column(name = "last_name")
     String lastName;
+
     @Column(name = "phone_number")
     String phoneNumber;
-    @Column(name = "study_format")
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "study_format")
     StudyFormat studyFormat;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -51,8 +72,6 @@ public class StudentEntity {
 
     @OneToOne(cascade = ALL)
     private TestStudentEntity testStudentEntity;
-
-
 
     public void setCourse(CourseEntity course) {
         if (courses == null) {

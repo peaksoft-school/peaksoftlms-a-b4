@@ -1,11 +1,9 @@
 package kg.peaksoft.peaksoftlmsab4.config.jwt;
 
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,6 @@ public class JwtUtils {
 
     public String generateToken(Authentication authentication) {
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
-
         return Jwts.builder()
                 .setSubject(authInfo.getEmail())
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecretKey())
@@ -46,4 +43,5 @@ public class JwtUtils {
             return false;
         }
     }
+
 }

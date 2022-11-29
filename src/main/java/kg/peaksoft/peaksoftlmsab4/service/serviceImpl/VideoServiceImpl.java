@@ -1,24 +1,24 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
-import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.VideoRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
 import kg.peaksoft.peaksoftlmsab4.model.mapper.VideoMapper;
 import kg.peaksoft.peaksoftlmsab4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.VideoRepository;
 import kg.peaksoft.peaksoftlmsab4.service.VideoService;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class VideoServiceImpl implements VideoService {
 
     private final VideoRepository videoRepository;
@@ -26,11 +26,10 @@ public class VideoServiceImpl implements VideoService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public VideoResponse create(VideoRequest videoRequest, Long lessonId) {
+    public VideoResponse create(VideoRequest request, Long lessonId) {
         LessonEntity lesson = lessonRepository.getById(lessonId);
-
         if (lesson.getVideoEntity() == null) {
-            VideoEntity videoEntity = mapper.mapToEntity(videoRequest);
+            VideoEntity videoEntity = mapper.mapToEntity(request);
             videoEntity.setLessonEntity(lesson);
             lesson.setVideoEntity(videoEntity);
             VideoEntity savedVideoEntity = videoRepository.save(videoEntity);
@@ -49,22 +48,20 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoResponse getById(Long videoId) {
-        VideoEntity videoEntity = videoRepository.findById(videoId)
-                .orElseThrow(() -> {
-                    throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
-                });
+        VideoEntity videoEntity = videoRepository.findById(videoId).orElseThrow(() -> {
+            throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
+        });
         return mapper.mapToResponse(videoEntity);
     }
 
     @Override
-    public VideoResponse update(Long videoId, VideoRequest videoRequest) {
-        VideoEntity videoEntity = videoRepository.findById(videoId)
-                .orElseThrow(() -> {
-                    throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
-                });
-        videoEntity.setVideoName(videoRequest.getVideoName());
-        videoEntity.setDescription(videoRequest.getDescription());
-        videoEntity.setVideoLink(videoRequest.getVideoLink());
+    public VideoResponse update(Long videoId, VideoRequest request) {
+        VideoEntity videoEntity = videoRepository.findById(videoId).orElseThrow(() -> {
+            throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
+        });
+        videoEntity.setVideoName(request.getVideoName());
+        videoEntity.setDescription(request.getDescription());
+        videoEntity.setVideoLink(request.getVideoLink());
         videoRepository.save(videoEntity);
         log.info("video with id = {} updated", videoId);
         return mapper.mapToResponse(videoEntity);
@@ -72,10 +69,9 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoResponse deleteById(Long videoId) {
-        VideoEntity videoEntity = videoRepository.findById(videoId)
-                .orElseThrow(() -> {
-                    throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
-                });
+        VideoEntity videoEntity = videoRepository.findById(videoId).orElseThrow(() -> {
+            throw new NotFoundException(String.format("video with id = %s does not exists", videoId));
+        });
         videoRepository.delete(videoEntity);
         log.info("video with id ={} successfully deleted", videoId);
         return mapper.mapToResponse(videoEntity);
@@ -83,12 +79,10 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoResponse getVideoByLessonId(Long id) {
-        LessonEntity lesson = lessonRepository.findById(id)
-                .orElseThrow(() -> {
-                    throw new NotFoundException(String.format("lesson with id = %s does not exists", id));
-                });
+        LessonEntity lesson = lessonRepository.findById(id).orElseThrow(() -> {
+            throw new NotFoundException(String.format("lesson with id = %s does not exists", id));
+        });
         return mapper.mapToResponse(lesson.getVideoEntity());
     }
-
 
 }

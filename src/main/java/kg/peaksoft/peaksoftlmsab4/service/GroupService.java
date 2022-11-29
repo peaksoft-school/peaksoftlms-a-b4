@@ -1,17 +1,15 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.GroupRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.GroupRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.StudentResponse;
 
 import java.util.List;
 
-
 public interface GroupService {
 
-    GroupResponse update(Long id, GroupRequest groupRequest);
+    GroupResponse update(Long id, GroupRequest request);
 
     GroupResponse getById(Long id);
 
@@ -19,11 +17,12 @@ public interface GroupService {
 
     List<GroupResponse> getAllGroup();
 
-    GroupResponse saveGroup(GroupRequest groupRequest);
+    GroupResponse saveGroup(GroupRequest request);
 
     GroupResponse setGroupToCourse(Long groupId, Long courseId);
 
     PaginationResponse<GroupResponse> getGroupPagination(int page, int size);
 
     List<StudentResponse> getAllStudentsByGroupId(Long id);
+
 }

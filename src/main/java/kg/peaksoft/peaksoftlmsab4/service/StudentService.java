@@ -1,25 +1,23 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.PaginationResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.StudentResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.StudentEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.PaginationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.StudentRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsab4.model.enums.StudyFormat;
 import org.springframework.web.multipart.MultipartFile;
-import kg.peaksoft.peaksoftlmsab4.model.entity.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface StudentService {
 
-    StudentResponse saveStudent(StudentRequest studentRequest);
+    StudentResponse saveStudent(StudentRequest request);
 
     List<StudentResponse> getAllStudent();
 
     StudentResponse getStudentById(Long studentId);
 
-    StudentResponse updateStudent(Long studentId, StudentRequest studentRequest);
+    StudentResponse updateStudent(Long studentId, StudentRequest request);
 
     StudentResponse deleteStudent(Long studentId);
 
@@ -27,11 +25,12 @@ public interface StudentService {
 
     StudentResponse setStudentToCourse(Long courseId, Long studentId);
 
-    StudentResponse saveStudentWithGroup(StudentRequest studentRequestDto);
+    StudentResponse saveStudentWithGroup(StudentRequest request);
 
-    List<StudentResponse> importExcel(MultipartFile file,Long groupId) throws IOException;
+    List<StudentResponse> importExcel(MultipartFile file, Long groupId) throws IOException;
 
     PaginationResponse<StudentResponse> getStudentPagination(int page, int size, StudyFormat studyFormat);
 
     List<StudentResponse> findByStudentName(String name);
+
 }

@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.InstructorRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.AuthInfo;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.enums.Role;
@@ -23,7 +23,6 @@ public class InstructorEditMapper {
         authInfo.setEmail(instructorRequest.getEmail());
         authInfo.setPassword(instructorRequest.getPassword());
         authInfo.setRole(Role.INSTRUCTOR);
-
         instructor.setAuthInfo(authInfo);
         return instructor;
     }
@@ -33,10 +32,9 @@ public class InstructorEditMapper {
         instructorEntity.setLastName(instructorRequest.getLastName());
         instructorEntity.setSpecialization(instructorRequest.getSpecialization());
         instructorEntity.setPhoneNumber(instructorRequest.getPhoneNumber());
-
         instructorEntity.getAuthInfo().setEmail(instructorRequest.getEmail());
         instructorEntity.getAuthInfo().setPassword(instructorRequest.getPassword());
         instructorEntity.getAuthInfo().setRole(Role.INSTRUCTOR);
-
     }
+
 }

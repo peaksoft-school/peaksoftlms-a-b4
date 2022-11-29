@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.VideoResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.VideoRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.VideoResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.VideoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,6 @@ public class VideoMapper {
         if (videoRequest == null) {
             return null;
         }
-
         return VideoEntity.builder()
                 .videoName(videoRequest.getVideoName())
                 .description(videoRequest.getDescription())
@@ -45,4 +44,5 @@ public class VideoMapper {
                 .lessonId(videoEntity.getLessonEntity().getId())
                 .build();
     }
+
 }

@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.InstructorResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.InstructorResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import org.springframework.stereotype.Component;
 
@@ -19,4 +19,5 @@ public class InstructorViewMapper {
         instructorResponse.setEmail(instructor.getAuthInfo().getEmail());
         return instructorResponse;
     }
+
 }

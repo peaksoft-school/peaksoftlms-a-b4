@@ -1,9 +1,8 @@
 package kg.peaksoft.peaksoftlmsab4.service.serviceImpl;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.*;
-import kg.peaksoft.peaksoftlmsab4.exception.AlreadyExistsException;
-import kg.peaksoft.peaksoftlmsab4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsab4.exception.NotFoundException;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.AssignRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.CourseRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.*;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.InstructorEntity;
 import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
@@ -12,6 +11,9 @@ import kg.peaksoft.peaksoftlmsab4.model.mapper.*;
 import kg.peaksoft.peaksoftlmsab4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsab4.repository.InstructorRepository;
 import kg.peaksoft.peaksoftlmsab4.service.CourseService;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.AlreadyExistsException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsab4.validation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -22,10 +24,11 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 @AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
+
     private final CourseRepository courseRepository;
     private final CourseEditMapper courseMapper;
     private final CourseViewMapper courseViewMapper;
@@ -35,14 +38,11 @@ public class CourseServiceImpl implements CourseService {
     private final LessonMapper lessonMapper;
 
     @Override
-    public CourseResponse saveCourse(CourseRequest courseRequest) {
-        checkByName(courseRequest.getCourseName());
-
-        CourseEntity course = courseMapper.create(courseRequest);
+    public CourseResponse saveCourse(CourseRequest request) {
+        checkByName(request.getCourseName());
+        CourseEntity course = courseMapper.create(request);
         CourseEntity savedCourse = courseRepository.save(course);
-
         log.info("Course with name = {} has successfully saved to database", savedCourse.getCourseName());
-
         return courseViewMapper.viewCourse(savedCourse);
     }
 
@@ -59,7 +59,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseResponse getById(Long courseId) {
         CourseEntity course = getByIdMethod(courseId);
-
         log.info("Founded course with id = {}", courseId);
         return courseViewMapper.viewCourse(course);
     }
@@ -67,30 +66,26 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseResponse deleteCourseById(Long courseId) {
         boolean exists = courseRepository.existsById(courseId);
-
         if (!exists) {
             log.error("Course with id = {} does not exists, you can't delete it", courseId);
             throw new BadRequestException(
-                    String.format("Course with id = %s does not exists, you can't delete it", courseId)
-            );
+                    String.format("Course with id = %s does not exists, you can't delete it", courseId));
         }
         CourseEntity deletedCourse = getByIdMethod(courseId);
         courseRepository.deleteById(courseId);
-
         log.info("Course with id = {} has successfully deleted", courseId);
-
         return courseViewMapper.viewCourse(deletedCourse);
     }
 
     @Override
-    public CourseResponse updateCourseById(Long courseId, CourseRequest courseRequest) {
+    public CourseResponse updateCourseById(Long courseId, CourseRequest request) {
         CourseEntity course = getByIdMethod(courseId);
-        String courseName = courseRequest.getCourseName();
+        String courseName = request.getCourseName();
         String courseEntityName = course.getCourseName();
         if (!courseName.equals(courseEntityName)) {
             checkByName(courseName);
         }
-        courseMapper.update(course, courseRequest);
+        courseMapper.update(course, request);
         courseRepository.save(course);
         return courseViewMapper.viewCourse(course);
     }
@@ -127,10 +122,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public String assignInstructorToCourse(AssignRequest assignRequest) {
-        CourseEntity course = courseRepository.findById(assignRequest.getCourseId())
-                .orElseThrow(() -> new NotFoundException("Course not found by this id"));
-        for (Long id : assignRequest.getInstructorsId()) {
+    public String assignInstructorToCourse(AssignRequest request) {
+        CourseEntity course = courseRepository.findById(request.getCourseId()).orElseThrow(() ->
+                new NotFoundException("Course not found by this id"));
+        for (Long id : request.getInstructorsId()) {
             InstructorEntity instructor = instructorRepository.findById(id).orElseThrow(() ->
                     new NotFoundException("Instructor not found by this id"));
             for (InstructorEntity instructorEntity : course.getInstructors()) {
@@ -161,22 +156,19 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private CourseEntity getByIdMethod(Long courseId) {
-        return courseRepository.findById(courseId)
-                .orElseThrow(() -> {
-                    log.error("Course with id = {} does not exists", courseId);
-                    throw new NotFoundException(
-                            String.format("Course with id = %s does not exists", courseId)
-                    );
-                });
+        return courseRepository.findById(courseId).orElseThrow(() -> {
+            log.error("Course with id = {} does not exists", courseId);
+            throw new NotFoundException(
+                    String.format("Course with id = %s does not exists", courseId));
+        });
     }
 
     private void checkByName(String name) {
         boolean exists = courseRepository.existsByCourseName(name);
         if (exists) {
             log.info("Course with name = {} already exists", name);
-            throw new AlreadyExistsException(
-                    "Course with name = " + name + " already exists"
-            );
+            throw new AlreadyExistsException("Course with name = " + name + " already exists");
         }
     }
+
 }

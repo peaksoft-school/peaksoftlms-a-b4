@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.CourseRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.CourseRequest;
 import kg.peaksoft.peaksoftlmsab4.model.entity.CourseEntity;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,6 @@ public class CourseEditMapper {
         course.setDateOfStart(courseRequest.getDateOfStart());
         course.setDescription(courseRequest.getDescription());
         course.setImage(courseRequest.getImage());
-
         return course;
     }
 
@@ -27,4 +26,5 @@ public class CourseEditMapper {
         course.setImage(courseRequest.getImage());
         return course;
     }
+
 }

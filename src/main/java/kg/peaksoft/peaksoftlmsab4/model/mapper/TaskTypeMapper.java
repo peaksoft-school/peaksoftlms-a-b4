@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskTypeRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.TaskTypeResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.TaskTypeRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.TaskTypeResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TaskTypeEntity;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,7 @@ import java.util.List;
 
 @Component
 public class TaskTypeMapper {
+
     public TaskTypeEntity mapToEntity(TaskTypeRequest taskTypeRequest) {
         if (taskTypeRequest == null) {
             return null;
@@ -19,7 +20,6 @@ public class TaskTypeMapper {
                 .name(taskTypeRequest.getName())
                 .taskType(taskTypeRequest.getTaskType())
                 .build();
-
     }
 
     public TaskTypeResponse mapToResponse(TaskTypeEntity taskTypeEntity) {
@@ -38,4 +38,5 @@ public class TaskTypeMapper {
         }
         return taskTypeResponses;
     }
+
 }

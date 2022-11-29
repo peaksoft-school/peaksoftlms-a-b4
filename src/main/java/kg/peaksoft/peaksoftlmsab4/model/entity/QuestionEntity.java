@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.peaksoft.peaksoftlmsab4.model.enums.QuestionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,28 +10,32 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "questions")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "questions")
 public class QuestionEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "questions_gen", sequenceName = "questions_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questions_gen")
     private Long id;
+
     private String question;
 
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OptionEntity> options;
 
-    public void setOption(OptionEntity option){
-        if (options==null){
-            options=new ArrayList<>();
+    public void setOption(OptionEntity option) {
+        if (options == null) {
+            options = new ArrayList<>();
         }
         options.add(option);
     }
+
 }

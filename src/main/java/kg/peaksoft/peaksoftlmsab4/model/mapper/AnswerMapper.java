@@ -1,8 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.AnswerResponse;
-import kg.peaksoft.peaksoftlmsab4.api.payload.LessonResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.LessonEntity;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.AnswerResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.TestStudentEntity;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +9,8 @@ import java.util.List;
 
 @Component
 public class AnswerMapper {
-    public AnswerResponse viewAnswer(TestStudentEntity testStudentEntity) {
 
+    public AnswerResponse viewAnswer(TestStudentEntity testStudentEntity) {
         if (testStudentEntity == null) {
             return null;
         }
@@ -21,13 +19,13 @@ public class AnswerMapper {
             answerResponse.setId(testStudentEntity.getId());
         }
         answerResponse.setId(testStudentEntity.getId());
-        answerResponse.setStudentName(testStudentEntity.getStudentEntity().getFirstName()+" "+testStudentEntity.getStudentEntity().getLastName());
+        answerResponse.setStudentName(testStudentEntity.getStudentEntity().getFirstName() + " " + testStudentEntity.getStudentEntity().getLastName());
         answerResponse.setGrade(testStudentEntity.getResult());
         answerResponse.setStatus(testStudentEntity.getTestResult());
         answerResponse.setDate(testStudentEntity.getLocalDate());
-
         return answerResponse;
     }
+
     public List<AnswerResponse> mapToResponse(List<TestStudentEntity> studentEntities) {
         List<AnswerResponse> answerResponses = new ArrayList<>();
         for (TestStudentEntity studentEntity : studentEntities) {
@@ -35,4 +33,5 @@ public class AnswerMapper {
         }
         return answerResponses;
     }
+
 }

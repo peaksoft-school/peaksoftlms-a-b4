@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.PresentationResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.PresentationRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.PresentationResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.PresentationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -51,4 +51,5 @@ public class PresentationMapper {
                 .lessonId(presentationEntity.getLessonEntity().getId())
                 .build();
     }
+
 }

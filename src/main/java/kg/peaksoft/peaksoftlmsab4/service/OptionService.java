@@ -1,17 +1,15 @@
 package kg.peaksoft.peaksoftlmsab4.service;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionRequest;
-import kg.peaksoft.peaksoftlmsab4.api.payload.OptionResponse;
-import kg.peaksoft.peaksoftlmsab4.model.entity.OptionEntity;
-import org.springframework.stereotype.Service;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.request.OptionRequest;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.OptionResponse;
 
 import java.util.List;
 
-@Service
 public interface OptionService {
-    OptionResponse create(OptionRequest optionRequest);
 
-    OptionResponse update(Long id, OptionRequest optionRequest);
+    OptionResponse create(OptionRequest request);
+
+    OptionResponse update(Long id, OptionRequest request);
 
     OptionResponse findById(Long id);
 
@@ -20,4 +18,5 @@ public interface OptionService {
     List<OptionResponse> findAll();
 
     OptionResponse findByOptionToQuestion(Long questionId, Long optionId);
+
 }

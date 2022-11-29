@@ -1,37 +1,51 @@
 package kg.peaksoft.peaksoftlmsab4.model.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Builder
-@Entity
-@Table(name = "instructors")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "instructors")
 public class InstructorEntity {
+
     @Id
-    @SequenceGenerator(
-            name = "instructors_sequence",
-            sequenceName = "instructors_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "instructors_sequence"
-    )
+    @SequenceGenerator(name = "instructors_gen", sequenceName = "instructors_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructors_gen")
     Long id;
+
     @Column(name = "first_name")
     String firstName;
+
     @Column(name = "last_name")
     String lastName;
+
     @Column(name = "phone_number")
     String phoneNumber;
+
     String specialization;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     AuthInfo authInfo;
 
@@ -52,4 +66,5 @@ public class InstructorEntity {
             course.getInstructors().remove(this);
         }
     }
+
 }

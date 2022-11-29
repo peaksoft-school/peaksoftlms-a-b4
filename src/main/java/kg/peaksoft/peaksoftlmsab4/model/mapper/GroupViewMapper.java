@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsab4.model.mapper;
 
-import kg.peaksoft.peaksoftlmsab4.api.payload.GroupResponse;
+import kg.peaksoft.peaksoftlmsab4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsab4.model.entity.GroupEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
