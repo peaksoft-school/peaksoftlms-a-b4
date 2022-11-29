@@ -54,12 +54,12 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
-    public PresentationResponse update(Long presentationId, PresentationRequest presentationRequest) {
+    public PresentationResponse update(Long presentationId, PresentationRequest request) {
         PresentationEntity presentationEntity = presentationRepository.findById(presentationId)
                 .orElseThrow(() -> {
                     throw new NotFoundException(String.format("Presentation with id = %s does not exists", presentationId));
                 });
-        mapper.update(presentationEntity, presentationRequest);
+        mapper.update(presentationEntity, request);
         presentationRepository.save(presentationEntity);
         return mapper.mapToResponse(presentationEntity);
     }
