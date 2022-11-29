@@ -38,14 +38,14 @@ public class GroupServiceImpl implements GroupService {
     private final StudentViewMapper studentViewMapper;
 
     @Override
-    public GroupResponse update(Long groupId, GroupRequest groupRequest) {
+    public GroupResponse update(Long groupId, GroupRequest request) {
         GroupEntity group = getByMethod(groupId);
-        String groupName = groupRequest.getGroupName();
+        String groupName = request.getGroupName();
         String groupEntityName = group.getGroupName();
         if (!groupName.equals(groupEntityName)) {
             checkByName(groupName);
         }
-        editMapper.update(group, groupRequest);
+        editMapper.update(group, request);
         repository.save(group);
         return viewMapper.viewGroup(group);
     }
@@ -79,10 +79,10 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupResponse saveGroup(GroupRequest groupRequest) {
-        checkByName(groupRequest.getGroupName());
+    public GroupResponse saveGroup(GroupRequest request) {
+        checkByName(request.getGroupName());
 
-        GroupEntity group = editMapper.convert(groupRequest);
+        GroupEntity group = editMapper.convert(request);
         GroupEntity savedGroup = repository.save(group);
         return viewMapper.viewGroup(savedGroup);
     }

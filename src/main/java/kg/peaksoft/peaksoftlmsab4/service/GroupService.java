@@ -7,10 +7,9 @@ import kg.peaksoft.peaksoftlmsab4.controller.payload.response.StudentResponse;
 
 import java.util.List;
 
-
 public interface GroupService {
 
-    GroupResponse update(Long id, GroupRequest groupRequest);
+    GroupResponse update(Long id, GroupRequest request);
 
     GroupResponse getById(Long id);
 
@@ -18,11 +17,12 @@ public interface GroupService {
 
     List<GroupResponse> getAllGroup();
 
-    GroupResponse saveGroup(GroupRequest groupRequest);
+    GroupResponse saveGroup(GroupRequest request);
 
     GroupResponse setGroupToCourse(Long groupId, Long courseId);
 
     PaginationResponse<GroupResponse> getGroupPagination(int page, int size);
 
     List<StudentResponse> getAllStudentsByGroupId(Long id);
+
 }
