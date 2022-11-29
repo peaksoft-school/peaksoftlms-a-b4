@@ -28,19 +28,19 @@ public class QuestionServiceImpl implements QuestionService {
     private final TestStudentRepository testStudentRepository;
 
     @Override
-    public QuestionResponse create(Long id, QuestionRequest questionRequest) {
-        return questionMapper.viewQuestion(questionRepository.save(questionMapper.create(questionRequest)));
+    public QuestionResponse create(Long id, QuestionRequest request) {
+        return questionMapper.viewQuestion(questionRepository.save(questionMapper.create(request)));
     }
 
     @Override
-    public QuestionResponse update(Long id, QuestionRequest questionRequest) {
+    public QuestionResponse update(Long id, QuestionRequest request) {
         QuestionEntity question = questionRepository.findById(id).orElseThrow(() -> {
             log.error("Question with id = {} does not exists", id);
             throw new NotFoundException(
                     String.format("Question with id = %s does not exists", id)
             );
         });
-        questionMapper.update(question, questionRequest);
+        questionMapper.update(question, request);
         return questionMapper.viewQuestion(questionRepository.save(question));
     }
 
