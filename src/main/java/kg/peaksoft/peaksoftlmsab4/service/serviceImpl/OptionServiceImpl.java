@@ -27,9 +27,9 @@ public class OptionServiceImpl implements OptionService {
     private final ModelMapper modelMapper;
 
 
-    public OptionResponse create( OptionRequest optionRequest) {
+    public OptionResponse create( OptionRequest request) {
         QuestionEntity question=new QuestionEntity();
-        OptionEntity optionEntity = optionMapper.create(optionRequest);
+        OptionEntity optionEntity = optionMapper.create(request);
         OptionEntity save = optionRepository.save(optionEntity);
         question.setOption(save);
         log.info("successful variant save:{}", save);
@@ -38,11 +38,11 @@ public class OptionServiceImpl implements OptionService {
 
     }
     @Override
-    public OptionResponse update(Long id, OptionRequest optionRequest) {
+    public OptionResponse update(Long id, OptionRequest request) {
       OptionEntity option=optionRepository.findById(id).orElseThrow(()-> new NotFoundException(
               String.format("Question with id = %s does not exists",id)
       ));
-      optionMapper.update(option,optionRequest);
+      optionMapper.update(option, request);
 
         return optionMapper.viewOption(optionRepository.save(option));
     }
