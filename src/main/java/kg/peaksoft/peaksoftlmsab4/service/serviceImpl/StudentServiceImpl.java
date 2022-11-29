@@ -47,17 +47,17 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public StudentResponse saveStudent(StudentRequest studentRequest) {
+    public StudentResponse saveStudent(StudentRequest request) {
         TestStudentEntity testStudentEntity = new TestStudentEntity();
-        String email = studentRequest.getEmail();
+        String email = request.getEmail();
         if (!validator.patternMatches(email)) {
             throw new InvalidArgumentException(email + " is not valid");
-        } else if (!validator.isValid(studentRequest.getPhoneNumber())) {
-            throw new InvalidArgumentException(studentRequest.getPhoneNumber() + " is not valid");
+        } else if (!validator.isValid(request.getPhoneNumber())) {
+            throw new InvalidArgumentException(request.getPhoneNumber() + " is not valid");
         }
         checkEmail(email);
         StudentEntity student = studentRepository.save(studentEditMapper
-                .convertToStudent(studentRequest));
+                .convertToStudent(request));
         log.info("Student with name : {} has successfully saved to database", student.getFirstName());
         student.setTestStudentEntity(testStudentEntity);
         return studentViewMapper.convertToStudentResponse(student);
@@ -80,29 +80,29 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse updateStudent(Long studentId, StudentRequest studentRequest) {
+    public StudentResponse updateStudent(Long studentId, StudentRequest request) {
         StudentEntity student = getByIdMethod(studentId);
-        String email = studentRequest.getEmail();
+        String email = request.getEmail();
         String entityEmail = student.getAuthInfo().getEmail();
         if (!validator.patternMatches(email)) {
             throw new InvalidArgumentException(email + " is not valid");
-        } else if (!validator.isValid(studentRequest.getPhoneNumber())){
-            throw new InvalidArgumentException(studentRequest.getPhoneNumber() + " is not valid");
+        } else if (!validator.isValid(request.getPhoneNumber())){
+            throw new InvalidArgumentException(request.getPhoneNumber() + " is not valid");
         }
         if (!email.equals(entityEmail)) {
             checkEmail(email);
         }
 
-        String encoderPassword = passwordEncoder.encode(studentRequest.getPassword());
-        studentRequest.setPassword(encoderPassword);
-        GroupEntity groupEntity = groupRepository.findById(studentRequest.getGroupId())
+        String encoderPassword = passwordEncoder.encode(request.getPassword());
+        request.setPassword(encoderPassword);
+        GroupEntity groupEntity = groupRepository.findById(request.getGroupId())
                 .orElseThrow(() -> {
-                    log.error("Group with id = {} does not exists", studentRequest.getGroupId());
+                    log.error("Group with id = {} does not exists", request.getGroupId());
                     throw new NotFoundException(
-                            String.format("Group with id = %s does not exists", studentRequest.getGroupId())
+                            String.format("Group with id = %s does not exists", request.getGroupId())
                     );
                 });
-        studentEditMapper.updateStudent(student, studentRequest);
+        studentEditMapper.updateStudent(student, request);
         student.setGroup(groupEntity);
 
         StudentEntity savedStudent = studentRepository.save(student);
@@ -162,23 +162,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse saveStudentWithGroup(StudentRequest studentRequest) {
-        GroupEntity group = groupRepository.findById(studentRequest.getGroupId())
+    public StudentResponse saveStudentWithGroup(StudentRequest request) {
+        GroupEntity group = groupRepository.findById(request.getGroupId())
                 .orElseThrow(() -> {
-                    log.error("Group with id = {} does not exists", studentRequest.getGroupId());
+                    log.error("Group with id = {} does not exists", request.getGroupId());
                     throw new NotFoundException(
-                            String.format("Group with id = %s does not exists", studentRequest.getGroupId())
+                            String.format("Group with id = %s does not exists", request.getGroupId())
                     );
                 });
-        String email = studentRequest.getEmail();
+        String email = request.getEmail();
         if (!validator.patternMatches(email)) {
             throw new InvalidArgumentException(email + " is not valid");
-        } else if (!validator.isValid(studentRequest.getPhoneNumber())){
-            throw new InvalidArgumentException(studentRequest.getPhoneNumber() + " is not valid");
+        } else if (!validator.isValid(request.getPhoneNumber())){
+            throw new InvalidArgumentException(request.getPhoneNumber() + " is not valid");
         }
         checkEmail(email);
 
-        StudentEntity convertedStudent = studentEditMapper.convertToStudent(studentRequest);
+        StudentEntity convertedStudent = studentEditMapper.convertToStudent(request);
         convertedStudent.setGroup(group);
 
         StudentEntity savedStudent = studentRepository.save(convertedStudent);

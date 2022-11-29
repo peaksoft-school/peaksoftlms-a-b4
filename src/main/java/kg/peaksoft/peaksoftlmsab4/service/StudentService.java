@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface StudentService {
 
-    StudentResponse saveStudent(StudentRequest studentRequest);
+    StudentResponse saveStudent(StudentRequest request);
 
     List<StudentResponse> getAllStudent();
 
     StudentResponse getStudentById(Long studentId);
 
-    StudentResponse updateStudent(Long studentId, StudentRequest studentRequest);
+    StudentResponse updateStudent(Long studentId, StudentRequest request);
 
     StudentResponse deleteStudent(Long studentId);
 
@@ -25,11 +25,12 @@ public interface StudentService {
 
     StudentResponse setStudentToCourse(Long courseId, Long studentId);
 
-    StudentResponse saveStudentWithGroup(StudentRequest studentRequestDto);
+    StudentResponse saveStudentWithGroup(StudentRequest request);
 
-    List<StudentResponse> importExcel(MultipartFile file,Long groupId) throws IOException;
+    List<StudentResponse> importExcel(MultipartFile file, Long groupId) throws IOException;
 
     PaginationResponse<StudentResponse> getStudentPagination(int page, int size, StudyFormat studyFormat);
 
     List<StudentResponse> findByStudentName(String name);
+
 }
