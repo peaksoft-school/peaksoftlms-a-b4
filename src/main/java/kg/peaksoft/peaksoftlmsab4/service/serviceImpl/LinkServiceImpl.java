@@ -63,7 +63,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public LinkResponse update(Long linkId, LinkRequest linkRequest) {
+    public LinkResponse update(Long linkId, LinkRequest request) {
         LinkEntity linkEntity = linkRepository.findById(linkId)
                 .orElseThrow(() -> {
                     log.error("Link with id ={} does not exists", linkId);
@@ -71,7 +71,7 @@ public class LinkServiceImpl implements LinkService {
                             String.format("link with id = %s does not exists", linkId)
                     );
                 });
-        mapper.update(linkEntity, linkRequest);
+        mapper.update(linkEntity, request);
         return mapper.mapToResponse(linkRepository.save(linkEntity));
     }
 
